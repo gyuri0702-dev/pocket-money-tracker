@@ -3,1161 +3,2244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>용돈플래너 - 게임 같은 가계부</title>
+  <title>용돈플래너 - 스마트 용돈 관리</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0f1419;
-      --bg-2:#1a1f2e;
-      --panel:#1d2231;
-      --panel-light:#252d3d;
-      --text:#f5f7fa;
-      --text-2:#a8b5c8;
-      --primary:#6366f1;
-      --primary-2:#818cf8;
-      --accent:#10b981;
-      --accent-2:#fbbf24;
-      --danger:#ef4444;
-      --line:#2d3547;
-      --shadow:0 25px 50px rgba(0,0,0,.5);
+      --bg:#fff8f0;
+      --bg-2:#fff3e6;
+      --panel:#ffffff;
+      --panel-light:#fff8f3;
+      --text:#2d1e0f;
+      --text-2:#8a6a50;
+      --text-3:#c4a882;
+      --primary:#ff7043;
+      --primary-2:#ff9263;
+      --primary-light:rgba(255,112,67,.12);
+      --accent:#ff8f00;
+      --accent-2:#ffca28;
+      --accent-light:rgba(255,143,0,.12);
+      --green:#43a047;
+      --green-light:rgba(67,160,71,.12);
+      --blue:#1e88e5;
+      --blue-light:rgba(30,136,229,.12);
+      --purple:#8e24aa;
+      --purple-light:rgba(142,36,170,.12);
+      --danger:#e53935;
+      --line:#ffe0cc;
+      --shadow:0 8px 32px rgba(255,112,67,.10);
+      --shadow-lg:0 20px 60px rgba(255,112,67,.18);
+      --radius:18px;
+      --radius-sm:12px;
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html{scroll-behavior:smooth;}
     body{
-      margin:0;
       font-family:'Noto Sans KR', sans-serif;
-      background:linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+      background:linear-gradient(135deg, #fff8f0 0%, #fff3e6 100%);
       color:var(--text);
       overflow-x:hidden;
+      min-height:100vh;
     }
 
+    /* ── 레이아웃 ── */
     .app-container{
       display:grid;
-      grid-template-columns:280px 1fr;
+      grid-template-columns:270px 1fr;
       min-height:100vh;
-      gap:0;
     }
 
-    /* 사이드바 */
+    /* ── 사이드바 ── */
     .sidebar{
-      background:linear-gradient(180deg, #1a1f2e 0%, #151a27 100%);
-      border-right:1px solid var(--line);
-      padding:20px 16px;
+      background:linear-gradient(180deg, #ff7043 0%, #ff8f00 100%);
+      padding:24px 16px;
       display:flex;
       flex-direction:column;
-      gap:20px;
+      gap:18px;
       position:fixed;
-      width:280px;
+      width:270px;
       height:100vh;
       overflow-y:auto;
+      z-index:50;
+      box-shadow:4px 0 24px rgba(255,112,67,.25);
     }
 
     .logo-area{
       display:flex;
       align-items:center;
       gap:12px;
-      margin-bottom:16px;
+      padding:4px 0 12px;
+      border-bottom:1px solid rgba(255,255,255,.25);
     }
 
     .logo-icon{
-      width:44px;
-      height:44px;
-      border-radius:12px;
-      background:linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background:rgba(255,255,255,.25);
       display:grid;
       place-items:center;
-      font-size:1.5rem;
-      box-shadow:0 12px 24px rgba(99,102,241,.3);
+      font-size:1.6rem;
+      backdrop-filter:blur(6px);
+      border:1.5px solid rgba(255,255,255,.4);
     }
 
     .logo-text{
-      font-weight:800;
-      font-size:1.1rem;
-      letter-spacing:-0.05em;
+      font-weight:900;
+      font-size:1.15rem;
+      color:#fff;
+      letter-spacing:-0.04em;
     }
 
+    .logo-sub{
+      font-size:.72rem;
+      color:rgba(255,255,255,.75);
+      margin-top:1px;
+    }
+
+    /* 사이드바 유저 카드 */
     .user-profile{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
+      background:rgba(255,255,255,.18);
+      border:1.5px solid rgba(255,255,255,.35);
       border-radius:16px;
-      padding:14px 12px;
+      padding:16px 12px;
       text-align:center;
+      backdrop-filter:blur(8px);
     }
 
-    .user-level{
-      font-size:2rem;
-      margin-bottom:6px;
+    .user-avatar{
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      background:rgba(255,255,255,.3);
+      margin:0 auto 8px;
+      display:grid;
+      place-items:center;
+      font-size:1.8rem;
+      border:2.5px solid rgba(255,255,255,.6);
     }
 
     .user-name{
+      font-weight:800;
+      color:#fff;
+      font-size:1rem;
+      margin-bottom:3px;
+    }
+
+    .user-level-badge{
+      display:inline-block;
+      background:rgba(255,255,255,.25);
+      color:#fff;
+      font-size:.72rem;
       font-weight:700;
-      margin-bottom:8px;
+      padding:2px 10px;
+      border-radius:999px;
+      margin-bottom:10px;
     }
 
     .user-stat{
-      display:flex;
-      justify-content:space-around;
-      gap:8px;
-      margin-top:10px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:6px;
+      margin-top:8px;
     }
 
-    .user-stat > div{
-      text-align:center;
+    .user-stat-item{
+      background:rgba(255,255,255,.15);
+      border-radius:10px;
+      padding:7px 4px;
     }
 
     .user-stat-val{
       font-weight:800;
-      font-size:1.1rem;
-      color:var(--accent);
+      font-size:.95rem;
+      color:#fff;
     }
 
     .user-stat-label{
-      font-size:.7rem;
-      color:var(--text-2);
+      font-size:.65rem;
+      color:rgba(255,255,255,.78);
       margin-top:2px;
+    }
+
+    /* 네비 */
+    .nav-section-label{
+      font-size:.68rem;
+      font-weight:700;
+      color:rgba(255,255,255,.6);
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      padding:0 4px;
+      margin-top:4px;
     }
 
     .nav-menu{
       display:flex;
       flex-direction:column;
-      gap:8px;
+      gap:5px;
     }
 
     .nav-item{
-      padding:12px 14px;
+      padding:11px 14px;
       border-radius:12px;
       cursor:pointer;
-      background:rgba(255,255,255,.04);
-      border:1px solid transparent;
+      background:rgba(255,255,255,.0);
+      border:1.5px solid transparent;
       transition:.2s ease;
       font-weight:600;
       display:flex;
       align-items:center;
       gap:10px;
-      color:var(--text-2);
+      color:rgba(255,255,255,.85);
+      font-size:.93rem;
+      position:relative;
     }
 
     .nav-item:hover{
-      background:rgba(99,102,241,.1);
-      border-color:var(--primary);
-      color:var(--text);
+      background:rgba(255,255,255,.18);
+      color:#fff;
     }
 
     .nav-item.active{
-      background:linear-gradient(135deg, rgba(99,102,241,.2), rgba(16,185,129,.1));
-      border-color:var(--primary);
-      color:var(--primary);
+      background:rgba(255,255,255,.28);
+      border-color:rgba(255,255,255,.5);
+      color:#fff;
+      box-shadow:0 4px 14px rgba(0,0,0,.1);
     }
 
-    .nav-item span:first-child{
-      font-size:1.2rem;
+    .nav-item .nav-icon{ font-size:1.2rem; }
+
+    .nav-badge{
+      margin-left:auto;
+      background:rgba(255,255,255,.35);
+      color:#fff;
+      font-size:.65rem;
+      font-weight:800;
+      padding:2px 7px;
+      border-radius:999px;
     }
 
-    /* 메인 콘텐츠 */
+    /* 사이드바 하단 팁 */
+    .sidebar-tip{
+      margin-top:auto;
+      background:rgba(255,255,255,.15);
+      border-radius:12px;
+      padding:12px 14px;
+      font-size:.8rem;
+      color:rgba(255,255,255,.88);
+      line-height:1.5;
+    }
+
+    .sidebar-tip strong{ color:#fff; display:block; margin-bottom:4px; font-size:.82rem; }
+
+    /* ── 메인 콘텐츠 ── */
     .main-content{
-      margin-left:280px;
-      padding:20px;
+      margin-left:270px;
+      padding:24px;
       display:flex;
       flex-direction:column;
       gap:20px;
     }
 
-    .header{
+    /* 헤더바 */
+    .topbar{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      padding:16px 24px;
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:16px;
-      gap:20px;
+      padding:16px 22px;
+      background:var(--panel);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      gap:16px;
+      flex-wrap:wrap;
     }
 
-    .header-title{
-      font-size:1.8rem;
-      font-weight:800;
-      letter-spacing:-0.05em;
-    }
+    .topbar-left{}
 
-    .header-date{
-      color:var(--text-2);
-      font-weight:600;
-    }
-
-    .header-action{
-      margin-left:auto;
-      display:flex;
-      gap:10px;
-    }
-
-    .btn{
-      border:none;
-      cursor:pointer;
-      border-radius:12px;
-      font-weight:700;
-      transition:.2s ease;
-      font-family:inherit;
-      font-size:.95rem;
-      padding:10px 16px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .btn-primary{
-      background:linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
-      color:#fff;
-      box-shadow:0 12px 24px rgba(99,102,241,.3);
-    }
-
-    .btn-primary:hover{
-      transform:translateY(-2px);
-      box-shadow:0 16px 32px rgba(99,102,241,.4);
-    }
-
-    .btn-secondary{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
+    .page-title{
+      font-size:1.6rem;
+      font-weight:900;
+      letter-spacing:-0.04em;
       color:var(--text);
     }
 
-    .btn-secondary:hover{
-      background:rgba(99,102,241,.1);
-      border-color:var(--primary);
+    .page-date{
+      color:var(--text-2);
+      font-weight:600;
+      font-size:.85rem;
+      margin-top:2px;
     }
 
-    .grid-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
+    .topbar-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:16px;
+    /* 버튼 */
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:var(--radius-sm);
+      font-weight:700;
+      transition:.2s ease;
+      font-family:inherit;
+      font-size:.9rem;
+      padding:10px 18px;
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      white-space:nowrap;
     }
 
+    .btn-primary{
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff;
+      box-shadow:0 6px 18px rgba(255,112,67,.35);
+    }
+
+    .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 28px rgba(255,112,67,.45); }
+
+    .btn-accent{
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#fff;
+      box-shadow:0 6px 18px rgba(255,143,0,.3);
+    }
+
+    .btn-accent:hover{ transform:translateY(-2px); }
+
+    .btn-secondary{
+      background:var(--panel-light);
+      border:1.5px solid var(--line);
+      color:var(--text);
+    }
+
+    .btn-secondary:hover{ background:var(--primary-light); border-color:var(--primary); color:var(--primary); }
+
+    .btn-ghost{
+      background:transparent;
+      color:var(--text-2);
+      padding:8px 12px;
+    }
+
+    .btn-ghost:hover{ color:var(--primary); background:var(--primary-light); }
+
+    .btn-sm{ padding:7px 13px; font-size:.82rem; border-radius:9px; }
+
+    .btn-danger{
+      background:linear-gradient(135deg, #e53935, #ef5350);
+      color:#fff;
+    }
+
+    /* ── 카드 기본 ── */
     .card{
-      background:linear-gradient(135deg, #1d2231 0%, #252d3d 100%);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:24px;
+      background:var(--panel);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius);
+      padding:22px;
       box-shadow:var(--shadow);
     }
 
     .card-title{
-      font-size:1.1rem;
-      font-weight:700;
-      margin-bottom:16px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .card-large-text{
-      font-size:2.8rem;
-      font-weight:900;
-      letter-spacing:-0.06em;
-      line-height:1;
-      margin:16px 0;
-    }
-
-    .card-sub{
-      color:var(--text-2);
-      font-size:.95rem;
-      margin-top:10px;
-    }
-
-    .progress-bar{
-      width:100%;
-      height:10px;
-      background:rgba(255,255,255,.08);
-      border-radius:999px;
-      overflow:hidden;
-      margin:12px 0;
-    }
-
-    .progress-fill{
-      height:100%;
-      background:linear-gradient(90deg, var(--primary), var(--accent));
-      border-radius:inherit;
-      transition:width .3s ease;
-    }
-
-    /* 추가 모달 */
-    .modal{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.7);
-      z-index:100;
-      align-items:center;
-      justify-content:center;
-      backdrop-filter:blur(4px);
-    }
-
-    .modal.active{
-      display:flex;
-    }
-
-    .modal-content{
-      background:linear-gradient(135deg, #1d2231 0%, #252d3d 100%);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:28px;
-      max-width:500px;
-      width:90%;
-      box-shadow:var(--shadow);
-    }
-
-    .modal-title{
-      font-size:1.6rem;
-      font-weight:800;
-      margin-bottom:20px;
-    }
-
-    .form-group{
-      margin-bottom:16px;
-    }
-
-    .form-group label{
-      display:block;
-      margin-bottom:8px;
-      font-weight:700;
-      font-size:.95rem;
-    }
-
-    .form-group input,
-    .form-group select{
-      width:100%;
-      padding:12px 14px;
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      border-radius:10px;
-      color:var(--text);
-      font-family:inherit;
-      font-size:.95rem;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus{
-      outline:none;
-      border-color:var(--primary);
-      background:rgba(99,102,241,.1);
-    }
-
-    .category-grid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:10px;
-      margin-bottom:16px;
-    }
-
-    .category-btn{
-      padding:12px;
-      background:rgba(255,255,255,.04);
-      border:2px solid transparent;
-      border-radius:12px;
-      cursor:pointer;
-      font-weight:700;
-      transition:.2s ease;
-      font-size:.9rem;
-    }
-
-    .category-btn:hover{
-      border-color:var(--primary);
-      background:rgba(99,102,241,.1);
-    }
-
-    .category-btn.active{
-      background:linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      border-color:var(--primary);
-      color:#fff;
-    }
-
-    .modal-actions{
-      display:flex;
-      gap:10px;
-      margin-top:24px;
-    }
-
-    .modal-actions button{
-      flex:1;
-    }
-
-    /* 거래 목록 */
-    .transaction-list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top:16px;
-    }
-
-    .transaction-item{
-      display:grid;
-      grid-template-columns:auto 1fr auto;
-      align-items:center;
-      gap:12px;
-      padding:12px 14px;
-      background:rgba(255,255,255,.02);
-      border:1px solid var(--line);
-      border-radius:12px;
-      transition:.2s ease;
-    }
-
-    .transaction-item:hover{
-      background:rgba(255,255,255,.04);
-      border-color:var(--primary);
-    }
-
-    .tx-icon{
-      font-size:1.3rem;
-    }
-
-    .tx-info{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-
-    .tx-title{
-      font-weight:700;
-      font-size:.95rem;
-    }
-
-    .tx-time{
-      color:var(--text-2);
-      font-size:.8rem;
-    }
-
-    .tx-amount{
-      font-weight:800;
       font-size:1rem;
-    }
-
-    .tx-plus{
-      color:var(--accent);
-    }
-
-    .tx-minus{
-      color:var(--danger);
-    }
-
-    /* 배지 */
-    .badges-grid{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:12px;
-      margin-top:16px;
-    }
-
-    .badge-item{
+      font-weight:800;
+      margin-bottom:16px;
       display:flex;
-      flex-direction:column;
       align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:16px 12px;
-      background:rgba(255,255,255,.02);
-      border:1px solid var(--line);
-      border-radius:14px;
-      text-align:center;
-      opacity:.5;
-      transition:.3s ease;
-    }
-
-    .badge-item.unlocked{
-      opacity:1;
-      background:linear-gradient(135deg, rgba(99,102,241,.15), rgba(16,185,129,.1));
-      border-color:var(--primary);
-      box-shadow:0 8px 16px rgba(99,102,241,.15);
-    }
-
-    .badge-icon{
-      font-size:2rem;
-    }
-
-    .badge-name{
-      font-size:.8rem;
-      font-weight:700;
-      color:var(--text-2);
-    }
-
-    .badge-item.unlocked .badge-name{
+      gap:9px;
       color:var(--text);
     }
 
-    /* 목표 카드 */
-    .goal-card{
-      background:linear-gradient(135deg, #1d2231 0%, #252d3d 100%);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:20px;
+    .card-title .badge-tag{
+      margin-left:auto;
+      font-size:.72rem;
+      font-weight:700;
+      padding:3px 10px;
+      border-radius:999px;
+      background:var(--primary-light);
+      color:var(--primary);
+    }
+
+    /* ── 그리드 ── */
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .grid-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+
+    /* ── 요약 카드 ── */
+    .stat-card{
+      background:var(--panel);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px 22px;
+      box-shadow:var(--shadow);
       position:relative;
       overflow:hidden;
     }
 
-    .goal-header{
+    .stat-card::before{
+      content:'';
+      position:absolute;
+      top:-30px; right:-30px;
+      width:90px; height:90px;
+      border-radius:50%;
+      opacity:.1;
+    }
+
+    .stat-card.income::before{ background:var(--green); }
+    .stat-card.expense::before{ background:var(--danger); }
+    .stat-card.saving::before{ background:var(--primary); }
+    .stat-card.goal::before{ background:var(--accent); }
+
+    .stat-label{
+      font-size:.82rem;
+      font-weight:700;
+      color:var(--text-2);
+      margin-bottom:8px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .stat-value{
+      font-size:2rem;
+      font-weight:900;
+      letter-spacing:-0.04em;
+      line-height:1;
+    }
+
+    .stat-value.income{ color:var(--green); }
+    .stat-value.expense{ color:var(--danger); }
+    .stat-value.saving{ color:var(--primary); }
+    .stat-value.goal{ color:var(--accent); }
+
+    .stat-sub{
+      margin-top:8px;
+      font-size:.78rem;
+      color:var(--text-2);
+      font-weight:600;
+    }
+
+    .stat-trend{
+      display:inline-flex;
+      align-items:center;
+      gap:3px;
+      font-weight:700;
+      font-size:.78rem;
+    }
+
+    .stat-trend.up{ color:var(--green); }
+    .stat-trend.down{ color:var(--danger); }
+
+    /* 프로그레스 */
+    .progress-bar{
+      width:100%;
+      height:9px;
+      background:var(--bg-2);
+      border-radius:999px;
+      overflow:hidden;
+      margin:10px 0;
+    }
+
+    .progress-fill{
+      height:100%;
+      border-radius:inherit;
+      transition:width .5s ease;
+    }
+
+    .progress-fill.orange{ background:linear-gradient(90deg, var(--primary), var(--accent-2)); }
+    .progress-fill.green{ background:linear-gradient(90deg, var(--green), #a5d6a7); }
+    .progress-fill.blue{ background:linear-gradient(90deg, var(--blue), #90caf9); }
+    .progress-fill.purple{ background:linear-gradient(90deg, var(--purple), #ce93d8); }
+
+    /* ── 거래 목록 ── */
+    .tx-list{ display:flex; flex-direction:column; gap:9px; }
+
+    .tx-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      background:var(--panel-light);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius-sm);
+      transition:.2s;
+      cursor:pointer;
+    }
+
+    .tx-item:hover{ border-color:var(--primary); box-shadow:0 4px 12px rgba(255,112,67,.1); }
+
+    .tx-icon-wrap{
+      width:40px; height:40px;
+      border-radius:11px;
+      display:grid;
+      place-items:center;
+      font-size:1.2rem;
+      flex-shrink:0;
+    }
+
+    .tx-icon-wrap.income{ background:var(--green-light); }
+    .tx-icon-wrap.expense{ background:var(--primary-light); }
+
+    .tx-body{ flex:1; min-width:0; }
+    .tx-name{ font-weight:700; font-size:.92rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .tx-meta{ font-size:.76rem; color:var(--text-2); margin-top:2px; font-weight:600; }
+
+    .tx-amount{
+      font-weight:800;
+      font-size:.98rem;
+      white-space:nowrap;
+    }
+
+    .tx-amount.income{ color:var(--green); }
+    .tx-amount.expense{ color:var(--danger); }
+
+    .tx-delete{
+      background:none; border:none; cursor:pointer;
+      color:var(--text-3); padding:4px; border-radius:6px;
+      font-size:1rem; transition:.2s;
+    }
+
+    .tx-delete:hover{ color:var(--danger); background:rgba(229,57,53,.1); }
+
+    /* ── 목표 카드 ── */
+    .goal-card{
+      background:var(--panel);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+      transition:.2s;
+    }
+
+    .goal-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+
+    .goal-card-header{
       display:flex;
       justify-content:space-between;
-      align-items:start;
+      align-items:flex-start;
       margin-bottom:12px;
     }
 
-    .goal-emoji{
-      font-size:2rem;
+    .goal-emoji-wrap{
+      width:50px; height:50px;
+      background:var(--primary-light);
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-size:1.8rem;
     }
 
-    .goal-status{
-      background:rgba(99,102,241,.2);
-      color:var(--primary);
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:.75rem;
-      font-weight:700;
+    .goal-status-pill{
+      font-size:.72rem; font-weight:800;
+      padding:4px 10px; border-radius:999px;
     }
 
-    .goal-name{
-      font-weight:800;
-      font-size:1.1rem;
-      margin-bottom:4px;
-    }
+    .goal-status-pill.ongoing{ background:var(--blue-light); color:var(--blue); }
+    .goal-status-pill.done{ background:var(--green-light); color:var(--green); }
+    .goal-status-pill.danger{ background:rgba(229,57,53,.1); color:var(--danger); }
 
-    .goal-desc{
-      color:var(--text-2);
-      font-size:.9rem;
-      margin-bottom:12px;
-    }
+    .goal-name{ font-weight:800; font-size:1.05rem; margin:8px 0 3px; }
+    .goal-desc{ color:var(--text-2); font-size:.82rem; font-weight:600; }
 
-    .goal-progress{
-      margin:12px 0;
-    }
-
-    .goal-meta{
+    .goal-amounts{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      color:var(--text-2);
+      margin-top:10px;
       font-size:.85rem;
       font-weight:700;
     }
 
-    .goal-amount{
-      color:var(--accent);
-      font-size:1rem;
+    .goal-current{ color:var(--primary); font-size:1rem; }
+    .goal-target{ color:var(--text-2); }
+
+    .goal-actions{
+      display:flex;
+      gap:8px;
+      margin-top:12px;
     }
 
-    /* 반응형 */
-    @media (max-width: 1200px){
-      .app-container{
-        grid-template-columns:1fr;
-      }
+    /* ── 배지 ── */
+    .badges-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:4px; }
 
-      .sidebar{
-        position:relative;
-        width:100%;
-        height:auto;
-        flex-direction:row;
-        border-right:none;
-        border-bottom:1px solid var(--line);
-      }
-
-      .main-content{
-        margin-left:0;
-      }
-
-      .grid-2, .grid-3{
-        grid-template-columns:1fr;
-      }
-
-      .header{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-
-      .header-action{
-        margin-left:0;
-      }
+    .badge-card{
+      display:flex; flex-direction:column;
+      align-items:center; gap:7px;
+      padding:16px 10px;
+      background:var(--panel-light);
+      border:1.5px solid var(--line);
+      border-radius:14px;
+      text-align:center;
+      opacity:.45;
+      transition:.3s;
+      cursor:default;
     }
 
-    @media (max-width: 768px){
-      .app-container{
-        gap:0;
-      }
+    .badge-card.unlocked{
+      opacity:1;
+      background:linear-gradient(135deg, #fff8f0, #fff3e0);
+      border-color:var(--accent-2);
+      box-shadow:0 4px 14px rgba(255,143,0,.18);
+    }
 
+    .badge-card.unlocked:hover{ transform:translateY(-3px); }
+
+    .badge-emoji{ font-size:2rem; }
+    .badge-name{ font-size:.75rem; font-weight:800; color:var(--text-2); }
+    .badge-card.unlocked .badge-name{ color:var(--text); }
+    .badge-desc{ font-size:.65rem; color:var(--text-3); font-weight:600; }
+
+    /* ── 절약 비교기 ── */
+    .compare-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
+      gap:12px;
+      margin-top:4px;
+    }
+
+    .compare-item{
+      background:var(--panel-light);
+      border:1.5px solid var(--line);
+      border-radius:14px;
+      padding:14px 12px;
+      text-align:center;
+      transition:.2s;
+      cursor:pointer;
+      position:relative;
+    }
+
+    .compare-item:hover{ border-color:var(--primary); background:var(--primary-light); }
+
+    .compare-item.affordable{
+      border-color:var(--green);
+      background:var(--green-light);
+    }
+
+    .compare-item.affordable .compare-status{ color:var(--green); }
+
+    .compare-item.not-affordable .compare-emoji{ opacity:.35; }
+
+    .compare-emoji{ font-size:2.2rem; margin-bottom:6px; display:block; }
+    .compare-name{ font-size:.82rem; font-weight:800; color:var(--text); margin-bottom:3px; }
+    .compare-price{ font-size:.78rem; color:var(--text-2); font-weight:700; margin-bottom:5px; }
+    .compare-status{ font-size:.75rem; font-weight:800; }
+
+    .compare-tag{
+      position:absolute; top:8px; right:8px;
+      background:var(--green); color:#fff;
+      font-size:.62rem; font-weight:800;
+      padding:2px 7px; border-radius:999px;
+    }
+
+    .savings-input-area{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+
+    .savings-input-area label{
+      font-weight:700; font-size:.92rem; color:var(--text); white-space:nowrap;
+    }
+
+    .savings-input-area input{
+      border:2px solid var(--line);
+      border-radius:10px;
+      padding:9px 14px;
+      font-size:.95rem;
+      font-family:inherit;
+      font-weight:700;
+      color:var(--text);
+      background:var(--panel-light);
+      width:180px;
+      transition:.2s;
+    }
+
+    .savings-input-area input:focus{
+      outline:none; border-color:var(--primary); background:#fff;
+    }
+
+    .savings-summary{
+      background:linear-gradient(135deg, var(--primary), var(--accent));
+      color:#fff;
+      border-radius:14px;
+      padding:16px 20px;
+      font-weight:700;
+      font-size:.92rem;
+      margin-bottom:16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .savings-summary .big{ font-size:1.4rem; font-weight:900; }
+
+    /* ── 필수지출 ── */
+    .essential-list{ display:flex; flex-direction:column; gap:10px; }
+
+    .essential-item{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:14px 16px;
+      background:var(--panel-light);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius-sm);
+      transition:.2s;
+    }
+
+    .essential-item.paid{
+      background:var(--green-light);
+      border-color:#a5d6a7;
+    }
+
+    .essential-item.paid .ess-name{ text-decoration:line-through; color:var(--text-2); }
+
+    .essential-icon{
+      width:40px; height:40px;
+      background:var(--primary-light);
+      border-radius:11px;
+      display:grid; place-items:center;
+      font-size:1.2rem; flex-shrink:0;
+    }
+
+    .essential-item.paid .essential-icon{ background:var(--green-light); }
+
+    .ess-body{ flex:1; }
+    .ess-name{ font-weight:700; font-size:.92rem; }
+    .ess-meta{ font-size:.75rem; color:var(--text-2); font-weight:600; margin-top:2px; }
+    .ess-amount{ font-weight:800; font-size:.95rem; color:var(--primary); white-space:nowrap; }
+
+    .ess-paid-btn{
+      background:none; border:1.5px solid var(--line);
+      border-radius:8px; padding:5px 10px;
+      font-size:.76rem; font-weight:700;
+      cursor:pointer; transition:.2s;
+      color:var(--text-2); font-family:inherit;
+      white-space:nowrap;
+    }
+
+    .ess-paid-btn:hover{ background:var(--green-light); border-color:var(--green); color:var(--green); }
+    .essential-item.paid .ess-paid-btn{ background:var(--green); color:#fff; border-color:var(--green); }
+
+    .essential-total{
+      background:linear-gradient(135deg, var(--primary-light), var(--accent-light));
+      border:1.5px solid var(--line);
+      border-radius:var(--radius-sm);
+      padding:14px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    .essential-total .total-val{ font-size:1.2rem; font-weight:900; color:var(--primary); }
+
+    /* ── 청년지원정책 ── */
+    .policy-filters{
+      display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;
+    }
+
+    .filter-chip{
+      padding:7px 15px;
+      background:var(--panel-light);
+      border:1.5px solid var(--line);
+      border-radius:999px;
+      font-size:.82rem; font-weight:700;
+      cursor:pointer; transition:.2s;
+      color:var(--text-2);
+    }
+
+    .filter-chip:hover{ border-color:var(--primary); color:var(--primary); }
+    .filter-chip.active{ background:var(--primary); color:#fff; border-color:var(--primary); }
+
+    .policy-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:16px; }
+
+    .policy-card{
+      background:var(--panel);
+      border:1.5px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow);
+      transition:.2s;
+    }
+
+    .policy-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lg); border-color:var(--primary); }
+
+    .policy-card-top{
+      display:flex; align-items:flex-start; gap:12px; margin-bottom:12px;
+    }
+
+    .policy-icon-wrap{
+      width:44px; height:44px;
+      border-radius:12px;
+      display:grid; place-items:center;
+      font-size:1.5rem; flex-shrink:0;
+    }
+
+    .policy-icon-wrap.savings{ background:var(--green-light); }
+    .policy-icon-wrap.loan{ background:var(--blue-light); }
+    .policy-icon-wrap.housing{ background:var(--purple-light); }
+    .policy-icon-wrap.job{ background:var(--accent-light); }
+    .policy-icon-wrap.education{ background:rgba(30,136,229,.1); }
+
+    .policy-info{ flex:1; }
+
+    .policy-name{ font-weight:800; font-size:1rem; margin-bottom:3px; }
+    .policy-org{ font-size:.76rem; color:var(--text-2); font-weight:700; }
+
+    .policy-cat-tag{
+      font-size:.68rem; font-weight:800;
+      padding:3px 9px; border-radius:999px;
+      margin-left:auto; flex-shrink:0;
+    }
+
+    .policy-cat-tag.savings{ background:var(--green-light); color:var(--green); }
+    .policy-cat-tag.loan{ background:var(--blue-light); color:var(--blue); }
+    .policy-cat-tag.housing{ background:var(--purple-light); color:var(--purple); }
+    .policy-cat-tag.job{ background:var(--accent-light); color:var(--accent); }
+    .policy-cat-tag.education{ background:rgba(30,136,229,.1); color:var(--blue); }
+
+    .policy-desc{
+      font-size:.82rem; color:var(--text-2); line-height:1.6;
+      margin-bottom:12px; font-weight:500;
+    }
+
+    .policy-highlights{
+      display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px;
+    }
+
+    .policy-highlight-tag{
+      font-size:.72rem; font-weight:700;
+      padding:3px 10px; border-radius:999px;
+      background:var(--bg-2); color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .policy-actions{ display:flex; gap:8px; align-items:center; }
+
+    .policy-link{
+      display:inline-flex; align-items:center; gap:5px;
+      background:var(--primary);
+      color:#fff;
+      padding:7px 14px;
+      border-radius:9px;
+      font-size:.8rem; font-weight:700;
+      text-decoration:none;
+      transition:.2s;
+    }
+
+    .policy-link:hover{ background:var(--primary-2); transform:translateY(-1px); }
+
+    .policy-link.secondary{
+      background:var(--panel-light);
+      color:var(--text);
+      border:1.5px solid var(--line);
+    }
+
+    .policy-link.secondary:hover{ border-color:var(--primary); color:var(--primary); }
+
+    .policy-age-badge{
+      margin-left:auto;
+      font-size:.72rem; font-weight:700;
+      padding:4px 10px; border-radius:999px;
+      background:var(--primary-light); color:var(--primary);
+    }
+
+    /* ── 모달 ── */
+    .modal{
+      display:none; position:fixed; inset:0;
+      background:rgba(45,30,15,.5);
+      z-index:200; align-items:center; justify-content:center;
+      backdrop-filter:blur(6px);
+    }
+
+    .modal.active{ display:flex; }
+
+    .modal-box{
+      background:var(--panel);
+      border:1.5px solid var(--line);
+      border-radius:22px;
+      padding:28px;
+      max-width:460px; width:92%;
+      box-shadow:var(--shadow-lg);
+      max-height:90vh; overflow-y:auto;
+    }
+
+    .modal-title{
+      font-size:1.5rem; font-weight:900;
+      letter-spacing:-0.04em; margin-bottom:20px;
+      display:flex; align-items:center; gap:10px;
+    }
+
+    .form-group{ margin-bottom:14px; }
+
+    .form-group label{
+      display:block; margin-bottom:7px;
+      font-weight:700; font-size:.88rem; color:var(--text);
+    }
+
+    .form-input{
+      width:100%; padding:11px 14px;
+      background:var(--panel-light);
+      border:1.5px solid var(--line);
+      border-radius:10px;
+      color:var(--text); font-family:inherit; font-size:.93rem;
+      transition:.2s;
+    }
+
+    .form-input:focus{
+      outline:none; border-color:var(--primary);
+      background:#fff; box-shadow:0 0 0 3px rgba(255,112,67,.12);
+    }
+
+    .cat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:14px; }
+
+    .cat-btn{
+      padding:10px 6px;
+      background:var(--panel-light);
+      border:2px solid var(--line);
+      border-radius:10px; cursor:pointer;
+      font-weight:700; font-size:.85rem;
+      transition:.2s; color:var(--text);
+      font-family:inherit;
+    }
+
+    .cat-btn:hover{ border-color:var(--primary); background:var(--primary-light); }
+    .cat-btn.active{ background:linear-gradient(135deg, var(--primary), var(--accent-2)); border-color:var(--primary); color:#fff; }
+
+    .modal-actions{ display:flex; gap:10px; margin-top:22px; }
+    .modal-actions .btn{ flex:1; justify-content:center; }
+
+    /* ── 알림 토스트 ── */
+    .toast-container{
+      position:fixed; bottom:24px; right:24px;
+      display:flex; flex-direction:column; gap:10px;
+      z-index:300;
+    }
+
+    .toast{
+      background:var(--panel);
+      border:1.5px solid var(--line);
+      border-radius:14px;
+      padding:14px 18px;
+      box-shadow:var(--shadow-lg);
+      display:flex; align-items:center; gap:12px;
+      font-weight:700; font-size:.9rem;
+      animation:slideIn .3s ease;
+      max-width:320px;
+    }
+
+    .toast.success{ border-color:var(--green); }
+    .toast.warning{ border-color:var(--accent); }
+    .toast.error{ border-color:var(--danger); }
+
+    @keyframes slideIn{
+      from{ opacity:0; transform:translateX(30px); }
+      to{ opacity:1; transform:translateX(0); }
+    }
+
+    /* ── 빈 상태 ── */
+    .empty-state{
+      text-align:center; padding:40px 20px;
+      color:var(--text-2);
+    }
+
+    .empty-state .empty-icon{ font-size:3rem; margin-bottom:12px; display:block; }
+    .empty-state p{ font-weight:600; font-size:.92rem; }
+
+    /* ── 탭 내부 서브탭 ── */
+    .sub-tabs{
+      display:flex; gap:6px;
+      background:var(--bg-2);
+      border-radius:12px; padding:5px;
+      margin-bottom:18px;
+    }
+
+    .sub-tab{
+      flex:1; padding:9px; text-align:center;
+      border-radius:9px; cursor:pointer;
+      font-weight:700; font-size:.84rem;
+      transition:.2s; color:var(--text-2);
+    }
+
+    .sub-tab.active{
+      background:var(--panel);
+      color:var(--primary);
+      box-shadow:var(--shadow);
+    }
+
+    /* 캘린더 미니 */
+    .mini-calendar{
+      display:grid; grid-template-columns:repeat(7,1fr);
+      gap:4px; margin-top:10px;
+    }
+
+    .cal-day{
+      aspect-ratio:1; border-radius:8px;
+      display:grid; place-items:center;
+      font-size:.76rem; font-weight:700;
+      cursor:pointer; transition:.2s;
+    }
+
+    .cal-day.header{ color:var(--text-2); cursor:default; font-size:.7rem; }
+    .cal-day:not(.header):not(.empty):hover{ background:var(--primary-light); color:var(--primary); }
+    .cal-day.today{ background:var(--primary); color:#fff; }
+    .cal-day.has-tx{ position:relative; }
+    .cal-day.has-tx::after{
+      content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%);
+      width:4px; height:4px; border-radius:50%; background:var(--accent);
+    }
+
+    .cal-day.empty{ pointer-events:none; }
+
+    /* 스크롤바 */
+    ::-webkit-scrollbar{ width:6px; height:6px; }
+    ::-webkit-scrollbar-track{ background:var(--bg-2); border-radius:3px; }
+    ::-webkit-scrollbar-thumb{ background:var(--primary-2); border-radius:3px; }
+
+    /* ── 반응형 ── */
+    @media(max-width:1100px){
+      .app-container{ grid-template-columns:1fr; }
       .sidebar{
-        flex-direction:column;
-        gap:12px;
+        position:relative; width:100%; height:auto;
+        flex-direction:row; flex-wrap:wrap;
+        padding:14px 16px;
       }
+      .main-content{ margin-left:0; }
+      .sidebar .user-profile{ display:none; }
+      .sidebar .nav-section-label{ display:none; }
+      .nav-menu{ flex-direction:row; gap:6px; overflow-x:auto; }
+      .nav-item{ padding:9px 12px; white-space:nowrap; flex:0 0 auto; }
+      .logo-area{ margin-right:auto; }
+      .grid-2{ grid-template-columns:1fr; }
+    }
 
-      .nav-menu{
-        flex-direction:row;
-        overflow-x:auto;
-      }
-
-      .nav-item{
-        white-space:nowrap;
-        flex:0 0 auto;
-      }
-
-      .user-profile{
-        display:none;
-      }
-
-      .badges-grid{
-        grid-template-columns:repeat(3, 1fr);
-      }
-
-      .header-action{
-        flex-direction:column;
-      }
+    @media(max-width:640px){
+      .main-content{ padding:14px; }
+      .grid-3, .grid-4{ grid-template-columns:1fr 1fr; }
+      .badges-grid{ grid-template-columns:repeat(3,1fr); }
+      .compare-grid{ grid-template-columns:repeat(2,1fr); }
+      .topbar{ flex-direction:column; align-items:flex-start; }
+      .sidebar-tip{ display:none; }
     }
   </style>
 </head>
 <body>
-  <div class="app-container">
-    <!-- 사이드바 -->
-    <aside class="sidebar">
-      <div class="logo-area">
-        <div class="logo-icon">₩</div>
+
+<div class="app-container">
+
+  <!-- ── 사이드바 ── -->
+  <aside class="sidebar">
+    <div class="logo-area">
+      <div class="logo-icon">🌱</div>
+      <div>
         <div class="logo-text">용돈플래너</div>
+        <div class="logo-sub">스마트 머니 트래커</div>
       </div>
+    </div>
 
-      <div class="user-profile">
-        <div class="user-level">🏅</div>
-        <div class="user-name">Level <span id="userLevel">5</span></div>
-        <div class="user-stat">
-          <div>
-            <div class="user-stat-val" id="totalSaved">₩12.5M</div>
-            <div class="user-stat-label">저축</div>
-          </div>
-          <div>
-            <div class="user-stat-val" id="streak">15</div>
-            <div class="user-stat-label">일 스트릭</div>
-          </div>
-          <div>
-            <div class="user-stat-val" id="badges">8</div>
-            <div class="user-stat-label">배지</div>
-          </div>
+    <div class="user-profile">
+      <div class="user-avatar">🧑</div>
+      <div class="user-name" id="sideUserName">나의 가계부</div>
+      <div class="user-level-badge">Lv.<span id="sideLevel">5</span> 절약 챌린저</div>
+      <div class="user-stat">
+        <div class="user-stat-item">
+          <div class="user-stat-val" id="sideStreak">15</div>
+          <div class="user-stat-label">일 스트릭</div>
         </div>
-      </div>
-
-      <nav class="nav-menu">
-        <div class="nav-item active" onclick="switchTab('dashboard')">
-          <span>📊</span>
-          <span>대시보드</span>
+        <div class="user-stat-item">
+          <div class="user-stat-val" id="sideBadges">8</div>
+          <div class="user-stat-label">배지</div>
         </div>
-        <div class="nav-item" onclick="switchTab('transactions')">
-          <span>💳</span>
-          <span>거래내역</span>
-        </div>
-        <div class="nav-item" onclick="switchTab('goals')">
-          <span>🎯</span>
-          <span>목표</span>
-        </div>
-        <div class="nav-item" onclick="switchTab('badges')">
-          <span>🏆</span>
-          <span>배지</span>
-        </div>
-      </nav>
-    </aside>
-
-    <!-- 메인 콘텐츠 -->
-    <div class="main-content">
-      <div class="header">
-        <div>
-          <div class="header-title" id="pageTitle">대시보드</div>
-          <div class="header-date" id="currentDate"></div>
-        </div>
-        <div class="header-action">
-          <button class="btn btn-secondary" onclick="openAddModal()">📥 수입 추가</button>
-          <button class="btn btn-primary" onclick="openExpenseModal()">➕ 지출 추가</button>
+        <div class="user-stat-item">
+          <div class="user-stat-val" id="sideGoals">3</div>
+          <div class="user-stat-label">목표</div>
         </div>
       </div>
+    </div>
 
-      <!-- 대시보드 탭 -->
-      <div id="dashboard-tab">
-        <div class="grid-2">
-          <div class="card">
-            <div class="card-title">💰 이번 달 수입</div>
-            <div class="card-large-text" id="monthIncome">₩0</div>
-            <div class="card-sub">vs 지난달 <span style="color:var(--accent)">+₩50,000</span></div>
-          </div>
+    <div class="nav-section-label">메뉴</div>
+    <nav class="nav-menu">
+      <div class="nav-item active" onclick="switchTab('dashboard',this)">
+        <span class="nav-icon">📊</span>
+        <span>대시보드</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('transactions',this)">
+        <span class="nav-icon">💳</span>
+        <span>거래내역</span>
+        <span class="nav-badge" id="txBadge">0</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('goals',this)">
+        <span class="nav-icon">🎯</span>
+        <span>목표</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('essential',this)">
+        <span class="nav-icon">📋</span>
+        <span>필수지출</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('compare',this)">
+        <span class="nav-icon">🛒</span>
+        <span>절약비교</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('policy',this)">
+        <span class="nav-icon">🏛️</span>
+        <span>청년지원정책</span>
+        <span class="nav-badge" style="background:rgba(255,255,255,.5);">NEW</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('badges',this)">
+        <span class="nav-icon">🏆</span>
+        <span>배지</span>
+      </div>
+    </nav>
 
-          <div class="card">
-            <div class="card-title">🧾 이번 달 지출</div>
-            <div class="card-large-text" id="monthExpense">₩0</div>
-            <div class="card-sub">vs 지난달 <span style="color:var(--danger)">-₩30,000</span></div>
-          </div>
+    <div class="sidebar-tip">
+      <strong>💡 오늘의 팁</strong>
+      <span id="dailyTip">점심 직접 싸오면 한 달 ₩10만 절약 가능!</span>
+    </div>
+  </aside>
+
+  <!-- ── 메인 콘텐츠 ── -->
+  <div class="main-content">
+
+    <!-- 상단 바 -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="page-title" id="pageTitle">📊 대시보드</div>
+        <div class="page-date" id="currentDate"></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" onclick="openModal('incomeModal')">📥 수입</button>
+        <button class="btn btn-primary" onclick="openModal('expenseModal')">➕ 지출</button>
+      </div>
+    </div>
+
+    <!-- ─── 대시보드 탭 ─── -->
+    <div id="dashboard-tab">
+      <div class="grid-4" style="margin-bottom:20px;">
+        <div class="stat-card income">
+          <div class="stat-label">💚 이번 달 수입</div>
+          <div class="stat-value income" id="monthIncome">₩0</div>
+          <div class="stat-sub">저번 달 대비 <span class="stat-trend up" id="incomeTrend">–</span></div>
         </div>
+        <div class="stat-card expense">
+          <div class="stat-label">🔴 이번 달 지출</div>
+          <div class="stat-value expense" id="monthExpense">₩0</div>
+          <div class="stat-sub">저번 달 대비 <span class="stat-trend down" id="expenseTrend">–</span></div>
+        </div>
+        <div class="stat-card saving">
+          <div class="stat-label">🟠 이번 달 저축</div>
+          <div class="stat-value saving" id="monthSaving">₩0</div>
+          <div class="stat-sub">저축률 <strong id="savingRate">0%</strong></div>
+        </div>
+        <div class="stat-card goal">
+          <div class="stat-label">🟡 목표 달성률</div>
+          <div class="stat-value goal" id="goalRate">0%</div>
+          <div class="stat-sub"><span id="goalCount">0</span>개 목표 진행 중</div>
+        </div>
+      </div>
 
-        <div class="grid-2">
-          <div class="card">
-            <div class="card-title">📈 저축률</div>
-            <div class="card-large-text" id="savingRate">0%</div>
-            <div class="progress-bar">
-              <div class="progress-fill" id="savingBarFill" style="width:45%"></div>
-            </div>
-            <div class="card-sub">목표: 60% 📍 <span style="color:var(--danger)">15% 부족</span></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">📈 저축률 현황
+            <span class="badge-tag" id="savingRateTag">0%</span>
           </div>
-
-          <div class="card">
-            <div class="card-title">🎯 목표 진행률</div>
-            <div class="card-large-text" id="goalProgress">0%</div>
-            <div class="progress-bar">
-              <div class="progress-fill" id="goalBarFill" style="width:65%"></div>
-            </div>
-            <div class="card-sub">2개 목표 진행 중 · 1개 달성!</div>
+          <div class="progress-bar">
+            <div class="progress-fill orange" id="savingBarFill" style="width:0%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.8rem;font-weight:700;color:var(--text-2);">
+            <span>0%</span><span>목표: 50%</span><span>100%</span>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="card-title" style="font-size:.9rem;margin-bottom:10px;">🔥 카테고리별 지출</div>
+            <div id="categoryBreakdown" style="display:flex;flex-direction:column;gap:8px;"></div>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-title">📋 최근 거래</div>
-          <div class="transaction-list" id="recentTransactions"></div>
+          <div class="card-title">📅 이번 달 캘린더
+            <span class="badge-tag" id="calMonthLabel"></span>
+          </div>
+          <div class="mini-calendar" id="miniCal"></div>
         </div>
       </div>
 
-      <!-- 거래내역 탭 -->
-      <div id="transactions-tab" style="display:none;">
+      <div class="card" style="margin-top:20px;">
+        <div class="card-title">📋 최근 거래 <span class="badge-tag" id="recentCount">0건</span></div>
+        <div class="tx-list" id="recentTransactions">
+          <div class="empty-state">
+            <span class="empty-icon">💸</span>
+            <p>아직 거래 기록이 없어요. 수입이나 지출을 추가해보세요!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 거래내역 탭 ─── -->
+    <div id="transactions-tab" style="display:none;">
+      <div class="card">
+        <div class="card-title">💳 전체 거래 기록</div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+          <select class="form-input" style="width:auto;" id="txFilterType" onchange="renderAllTx()">
+            <option value="all">전체</option>
+            <option value="income">수입만</option>
+            <option value="expense">지출만</option>
+          </select>
+          <select class="form-input" style="width:auto;" id="txFilterCat" onchange="renderAllTx()">
+            <option value="all">모든 카테고리</option>
+          </select>
+        </div>
+        <div class="tx-list" id="allTransactions"></div>
+      </div>
+    </div>
+
+    <!-- ─── 목표 탭 ─── -->
+    <div id="goals-tab" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+        <div style="font-weight:700;color:var(--text-2);font-size:.9rem;">🎯 저축 목표를 설정하고 달성해보세요!</div>
+        <button class="btn btn-primary" onclick="openModal('goalModal')">✨ 새 목표 추가</button>
+      </div>
+      <div class="grid-3" id="goalsGrid">
+        <div class="empty-state" style="grid-column:1/-1;">
+          <span class="empty-icon">🎯</span>
+          <p>아직 목표가 없어요. 첫 목표를 만들어보세요!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 필수지출 탭 ─── -->
+    <div id="essential-tab" style="display:none;">
+      <div class="grid-2">
         <div class="card">
-          <div class="card-title">모든 거래 기록</div>
-          <div class="transaction-list" id="allTransactions"></div>
+          <div class="card-title">📋 이번 달 필수지출 목록
+            <span class="badge-tag" id="essentialPaidBadge">0/0</span>
+          </div>
+          <div class="essential-total">
+            <div>
+              <div style="font-size:.8rem;color:var(--text-2);font-weight:600;margin-bottom:3px;">총 필수지출 예산</div>
+              <div class="total-val" id="essentialTotalAmt">₩0</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:.8rem;color:var(--text-2);font-weight:600;margin-bottom:3px;">남은 금액</div>
+              <div style="font-size:1.1rem;font-weight:900;color:var(--green);" id="essentialLeftAmt">₩0</div>
+            </div>
+          </div>
+          <div class="essential-list" id="essentialList"></div>
+          <button class="btn btn-secondary btn-sm" style="margin-top:14px;width:100%;" onclick="openModal('essentialModal')">+ 필수지출 항목 추가</button>
         </div>
-      </div>
 
-      <!-- 목표 탭 -->
-      <div id="goals-tab" style="display:none;">
-        <button class="btn btn-primary" onclick="openGoalModal()" style="margin-bottom:20px;">
-          ✨ 새 목표 추가
-        </button>
-        <div class="grid-3" id="goalsGrid"></div>
-      </div>
-
-      <!-- 배지 탭 -->
-      <div id="badges-tab" style="display:none;">
         <div class="card">
-          <div class="card-title">🏆 나의 배지</div>
-          <div class="badges-grid" id="badgesGrid"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 지출 추가 모달 -->
-  <div class="modal" id="expenseModal">
-    <div class="modal-content">
-      <div class="modal-title">💳 지출 기록하기</div>
-      <div class="form-group">
-        <label>카테고리 선택</label>
-        <div class="category-grid">
-          <button class="category-btn" onclick="selectCategory(this, '음식')">🍔 음식</button>
-          <button class="category-btn" onclick="selectCategory(this, '교통')">🚗 교통</button>
-          <button class="category-btn" onclick="selectCategory(this, '쇼핑')">🛍️ 쇼핑</button>
-          <button class="category-btn" onclick="selectCategory(this, '오락')">🎮 오락</button>
-          <button class="category-btn" onclick="selectCategory(this, '학용')">📚 학용</button>
-          <button class="category-btn" onclick="selectCategory(this, '기타')">📌 기타</button>
-        </div>
-        <input type="hidden" id="selectedCategory" value="">
-      </div>
-      <div class="form-group">
-        <label>금액</label>
-        <input type="number" id="expenseAmount" placeholder="0" min="0">
-      </div>
-      <div class="form-group">
-        <label>메모</label>
-        <input type="text" id="expenseMemo" placeholder="뭘 샀나요?">
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModals()">취소</button>
-        <button class="btn btn-primary" onclick="addExpense()">추가</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 수입 추가 모달 -->
-  <div class="modal" id="incomeModal">
-    <div class="modal-content">
-      <div class="modal-title">📥 수입 기록하기</div>
-      <div class="form-group">
-        <label>수입원</label>
-        <input type="text" id="incomeSource" placeholder="용돈, 아르바이트, 등등">
-      </div>
-      <div class="form-group">
-        <label>금액</label>
-        <input type="number" id="incomeAmount" placeholder="0" min="0">
-      </div>
-      <div class="form-group">
-        <label>메모</label>
-        <input type="text" id="incomeMemo" placeholder="어디서 받았나요?">
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModals()">취소</button>
-        <button class="btn btn-primary" onclick="addIncome()">추가</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 목표 추가 모달 -->
-  <div class="modal" id="goalModal">
-    <div class="modal-content">
-      <div class="modal-title">🎯 새 목표 만들기</div>
-      <div class="form-group">
-        <label>목표 이름</label>
-        <input type="text" id="goalName" placeholder="예: 게임기 구매">
-      </div>
-      <div class="form-group">
-        <label>목표 금액</label>
-        <input type="number" id="goalAmount" placeholder="0" min="0">
-      </div>
-      <div class="form-group">
-        <label>목표 기간 (개월)</label>
-        <input type="number" id="goalMonths" placeholder="3" min="1">
-      </div>
-      <div class="form-group">
-        <label>이모지 선택</label>
-        <div class="category-grid">
-          <button class="category-btn" onclick="selectGoalEmoji(this, '🎮')">🎮</button>
-          <button class="category-btn" onclick="selectGoalEmoji(this, '📱')">📱</button>
-          <button class="category-btn" onclick="selectGoalEmoji(this, '🎧')">🎧</button>
-          <button class="category-btn" onclick="selectGoalEmoji(this, '✈️')">✈️</button>
-          <button class="category-btn" onclick="selectGoalEmoji(this, '🏠')">🏠</button>
-          <button class="category-btn" onclick="selectGoalEmoji(this, '📚')">📚</button>
-        </div>
-        <input type="hidden" id="selectedEmoji" value="🎮">
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModals()">취소</button>
-        <button class="btn btn-primary" onclick="addGoal()">만들기</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // 데이터 저장소
-    let appData = {
-      level: 5,
-      exp: 250,
-      streak: 15,
-      totalSaved: 12500000,
-      transactions: [],
-      goals: [],
-      badges: [
-        { name: '시작', emoji: '🚀', unlocked: true },
-        { name: '저축왕', emoji: '💰', unlocked: true },
-        { name: '연속기록', emoji: '🔥', unlocked: true },
-        { name: '목표달성', emoji: '🎯', unlocked: true },
-        { name: '100만원', emoji: '💎', unlocked: true },
-        { name: '매일기록', emoji: '📅', unlocked: true },
-        { name: '500만원', emoji: '👑', unlocked: true },
-        { name: '배짱', emoji: '🦾', unlocked: true },
-        { name: '미래', emoji: '🌟', unlocked: false },
-        { name: '고수', emoji: '🧙', unlocked: false },
-        { name: '부자', emoji: '🤑', unlocked: false },
-        { name: '전설', emoji: '⭐', unlocked: false },
-      ]
-    };
-
-    // 초기 데이터
-    const sampleData = [
-      { type: 'expense', category: '음식', amount: 18000, memo: '점심', date: new Date(2024, 9, 12) },
-      { type: 'income', category: '용돈', amount: 50000, memo: '엄마한테 받음', date: new Date(2024, 9, 12) },
-      { type: 'expense', category: '쇼핑', amount: 45000, memo: '옷 구매', date: new Date(2024, 9, 11) },
-      { type: 'expense', category: '오락', amount: 15000, memo: '게임', date: new Date(2024, 9, 11) },
-      { type: 'income', category: '아르바이트', amount: 150000, memo: '카페 알바', date: new Date(2024, 9, 10) },
-      { type: 'expense', category: '음식', amount: 12000, memo: '저녁', date: new Date(2024, 9, 10) },
-    ];
-
-    const sampleGoals = [
-      { emoji: '🎮', name: '게임기', amount: 500000, current: 340000, deadline: 3 },
-      { emoji: '✈️', name: '여행', amount: 1500000, current: 780000, deadline: 5 },
-      { emoji: '📱', name: '핸드폰', amount: 1000000, current: 650000, deadline: 4 },
-    ];
-
-    appData.transactions = sampleData;
-    appData.goals = sampleGoals;
-
-    // 날짜 포맷팅
-    function formatDate(date) {
-      const today = new Date();
-      const d = new Date(date);
-      const diff = today - d;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-      if (days === 0) return '오늘';
-      if (days === 1) return '어제';
-      if (days < 7) return `${days}일 전`;
-      return d.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
-    }
-
-    function getCategoryEmoji(category) {
-      const map = {
-        '음식': '🍔',
-        '교통': '🚗',
-        '쇼핑': '🛍️',
-        '오락': '🎮',
-        '학용': '📚',
-        '용돈': '💰',
-        '아르바이트': '💼',
-        '기타': '📌'
-      };
-      return map[category] || '📌';
-    }
-
-    function updateUI() {
-      // 수입/지출 계산
-      const now = new Date();
-      const currentMonth = now.getMonth();
-      const currentYear = now.getFullYear();
-
-      const monthTransactions = appData.transactions.filter(t => {
-        const d = new Date(t.date);
-        return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
-      });
-
-      const income = monthTransactions
-        .filter(t => t.type === 'income')
-        .reduce((sum, t) => sum + t.amount, 0);
-
-      const expense = monthTransactions
-        .filter(t => t.type === 'expense')
-        .reduce((sum, t) => sum + t.amount, 0);
-
-      const saving = income - expense;
-      const savingRate = income > 0 ? Math.round((saving / income) * 100) : 0;
-
-      // DOM 업데이트
-      document.getElementById('monthIncome').textContent = `₩${income.toLocaleString()}`;
-      document.getElementById('monthExpense').textContent = `₩${expense.toLocaleString()}`;
-      document.getElementById('savingRate').textContent = `${savingRate}%`;
-      document.getElementById('savingBarFill').style.width = `${Math.min(savingRate, 100)}%`;
-
-      // 목표 진행률
-      const totalGoal = appData.goals.reduce((sum, g) => sum + g.current, 0);
-      const totalGoalAmount = appData.goals.reduce((sum, g) => sum + g.amount, 0);
-      const goalRate = totalGoalAmount > 0 ? Math.round((totalGoal / totalGoalAmount) * 100) : 0;
-      document.getElementById('goalProgress').textContent = `${goalRate}%`;
-      document.getElementById('goalBarFill').style.width = `${Math.min(goalRate, 100)}%`;
-
-      // 레벨/통계
-      document.getElementById('userLevel').textContent = appData.level;
-      document.getElementById('totalSaved').textContent = `₩${(appData.totalSaved / 1000000).toFixed(1)}M`;
-      document.getElementById('streak').textContent = appData.streak;
-      document.getElementById('badges').textContent = appData.badges.filter(b => b.unlocked).length;
-
-      // 날짜
-      const today = new Date();
-      document.getElementById('currentDate').textContent = today.toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      });
-
-      // 거래 목록
-      updateTransactionList();
-      updateGoalsList();
-      updateBadges();
-    }
-
-    function updateTransactionList(allTx = false) {
-      const list = allTx ? appData.transactions : appData.transactions.slice(0, 5);
-      const container = allTx ? document.getElementById('allTransactions') : document.getElementById('recentTransactions');
-
-      container.innerHTML = list.map(tx => `
-        <div class="transaction-item">
-          <div class="tx-icon">${getCategoryEmoji(tx.category)}</div>
-          <div class="tx-info">
-            <div class="tx-title">${tx.memo || tx.category}</div>
-            <div class="tx-time">${formatDate(tx.date)}</div>
-          </div>
-          <div class="tx-amount ${tx.type === 'income' ? 'tx-plus' : 'tx-minus'}">
-            ${tx.type === 'income' ? '+' : '-'}₩${tx.amount.toLocaleString()}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function updateGoalsList() {
-      const container = document.getElementById('goalsGrid');
-      container.innerHTML = appData.goals.map(goal => {
-        const progress = Math.round((goal.current / goal.amount) * 100);
-        return `
-          <div class="goal-card">
-            <div class="goal-header">
-              <div class="goal-emoji">${goal.emoji}</div>
-              <div class="goal-status">${progress}%</div>
+          <div class="card-title">💡 필수지출 가이드</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:var(--primary-light);border-radius:12px;padding:14px 16px;">
+              <div style="font-weight:800;font-size:.92rem;color:var(--primary);margin-bottom:5px;">🏠 주거 & 생활</div>
+              <div style="font-size:.82rem;color:var(--text-2);line-height:1.6;font-weight:500;">월세, 관리비, 전기/가스/수도 요금 등 고정 비용은 반드시 먼저 예산에 반영해요.</div>
             </div>
-            <div class="goal-name">${goal.name}</div>
-            <div class="goal-desc">목표금액: ₩${goal.amount.toLocaleString()}</div>
-            <div class="goal-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" style="width:${progress}%"></div>
-              </div>
+            <div style="background:var(--accent-light);border-radius:12px;padding:14px 16px;">
+              <div style="font-weight:800;font-size:.92rem;color:var(--accent);margin-bottom:5px;">📱 통신 & 교통</div>
+              <div style="font-size:.82rem;color:var(--text-2);line-height:1.6;font-weight:500;">휴대폰 요금, 교통 정기권, 보험료 등 구독형 비용도 필수지출로 관리하세요.</div>
             </div>
-            <div class="goal-meta">
-              <span class="goal-amount">₩${goal.current.toLocaleString()}</span>
-              <span>${goal.deadline}개월 남음</span>
+            <div style="background:var(--green-light);border-radius:12px;padding:14px 16px;">
+              <div style="font-weight:800;font-size:.92rem;color:var(--green);margin-bottom:5px;">💰 50/30/20 법칙</div>
+              <div style="font-size:.82rem;color:var(--text-2);line-height:1.6;font-weight:500;">수입의 50%는 필수 지출, 30%는 원하는 것, 20%는 저축! 이 황금비율을 지켜보세요.</div>
             </div>
           </div>
-        `;
-      }).join('');
-    }
-
-    function updateBadges() {
-      const container = document.getElementById('badgesGrid');
-      container.innerHTML = appData.badges.map(badge => `
-        <div class="badge-item ${badge.unlocked ? 'unlocked' : ''}">
-          <div class="badge-icon">${badge.emoji}</div>
-          <div class="badge-name">${badge.name}</div>
         </div>
-      `).join('');
-    }
+      </div>
+    </div>
 
-    function switchTab(tabName) {
-      // 탭 전환
-      document.querySelectorAll('[id$="-tab"]').forEach(el => el.style.display = 'none');
-      document.getElementById(tabName + '-tab').style.display = 'block';
+    <!-- ─── 절약비교 탭 ─── -->
+    <div id="compare-tab" style="display:none;">
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">🛒 절약하면 뭘 살 수 있을까?</div>
+        <div class="savings-input-area">
+          <label>한 달에 </label>
+          <input type="number" id="savingsInput" class="form-input" placeholder="50000" value="50000" oninput="updateCompare()" style="width:150px;">
+          <label>원 아낀다면…</label>
+          <select id="compareMonths" class="form-input" style="width:120px;" onchange="updateCompare()">
+            <option value="1">1개월</option>
+            <option value="3">3개월</option>
+            <option value="6" selected>6개월</option>
+            <option value="12">1년</option>
+            <option value="24">2년</option>
+          </select>
+          <label>후에</label>
+        </div>
+        <div class="savings-summary" id="savingsSummary">
+          <span>💰</span>
+          <span>총 <span class="big" id="totalSavedAmt">₩300,000</span> 모여요!</span>
+          <span style="opacity:.8;font-size:.82rem;" id="savingsDailyAmt">(하루 ₩1,667)</span>
+        </div>
+        <div class="compare-grid" id="compareGrid"></div>
+      </div>
 
-      // 네비게이션 활성화
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      event.target.closest('.nav-item').classList.add('active');
+      <div class="card">
+        <div class="card-title">✏️ 내 절약 목표 계산기</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
+          <div class="form-group" style="margin:0;">
+            <label style="font-size:.82rem;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">원하는 물건/금액</label>
+            <input type="number" id="targetAmtInput" class="form-input" placeholder="500000" style="width:160px;">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label style="font-size:.82rem;font-weight:700;color:var(--text-2);display:block;margin-bottom:6px;">매달 절약 금액</label>
+            <input type="number" id="monthlySaveInput" class="form-input" placeholder="50000" style="width:160px;">
+          </div>
+          <button class="btn btn-accent" onclick="calcTarget()">계산하기</button>
+        </div>
+        <div id="calcResult" style="margin-top:14px;display:none;background:var(--accent-light);border-radius:12px;padding:14px 18px;font-weight:700;"></div>
+      </div>
+    </div>
 
-      // 제목 변경
-      const titles = {
-        'dashboard': '대시보드',
-        'transactions': '거래내역',
-        'goals': '목표',
-        'badges': '배지'
-      };
-      document.getElementById('pageTitle').textContent = titles[tabName];
+    <!-- ─── 청년지원정책 탭 ─── -->
+    <div id="policy-tab" style="display:none;">
+      <div class="card" style="margin-bottom:20px;background:linear-gradient(135deg, #ff7043, #ff8f00);border:none;">
+        <div style="color:#fff;">
+          <div style="font-size:1.2rem;font-weight:900;margin-bottom:6px;">🏛️ 청년 금융 지원정책 모음</div>
+          <div style="font-size:.88rem;opacity:.9;line-height:1.6;">정부와 지자체에서 청년을 위해 제공하는 금융 혜택들이에요. 지금 바로 신청 가능한 정책을 확인해보세요!</div>
+        </div>
+      </div>
 
-      if (tabName === 'transactions') updateTransactionList(true);
-    }
+      <div class="policy-filters">
+        <div class="filter-chip active" onclick="filterPolicy('all',this)">전체</div>
+        <div class="filter-chip" onclick="filterPolicy('savings',this)">💚 저축·적금</div>
+        <div class="filter-chip" onclick="filterPolicy('loan',this)">💙 대출·금리</div>
+        <div class="filter-chip" onclick="filterPolicy('housing',this)">💜 주거</div>
+        <div class="filter-chip" onclick="filterPolicy('job',this)">🟡 취업·창업</div>
+        <div class="filter-chip" onclick="filterPolicy('education',this)">🔵 교육·장학</div>
+      </div>
 
-    function openExpenseModal() {
-      document.getElementById('expenseModal').classList.add('active');
-      document.getElementById('selectedCategory').value = '';
-      document.getElementById('expenseAmount').value = '';
-      document.getElementById('expenseMemo').value = '';
-      document.querySelectorAll('#expenseModal .category-btn').forEach(btn => btn.classList.remove('active'));
-    }
+      <div class="policy-grid" id="policyGrid"></div>
+    </div>
 
-    function openAddModal() {
-      document.getElementById('incomeModal').classList.add('active');
-      document.getElementById('incomeSource').value = '';
-      document.getElementById('incomeAmount').value = '';
-      document.getElementById('incomeMemo').value = '';
-    }
+    <!-- ─── 배지 탭 ─── -->
+    <div id="badges-tab" style="display:none;">
+      <div class="card">
+        <div class="card-title">🏆 나의 배지
+          <span class="badge-tag" id="badgeCountTag">0/12</span>
+        </div>
+        <div class="badges-grid" id="badgesGrid"></div>
+      </div>
+    </div>
 
-    function openGoalModal() {
-      document.getElementById('goalModal').classList.add('active');
-      document.getElementById('goalName').value = '';
-      document.getElementById('goalAmount').value = '';
-      document.getElementById('goalMonths').value = '';
-      document.getElementById('selectedEmoji').value = '🎮';
-      document.querySelectorAll('#goalModal .category-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('#goalModal .category-btn')[0].classList.add('active');
-    }
+  </div><!-- /main-content -->
+</div><!-- /app-container -->
 
-    function closeModals() {
-      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-    }
+<!-- ── 토스트 ── -->
+<div class="toast-container" id="toastContainer"></div>
 
-    function selectCategory(btn, category) {
-      btn.parentElement.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('selectedCategory').value = category;
-    }
+<!-- ── 지출 모달 ── -->
+<div class="modal" id="expenseModal">
+  <div class="modal-box">
+    <div class="modal-title">💳 지출 기록하기</div>
+    <div class="form-group">
+      <label>카테고리</label>
+      <div class="cat-grid">
+        <button class="cat-btn" onclick="selectCat(this,'음식','🍔')">🍔 음식</button>
+        <button class="cat-btn" onclick="selectCat(this,'교통','🚗')">🚗 교통</button>
+        <button class="cat-btn" onclick="selectCat(this,'쇼핑','🛍️')">🛍️ 쇼핑</button>
+        <button class="cat-btn" onclick="selectCat(this,'오락','🎮')">🎮 오락</button>
+        <button class="cat-btn" onclick="selectCat(this,'학용','📚')">📚 학용</button>
+        <button class="cat-btn" onclick="selectCat(this,'미용','💄')">💄 미용</button>
+        <button class="cat-btn" onclick="selectCat(this,'의료','💊')">💊 의료</button>
+        <button class="cat-btn" onclick="selectCat(this,'구독','📱')">📱 구독</button>
+        <button class="cat-btn" onclick="selectCat(this,'기타','📌')">📌 기타</button>
+      </div>
+      <input type="hidden" id="expCat" value="">
+    </div>
+    <div class="form-group">
+      <label>금액 (원)</label>
+      <input type="number" id="expAmt" class="form-input" placeholder="0" min="0">
+    </div>
+    <div class="form-group">
+      <label>메모</label>
+      <input type="text" id="expMemo" class="form-input" placeholder="뭘 샀나요?">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModals()">취소</button>
+      <button class="btn btn-primary" onclick="addExpense()">추가하기</button>
+    </div>
+  </div>
+</div>
 
-    function selectGoalEmoji(btn, emoji) {
-      btn.parentElement.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('selectedEmoji').value = emoji;
-    }
+<!-- ── 수입 모달 ── -->
+<div class="modal" id="incomeModal">
+  <div class="modal-box">
+    <div class="modal-title">📥 수입 기록하기</div>
+    <div class="form-group">
+      <label>수입 종류</label>
+      <div class="cat-grid">
+        <button class="cat-btn" onclick="selectCatInc(this,'용돈','💰')">💰 용돈</button>
+        <button class="cat-btn" onclick="selectCatInc(this,'알바','💼')">💼 알바</button>
+        <button class="cat-btn" onclick="selectCatInc(this,'급여','🏦')">🏦 급여</button>
+        <button class="cat-btn" onclick="selectCatInc(this,'선물','🎁')">🎁 선물</button>
+        <button class="cat-btn" onclick="selectCatInc(this,'이자','📈')">📈 이자/투자</button>
+        <button class="cat-btn" onclick="selectCatInc(this,'기타','💫')">💫 기타</button>
+      </div>
+      <input type="hidden" id="incCat" value="">
+    </div>
+    <div class="form-group">
+      <label>금액 (원)</label>
+      <input type="number" id="incAmt" class="form-input" placeholder="0" min="0">
+    </div>
+    <div class="form-group">
+      <label>메모</label>
+      <input type="text" id="incMemo" class="form-input" placeholder="어디서 받았나요?">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModals()">취소</button>
+      <button class="btn btn-accent" onclick="addIncome()">추가하기</button>
+    </div>
+  </div>
+</div>
 
-    function addExpense() {
-      const category = document.getElementById('selectedCategory').value;
-      const amount = parseInt(document.getElementById('expenseAmount').value) || 0;
-      const memo = document.getElementById('expenseMemo').value;
+<!-- ── 목표 모달 ── -->
+<div class="modal" id="goalModal">
+  <div class="modal-box">
+    <div class="modal-title">🎯 새 목표 만들기</div>
+    <div class="form-group">
+      <label>목표 이름</label>
+      <input type="text" id="goalName" class="form-input" placeholder="예: 게임기 구매">
+    </div>
+    <div class="form-group">
+      <label>목표 금액 (원)</label>
+      <input type="number" id="goalAmt" class="form-input" placeholder="0" min="0">
+    </div>
+    <div class="form-group">
+      <label>현재 모은 금액 (원)</label>
+      <input type="number" id="goalCurrent" class="form-input" placeholder="0" min="0">
+    </div>
+    <div class="form-group">
+      <label>목표 기간 (개월)</label>
+      <input type="number" id="goalMonths" class="form-input" placeholder="3" min="1">
+    </div>
+    <div class="form-group">
+      <label>이모지 선택</label>
+      <div class="cat-grid">
+        <button class="cat-btn active" onclick="selectEmoji(this,'🎮')">🎮</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'📱')">📱</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'🎧')">🎧</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'✈️')">✈️</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'🏠')">🏠</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'📚')">📚</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'🚗')">🚗</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'💻')">💻</button>
+        <button class="cat-btn" onclick="selectEmoji(this,'🌟')">🌟</button>
+      </div>
+      <input type="hidden" id="goalEmoji" value="🎮">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModals()">취소</button>
+      <button class="btn btn-primary" onclick="addGoal()">만들기</button>
+    </div>
+  </div>
+</div>
 
-      if (!category || amount === 0) {
-        alert('카테고리와 금액을 입력해주세요!');
-        return;
-      }
+<!-- ── 필수지출 추가 모달 ── -->
+<div class="modal" id="essentialModal">
+  <div class="modal-box">
+    <div class="modal-title">📋 필수지출 추가</div>
+    <div class="form-group">
+      <label>항목 이름</label>
+      <input type="text" id="essName" class="form-input" placeholder="예: 월세, 교통 정기권">
+    </div>
+    <div class="form-group">
+      <label>카테고리</label>
+      <div class="cat-grid">
+        <button class="cat-btn" onclick="selectEssCat(this,'주거','🏠')">🏠 주거</button>
+        <button class="cat-btn" onclick="selectEssCat(this,'통신','📱')">📱 통신</button>
+        <button class="cat-btn" onclick="selectEssCat(this,'교통','🚌')">🚌 교통</button>
+        <button class="cat-btn" onclick="selectEssCat(this,'보험','🛡️')">🛡️ 보험</button>
+        <button class="cat-btn" onclick="selectEssCat(this,'식비','🍚')">🍚 식비</button>
+        <button class="cat-btn" onclick="selectEssCat(this,'구독','💻')">💻 구독</button>
+      </div>
+      <input type="hidden" id="essCat" value="">
+    </div>
+    <div class="form-group">
+      <label>금액 (원)</label>
+      <input type="number" id="essAmt" class="form-input" placeholder="0" min="0">
+    </div>
+    <div class="form-group">
+      <label>메모 (선택)</label>
+      <input type="text" id="essMemo" class="form-input" placeholder="상세 내용">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModals()">취소</button>
+      <button class="btn btn-primary" onclick="addEssential()">추가</button>
+    </div>
+  </div>
+</div>
 
-      appData.transactions.unshift({
-        type: 'expense',
-        category,
-        amount,
-        memo,
-        date: new Date()
-      });
+<!-- ── 목표 적립 모달 ── -->
+<div class="modal" id="depositModal">
+  <div class="modal-box">
+    <div class="modal-title">💰 금액 적립하기</div>
+    <div style="margin-bottom:16px;font-weight:700;color:var(--text-2);" id="depositGoalName"></div>
+    <div class="form-group">
+      <label>적립 금액 (원)</label>
+      <input type="number" id="depositAmt" class="form-input" placeholder="0" min="0">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModals()">취소</button>
+      <button class="btn btn-accent" onclick="doDeposit()">적립하기</button>
+    </div>
+  </div>
+</div>
 
-      closeModals();
-      updateUI();
-      alert('지출이 기록되었습니다! 🎉');
-    }
+<script>
+// ═══════════════════════════════════════════════
+//  데이터 초기화
+// ═══════════════════════════════════════════════
+let appData = {
+  level: 5,
+  exp: 250,
+  streak: 15,
+  transactions: [],
+  goals: [],
+  essentials: [],
+  badges: [
+    { name: '시작!', emoji: '🚀', desc: '첫 거래 기록', unlocked: true },
+    { name: '저축왕', emoji: '💰', desc: '저축률 30% 달성', unlocked: true },
+    { name: '연속기록', emoji: '🔥', desc: '7일 연속 기록', unlocked: true },
+    { name: '목표달성', emoji: '🎯', desc: '첫 목표 달성', unlocked: true },
+    { name: '100만원', emoji: '💎', desc: '누적 저축 100만', unlocked: true },
+    { name: '매일기록', emoji: '📅', desc: '한 달 매일 기록', unlocked: true },
+    { name: '절약고수', emoji: '🧙', desc: '지출 20% 절감', unlocked: true },
+    { name: '목표부자', emoji: '👑', desc: '목표 3개 동시 진행', unlocked: true },
+    { name: '500만원', emoji: '🌟', desc: '누적 저축 500만', unlocked: false },
+    { name: '부동산왕', emoji: '🏠', desc: '주거 목표 달성', unlocked: false },
+    { name: '투자자', emoji: '📈', desc: '이자 수입 발생', unlocked: false },
+    { name: '전설', emoji: '⭐', desc: '모든 배지 달성', unlocked: false },
+  ]
+};
 
-    function addIncome() {
-      const source = document.getElementById('incomeSource').value;
-      const amount = parseInt(document.getElementById('incomeAmount').value) || 0;
-      const memo = document.getElementById('incomeMemo').value;
+// 샘플 거래 데이터
+appData.transactions = [
+  { id:1, type:'income',  category:'용돈',  emoji:'💰', amount:200000, memo:'이번 달 용돈',      date: new Date(2026,10,1) },
+  { id:2, type:'income',  category:'알바',  emoji:'💼', amount:350000, memo:'편의점 알바',        date: new Date(2026,10,3) },
+  { id:3, type:'expense', category:'음식',  emoji:'🍔', amount:18500,  memo:'점심 — 김밥천국',   date: new Date(2026,10,3) },
+  { id:4, type:'expense', category:'교통',  emoji:'🚗', amount:12000,  memo:'버스 정기권',        date: new Date(2026,10,4) },
+  { id:5, type:'expense', category:'쇼핑',  emoji:'🛍️', amount:45000,  memo:'운동화',             date: new Date(2026,10,5) },
+  { id:6, type:'expense', category:'구독',  emoji:'📱', amount:14900,  memo:'넷플릭스',           date: new Date(2026,10,6) },
+  { id:7, type:'expense', category:'오락',  emoji:'🎮', amount:15000,  memo:'게임 아이템',        date: new Date(2026,10,7) },
+  { id:8, type:'income',  category:'선물',  emoji:'🎁', amount:50000,  memo:'생일 선물',          date: new Date(2026,10,8) },
+  { id:9, type:'expense', category:'음식',  emoji:'🍔', amount:22000,  memo:'저녁 — 치킨',       date: new Date(2026,10,9) },
+  { id:10, type:'expense',category:'미용',  emoji:'💄', amount:18000,  memo:'헤어컷',             date: new Date(2026,10,10) },
+];
 
-      if (!source || amount === 0) {
-        alert('수입원과 금액을 입력해주세요!');
-        return;
-      }
+// 샘플 목표
+appData.goals = [
+  { id:1, emoji:'🎮', name:'게임기 구매', amount:500000, current:340000, months:3 },
+  { id:2, emoji:'✈️', name:'방학 여행',   amount:1500000, current:780000, months:5 },
+  { id:3, emoji:'📱', name:'새 핸드폰',   amount:1000000, current:650000, months:4 },
+];
 
-      appData.transactions.unshift({
-        type: 'income',
-        category: source,
-        amount,
-        memo,
-        date: new Date()
-      });
+// 샘플 필수지출
+appData.essentials = [
+  { id:1, icon:'🏠', name:'월세',          cat:'주거', amount:350000, memo:'원룸 월세',        paid:true  },
+  { id:2, icon:'📱', name:'휴대폰 요금',   cat:'통신', amount:49000,  memo:'LTE 요금제',       paid:true  },
+  { id:3, icon:'🚌', name:'교통 정기권',   cat:'교통', amount:55000,  memo:'지하철 정기권',    paid:false },
+  { id:4, icon:'🛡️', name:'실손 보험',     cat:'보험', amount:30000,  memo:'청년 실손보험',    paid:false },
+  { id:5, icon:'🍚', name:'식비 예산',     cat:'식비', amount:200000, memo:'한 달 식재료',     paid:false },
+  { id:6, icon:'💻', name:'OTT 구독',      cat:'구독', amount:14900,  memo:'넷플릭스',         paid:true  },
+];
 
-      closeModals();
-      updateUI();
-      alert('수입이 기록되었습니다! 💰');
-    }
+let nextTxId = 100;
+let depositTargetId = null;
 
-    function addGoal() {
-      const name = document.getElementById('goalName').value;
-      const amount = parseInt(document.getElementById('goalAmount').value) || 0;
-      const months = parseInt(document.getElementById('goalMonths').value) || 1;
-      const emoji = document.getElementById('selectedEmoji').value;
+// 오늘의 팁 목록
+const tips = [
+  '점심 직접 싸오면 한 달 ₩10만 절약 가능!',
+  '커피 한 잔 줄이면 1년에 ₩50만 모여요 ☕',
+  '구독 서비스, 지금 쓰지 않는 건 없는지 확인해보세요!',
+  '50/30/20 법칙: 수입의 20%는 반드시 저축!',
+  '청년 우대 적금 금리 최대 연 5%! 지금 알아보세요.',
+  '지출 기록하는 것만으로도 소비가 10% 줄어요.',
+  '목표가 있으면 저축이 재미있어집니다 🎯',
+  '청년도약계좌로 최대 월 70만원 납입, 정부가 지원해요!',
+];
 
-      if (!name || amount === 0) {
-        alert('목표 이름과 금액을 입력해주세요!');
-        return;
-      }
+document.getElementById('dailyTip').textContent = tips[Math.floor(Math.random() * tips.length)];
 
-      appData.goals.push({
-        emoji,
-        name,
-        amount,
-        current: 0,
-        deadline: months
-      });
+// ═══════════════════════════════════════════════
+//  절약 비교 아이템 데이터
+// ═══════════════════════════════════════════════
+const compareItems = [
+  { emoji:'☕', name:'스타벅스 아메리카노', price:4700,  desc:'Tall 기준' },
+  { emoji:'🍔', name:'맥도날드 빅맥세트',  price:8900,  desc:'단품+감자+콜라' },
+  { emoji:'🎬', name:'영화 1회',           price:14000, desc:'CGV 일반 기준' },
+  { emoji:'🎮', name:'게임 스킨/아이템',   price:15000, desc:'인게임 구매' },
+  { emoji:'📱', name:'OTT 구독 1개월',     price:14900, desc:'넷플릭스 스탠다드' },
+  { emoji:'👟', name:'운동화 (국내 브랜드)',price:69000, desc:'기본 스니커즈' },
+  { emoji:'🎧', name:'무선 이어폰 (보급형)',price:49000, desc:'TWS 기본형' },
+  { emoji:'🍕', name:'피자 1판 (M)',        price:23000, desc:'배달 포함' },
+  { emoji:'📚', name:'전공서적 1권',        price:35000, desc:'중고 기준' },
+  { emoji:'✈️', name:'국내선 항공권',        price:80000, desc:'제주 왕복 최저가' },
+  { emoji:'🏋️', name:'헬스장 1개월',        price:60000, desc:'일반 헬스장' },
+  { emoji:'💻', name:'외장 SSD 256GB',      price:49000, desc:'보급형 기준' },
+  { emoji:'🎁', name:'생일 선물 (친구)',     price:30000, desc:'기프티콘 등' },
+  { emoji:'👔', name:'캐주얼 셔츠',          price:39000, desc:'SPA 브랜드' },
+  { emoji:'🚗', name:'택시 (5km)',           price:8000,  desc:'카카오T 기준' },
+  { emoji:'📸', name:'인스탁스 필름 10장',   price:12000, desc:'후지필름' },
+  { emoji:'🍰', name:'카페 케이크 1조각',    price:7500,  desc:'커피숍 기준' },
+  { emoji:'💊', name:'종합 비타민 1개월치',  price:15000, desc:'기본 제품' },
+  { emoji:'🎤', name:'노래방 1시간',         price:12000, desc:'2인 기준' },
+  { emoji:'🏝️', name:'제주 숙박 1박',        price:120000,desc:'게스트하우스' },
+  { emoji:'💎', name:'애플워치 SE',           price:299000,desc:'최저가 기준' },
+  { emoji:'📱', name:'갤럭시 버즈',           price:199000,desc:'최신 보급형' },
+  { emoji:'🚲', name:'따릉이 연간권',         price:30000, desc:'서울 기준' },
+  { emoji:'🎸', name:'기타 레슨 1개월',       price:80000, desc:'개인 레슨' },
+];
 
-      closeModals();
-      updateUI();
-      alert('새 목표가 생성되었습니다! 🎯');
-    }
+// ═══════════════════════════════════════════════
+//  청년지원정책 데이터
+// ═══════════════════════════════════════════════
+const policies = [
+  {
+    cat: 'savings',
+    icon: '🏦',
+    name: '청년도약계좌',
+    org: '금융위원회 · 서민금융진흥원',
+    desc: '월 최대 70만원 납입 시 정부가 최대 6%를 매칭 지원. 만기(5년) 시 최대 5,000만원 이상 목돈 마련 가능.',
+    highlights: ['만 19~34세', '개인소득 7,500만원 이하', '비과세', '연 최대 6% 매칭'],
+    link: 'https://ylaccount.kinfa.or.kr',
+    linkLabel: '청년도약계좌 신청',
+    linkSub: 'https://www.kinfa.or.kr',
+  },
+  {
+    cat: 'savings',
+    icon: '💰',
+    name: '청년희망적금',
+    org: '금융위원회',
+    desc: '만기 2년간 납입 이자에 10~20% 저축장려금 추가 지급. 이자소득 비과세 혜택 제공.',
+    highlights: ['만 19~34세', '총 급여 3,600만원 이하', '비과세', '최대 연 9%대 효과'],
+    link: 'https://www.kinfa.or.kr',
+    linkLabel: '자세히 보기',
+  },
+  {
+    cat: 'savings',
+    icon: '🌱',
+    name: '청년내일저축계좌',
+    org: '보건복지부',
+    desc: '차상위 계층 이하 청년이 3년간 월 10만원 적립 시 정부가 30만원 추가 지원. 총 1,440만원 목돈 마련.',
+    highlights: ['만 15~39세', '기준 중위소득 100% 이하', '근로·사업소득 있어야', '정부 3배 매칭'],
+    link: 'https://www.bokjiro.go.kr',
+    linkLabel: '복지로 신청',
+  },
+  {
+    cat: 'loan',
+    icon: '💳',
+    name: '청년 전월세 대출 (버팀목)',
+    org: '주택도시기금',
+    desc: '청년 1인 가구를 위한 전세·월세 저금리 대출. 전세는 최대 1억, 월세는 최대 1,200만원 한도.',
+    highlights: ['만 19~34세', '연소득 5,000만원 이하', '금리 연 1.5~2.1%', '임차보증금 3억 이하'],
+    link: 'https://nhuf.molit.go.kr',
+    linkLabel: '주택도시기금 신청',
+  },
+  {
+    cat: 'loan',
+    icon: '🎓',
+    name: '취업 후 상환 학자금 대출',
+    org: '한국장학재단',
+    desc: '재학 중 대출 이자 無. 취업 후 소득이 생기면 그때 상환. 생활비 대출 포함.',
+    highlights: ['대학 재학생', '소득 8분위 이하', '이자 면제 기간', '유연한 상환'],
+    link: 'https://www.kosaf.go.kr',
+    linkLabel: '한국장학재단',
+  },
+  {
+    cat: 'loan',
+    icon: '💊',
+    name: '청년 신용대출 (햇살론 유스)',
+    org: '서민금융진흥원',
+    desc: '저신용·저소득 청년을 위한 저금리 생활안정자금 대출. 최대 1,200만원까지 연 3.5% 수준.',
+    highlights: ['만 19~34세', '연소득 3,500만원 이하', '최대 1,200만원', '연 3.5%'],
+    link: 'https://www.kinfa.or.kr',
+    linkLabel: '서민금융진흥원',
+  },
+  {
+    cat: 'housing',
+    icon: '🏠',
+    name: '청년 행복주택',
+    org: '한국토지주택공사 (LH)',
+    desc: '대학생·청년에게 시세의 60~80% 수준으로 공공임대 공급. 역세권·대학가 중심 공급.',
+    highlights: ['만 19~39세', '무주택자', '시세 60~80%', '최장 6년 거주'],
+    link: 'https://apply.lh.or.kr',
+    linkLabel: 'LH 청약 신청',
+  },
+  {
+    cat: 'housing',
+    icon: '🔑',
+    name: '역세권 청년 주택',
+    org: '서울시',
+    desc: '서울 역세권 민간임대주택을 청년에게 시세 대비 저렴하게 공급. 청년 우선 공급.',
+    highlights: ['서울 거주 청년', '소득 기준 충족 시', '시세 85% 이하', '최장 8년'],
+    link: 'https://housing.seoul.go.kr',
+    linkLabel: '서울주거포털',
+  },
+  {
+    cat: 'job',
+    icon: '💼',
+    name: '청년 내일채움공제',
+    org: '고용노동부',
+    desc: '중소기업 취업 청년이 2년간 400만원 적립 시 기업+정부가 1,200만원 추가. 총 1,600만원 수령.',
+    highlights: ['만 15~34세', '중소기업 재직', '2년 이상 근무', '총 1,600만원'],
+    link: 'https://www.work.go.kr',
+    linkLabel: '워크넷 신청',
+  },
+  {
+    cat: 'job',
+    icon: '🚀',
+    name: '청년창업 지원 (창업지원단)',
+    org: '중소벤처기업부',
+    desc: '사업계획서 선발 시 최대 1억원 사업화 자금 지원. 멘토링·네트워킹 포함.',
+    highlights: ['만 39세 이하', '초기 창업자', '최대 1억 지원', '비상환 자금'],
+    link: 'https://www.k-startup.go.kr',
+    linkLabel: '창업지원포털',
+  },
+  {
+    cat: 'education',
+    icon: '📖',
+    name: '국가장학금 I·II 유형',
+    org: '한국장학재단',
+    desc: '소득 8분위 이하 대학생에게 최대 연 520만원 장학금 지원. 성적 기준 충족 필요.',
+    highlights: ['재학 대학생', '소득 8분위 이하', '최대 연 520만원', '반기 신청'],
+    link: 'https://www.kosaf.go.kr',
+    linkLabel: '장학재단 신청',
+  },
+  {
+    cat: 'education',
+    icon: '💡',
+    name: '국민 내일배움카드',
+    org: '고용노동부',
+    desc: '훈련비 최대 500만원 지원. 청년은 300만원 추가 혜택. IT·디자인·요리 등 다양한 직업 훈련.',
+    highlights: ['취업준비생 가능', '최대 500만원', '5년간 사용', 'IT·디자인 등 다양'],
+    link: 'https://www.hrd.go.kr',
+    linkLabel: 'HRD-Net',
+  },
+];
 
-    // 초기화
-    updateUI();
+// ═══════════════════════════════════════════════
+//  유틸리티
+// ═══════════════════════════════════════════════
+function fmt(n){ return '₩' + Number(n).toLocaleString(); }
+function fmtDate(d){
+  const today = new Date(); const dt = new Date(d);
+  const diff = Math.floor((today - dt) / 86400000);
+  if(diff===0) return '오늘';
+  if(diff===1) return '어제';
+  if(diff<7)  return `${diff}일 전`;
+  return dt.toLocaleDateString('ko-KR',{month:'short',day:'numeric'});
+}
 
-    // 모달 외부 클릭 시 닫기
-    document.querySelectorAll('.modal').forEach(modal => {
-      modal.addEventListener('click', e => {
-        if (e.target === modal) closeModals();
-      });
-    });
-  </script>
+function showToast(msg, type='success'){
+  const tc = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  const icons = { success:'✅', warning:'⚠️', error:'❌' };
+  el.innerHTML = `<span>${icons[type]||'✅'}</span><span>${msg}</span>`;
+  tc.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(30px)'; el.style.transition='.3s'; setTimeout(()=>el.remove(),300); }, 2800);
+}
+
+// ═══════════════════════════════════════════════
+//  탭 전환
+// ═══════════════════════════════════════════════
+const TAB_TITLES = {
+  dashboard:'📊 대시보드',
+  transactions:'💳 거래내역',
+  goals:'🎯 목표',
+  essential:'📋 필수지출',
+  compare:'🛒 절약비교',
+  policy:'🏛️ 청년지원정책',
+  badges:'🏆 배지',
+};
+
+function switchTab(name, el){
+  document.querySelectorAll('[id$="-tab"]').forEach(t=>t.style.display='none');
+  document.getElementById(name+'-tab').style.display='';
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.closest('.nav-item').classList.add('active');
+  document.getElementById('pageTitle').textContent = TAB_TITLES[name]||name;
+
+  if(name==='transactions') renderAllTx();
+  if(name==='compare') updateCompare();
+  if(name==='policy') renderPolicy('all');
+}
+
+// ═══════════════════════════════════════════════
+//  UI 전체 업데이트
+// ═══════════════════════════════════════════════
+function updateUI(){
+  const now = new Date();
+  const cm = now.getMonth(), cy = now.getFullYear();
+
+  document.getElementById('currentDate').textContent =
+    now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+
+  // 이번 달 거래
+  const mTx = appData.transactions.filter(t=>{
+    const d=new Date(t.date); return d.getMonth()===cm && d.getFullYear()===cy;
+  });
+  const income  = mTx.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense = mTx.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const saving  = income - expense;
+  const savingPct = income>0 ? Math.round((saving/income)*100) : 0;
+
+  document.getElementById('monthIncome').textContent  = fmt(income);
+  document.getElementById('monthExpense').textContent = fmt(expense);
+  document.getElementById('monthSaving').textContent  = fmt(Math.max(saving,0));
+  document.getElementById('savingRate').textContent   = savingPct+'%';
+  document.getElementById('savingRateTag').textContent= savingPct+'%';
+  document.getElementById('savingBarFill').style.width= Math.min(Math.max(savingPct,0),100)+'%';
+
+  // 목표
+  const totalGoalCur = appData.goals.reduce((s,g)=>s+g.current,0);
+  const totalGoalAmt = appData.goals.reduce((s,g)=>s+g.amount,0);
+  const goalR = totalGoalAmt>0?Math.round((totalGoalCur/totalGoalAmt)*100):0;
+  document.getElementById('goalRate').textContent  = goalR+'%';
+  document.getElementById('goalCount').textContent = appData.goals.length;
+
+  // 레벨/사이드바
+  document.getElementById('sideLevel').textContent  = appData.level;
+  document.getElementById('sideStreak').textContent = appData.streak;
+  document.getElementById('sideBadges').textContent = appData.badges.filter(b=>b.unlocked).length;
+  document.getElementById('sideGoals').textContent  = appData.goals.length;
+
+  // 거래 배지
+  document.getElementById('txBadge').textContent = appData.transactions.length;
+
+  // 최근 거래 5건
+  const rc = document.getElementById('recentTransactions');
+  const recTx = [...appData.transactions].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,5);
+  document.getElementById('recentCount').textContent = recTx.length+'건';
+  rc.innerHTML = recTx.length===0
+    ? `<div class="empty-state"><span class="empty-icon">💸</span><p>거래 기록이 없어요!</p></div>`
+    : recTx.map(tx=>txHTML(tx)).join('');
+
+  // 카테고리 도넛 (막대)
+  renderCategoryBreakdown(mTx);
+
+  // 미니 캘린더
+  renderMiniCal(cm, cy);
+
+  // 목표
+  renderGoals();
+
+  // 필수지출
+  renderEssentials();
+
+  // 배지
+  renderBadges();
+
+  // 거래 탭 배지 업데이트
+  updateTxFilterCats();
+}
+
+// ─── 카테고리 지출 분석 ───
+function renderCategoryBreakdown(mTx){
+  const expTx = mTx.filter(t=>t.type==='expense');
+  const catMap = {};
+  expTx.forEach(t=>{ catMap[t.category]=(catMap[t.category]||0)+t.amount; });
+  const total = Object.values(catMap).reduce((s,v)=>s+v,0);
+  const sorted = Object.entries(catMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+  const colors = ['orange','green','blue','purple','orange'];
+  const cb = document.getElementById('categoryBreakdown');
+  if(sorted.length===0){
+    cb.innerHTML='<div style="color:var(--text-3);font-size:.82rem;font-weight:600;">아직 지출이 없어요 🌿</div>';
+    return;
+  }
+  cb.innerHTML = sorted.map(([cat,amt],i)=>`
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:.8rem;font-weight:700;margin-bottom:4px;">
+        <span>${cat}</span><span>${Math.round(amt/total*100)}% · ${fmt(amt)}</span>
+      </div>
+      <div class="progress-bar" style="margin:0;">
+        <div class="progress-fill ${colors[i%colors.length]}" style="width:${Math.round(amt/total*100)}%"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── 미니 캘린더 ───
+function renderMiniCal(m, y){
+  const now = new Date();
+  const label = now.toLocaleDateString('ko-KR',{year:'numeric',month:'long'});
+  document.getElementById('calMonthLabel').textContent = label;
+
+  const txDates = new Set(
+    appData.transactions
+      .filter(t=>{ const d=new Date(t.date); return d.getMonth()===m && d.getFullYear()===y; })
+      .map(t=>new Date(t.date).getDate())
+  );
+
+  const firstDay = new Date(y,m,1).getDay();
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  const days = ['일','월','화','수','목','금','토'];
+
+  let html = days.map(d=>`<div class="cal-day header">${d}</div>`).join('');
+  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const isToday = d===now.getDate() && m===now.getMonth() && y===now.getFullYear();
+    const hasTx = txDates.has(d);
+    html+=`<div class="cal-day${isToday?' today':''}${hasTx&&!isToday?' has-tx':''}">${d}</div>`;
+  }
+  document.getElementById('miniCal').innerHTML = html;
+}
+
+// ─── 거래 아이템 HTML ───
+function txHTML(tx){
+  const typeClass = tx.type==='income'?'income':'expense';
+  const sign = tx.type==='income'?'+':'-';
+  return `
+    <div class="tx-item">
+      <div class="tx-icon-wrap ${typeClass}">${tx.emoji||'📌'}</div>
+      <div class="tx-body">
+        <div class="tx-name">${tx.memo||tx.category}</div>
+        <div class="tx-meta">${tx.category} · ${fmtDate(tx.date)}</div>
+      </div>
+      <div class="tx-amount ${typeClass}">${sign}${fmt(tx.amount)}</div>
+      <button class="tx-delete" onclick="deleteTx(${tx.id})" title="삭제">✕</button>
+    </div>
+  `;
+}
+
+function deleteTx(id){
+  appData.transactions = appData.transactions.filter(t=>t.id!==id);
+  updateUI();
+  showToast('거래가 삭제되었어요.','warning');
+}
+
+// ─── 거래내역 탭 렌더 ───
+function renderAllTx(){
+  const typeF = document.getElementById('txFilterType').value;
+  const catF  = document.getElementById('txFilterCat').value;
+  let list = [...appData.transactions].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(typeF!=='all') list=list.filter(t=>t.type===typeF);
+  if(catF!=='all')  list=list.filter(t=>t.category===catF);
+
+  const el = document.getElementById('allTransactions');
+  el.innerHTML = list.length===0
+    ? `<div class="empty-state"><span class="empty-icon">📭</span><p>조건에 맞는 거래가 없어요.</p></div>`
+    : list.map(tx=>txHTML(tx)).join('');
+}
+
+function updateTxFilterCats(){
+  const cats = [...new Set(appData.transactions.map(t=>t.category))];
+  const sel = document.getElementById('txFilterCat');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="all">모든 카테고리</option>' +
+    cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.value = cats.includes(cur)?cur:'all';
+}
+
+// ─── 목표 렌더 ───
+function renderGoals(){
+  const el = document.getElementById('goalsGrid');
+  if(appData.goals.length===0){
+    el.innerHTML=`<div class="empty-state" style="grid-column:1/-1;"><span class="empty-icon">🎯</span><p>아직 목표가 없어요. 첫 목표를 만들어보세요!</p></div>`;
+    return;
+  }
+  el.innerHTML = appData.goals.map(g=>{
+    const pct = Math.min(Math.round(g.current/g.amount*100),100);
+    const monthly = Math.ceil((g.amount-g.current)/Math.max(g.months,1));
+    let status='ongoing'; let statusText='진행 중';
+    if(pct>=100){ status='done'; statusText='🎉 달성!'; }
+    else if(monthly>200000){ status='danger'; statusText='⚠️ 목표 점검 필요'; }
+    return `
+      <div class="goal-card">
+        <div class="goal-card-header">
+          <div class="goal-emoji-wrap">${g.emoji}</div>
+          <div class="goal-status-pill ${status}">${statusText}</div>
+        </div>
+        <div class="goal-name">${g.name}</div>
+        <div class="goal-desc">목표 ${fmt(g.amount)} · 남은 기간 ${g.months}개월</div>
+        <div class="progress-bar"><div class="progress-fill orange" style="width:${pct}%"></div></div>
+        <div class="goal-amounts">
+          <span class="goal-current">${fmt(g.current)}</span>
+          <span class="goal-target">${pct}% / ${fmt(g.amount)}</span>
+        </div>
+        <div style="margin-top:8px;font-size:.78rem;color:var(--text-2);font-weight:600;">
+          매달 ${fmt(monthly)} 씩 저축하면 달성!
+        </div>
+        <div class="goal-actions">
+          <button class="btn btn-accent btn-sm" style="flex:1;" onclick="openDeposit(${g.id})">💰 적립</button>
+          <button class="btn btn-secondary btn-sm" onclick="deleteGoal(${g.id})">삭제</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function deleteGoal(id){
+  appData.goals=appData.goals.filter(g=>g.id!==id);
+  updateUI(); showToast('목표가 삭제되었어요.','warning');
+}
+
+function openDeposit(id){
+  depositTargetId=id;
+  const g=appData.goals.find(g=>g.id===id);
+  document.getElementById('depositGoalName').textContent=`🎯 ${g.name} — 현재 ${fmt(g.current)}`;
+  document.getElementById('depositAmt').value='';
+  openModal('depositModal');
+}
+
+function doDeposit(){
+  const amt=parseInt(document.getElementById('depositAmt').value)||0;
+  if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
+  const g=appData.goals.find(g=>g.id===depositTargetId);
+  if(!g) return;
+  g.current=Math.min(g.current+amt, g.amount);
+  closeModals(); updateUI();
+  if(g.current>=g.amount) showToast(`🎉 "${g.name}" 목표 달성!`,'success');
+  else showToast(`${fmt(amt)} 적립! 앞으로 ${fmt(g.amount-g.current)} 남았어요.`,'success');
+}
+
+// ─── 필수지출 렌더 ───
+function renderEssentials(){
+  const total=appData.essentials.reduce((s,e)=>s+e.amount,0);
+  const paidTotal=appData.essentials.filter(e=>e.paid).reduce((s,e)=>s+e.amount,0);
+  const paidCnt=appData.essentials.filter(e=>e.paid).length;
+  document.getElementById('essentialTotalAmt').textContent=fmt(total);
+  document.getElementById('essentialLeftAmt').textContent=fmt(total-paidTotal);
+  document.getElementById('essentialPaidBadge').textContent=`${paidCnt}/${appData.essentials.length}`;
+
+  const el=document.getElementById('essentialList');
+  if(appData.essentials.length===0){
+    el.innerHTML=`<div class="empty-state"><span class="empty-icon">📋</span><p>필수지출 항목을 추가해보세요!</p></div>`;
+    return;
+  }
+  el.innerHTML=appData.essentials.map(e=>`
+    <div class="essential-item ${e.paid?'paid':''}">
+      <div class="essential-icon">${e.icon}</div>
+      <div class="ess-body">
+        <div class="ess-name">${e.name}</div>
+        <div class="ess-meta">${e.cat}${e.memo?' · '+e.memo:''}</div>
+      </div>
+      <div class="ess-amount">${fmt(e.amount)}</div>
+      <button class="ess-paid-btn" onclick="toggleEssential(${e.id})">${e.paid?'✓ 납부완료':'납부하기'}</button>
+    </div>
+  `).join('');
+}
+
+function toggleEssential(id){
+  const e=appData.essentials.find(e=>e.id===id);
+  if(!e) return;
+  e.paid=!e.paid;
+  renderEssentials();
+  showToast(e.paid?`"${e.name}" 납부 완료!`:`"${e.name}" 납부 취소`,'success');
+}
+
+// ─── 배지 렌더 ───
+function renderBadges(){
+  const unlocked=appData.badges.filter(b=>b.unlocked).length;
+  document.getElementById('badgeCountTag').textContent=`${unlocked}/${appData.badges.length}`;
+  document.getElementById('badgesGrid').innerHTML=appData.badges.map(b=>`
+    <div class="badge-card ${b.unlocked?'unlocked':''}">
+      <div class="badge-emoji">${b.emoji}</div>
+      <div class="badge-name">${b.name}</div>
+      <div class="badge-desc">${b.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ─── 절약 비교기 ───
+function updateCompare(){
+  const monthly=parseInt(document.getElementById('savingsInput').value)||0;
+  const months=parseInt(document.getElementById('compareMonths').value)||6;
+  const total=monthly*months;
+  const daily=Math.round(monthly/30);
+
+  document.getElementById('totalSavedAmt').textContent=fmt(total);
+  document.getElementById('savingsDailyAmt').textContent=`(하루 ${fmt(daily)})`;
+
+  const grid=document.getElementById('compareGrid');
+  grid.innerHTML=compareItems.map(item=>{
+    const maxCount=Math.floor(total/item.price);
+    const affordable=maxCount>0;
+    return `
+      <div class="compare-item ${affordable?'affordable':'not-affordable'}" title="${item.desc}">
+        ${affordable?`<span class="compare-tag">×${maxCount}</span>`:''}
+        <span class="compare-emoji">${item.emoji}</span>
+        <div class="compare-name">${item.name}</div>
+        <div class="compare-price">${fmt(item.price)}</div>
+        <div class="compare-status">${affordable?`✅ ${maxCount}개 살 수 있어요!`:'아직 부족해요'}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function calcTarget(){
+  const target=parseInt(document.getElementById('targetAmtInput').value)||0;
+  const monthly=parseInt(document.getElementById('monthlySaveInput').value)||0;
+  const res=document.getElementById('calcResult');
+  if(target<=0||monthly<=0){ showToast('금액을 입력해주세요!','error'); return; }
+  const months=Math.ceil(target/monthly);
+  const years=Math.floor(months/12);
+  const remMonths=months%12;
+  let periodStr='';
+  if(years>0) periodStr+=`${years}년 `;
+  if(remMonths>0) periodStr+=`${remMonths}개월`;
+
+  res.style.display='block';
+  res.innerHTML=`
+    🧮 매달 <strong>${fmt(monthly)}</strong> 씩 절약하면<br>
+    <strong>${fmt(target)}</strong> 를 모으는 데 <strong style="color:var(--primary);font-size:1.1em;">${periodStr}</strong> 걸려요!<br>
+    <span style="font-size:.82rem;color:var(--text-2);font-weight:600;margin-top:4px;display:block;">하루에 ${fmt(Math.round(monthly/30))} 씩만 아끼면 돼요 😊</span>
+  `;
+}
+
+// ─── 청년지원정책 렌더 ───
+function renderPolicy(catFilter){
+  const grid=document.getElementById('policyGrid');
+  const filtered=catFilter==='all'?policies:policies.filter(p=>p.cat===catFilter);
+  if(filtered.length===0){
+    grid.innerHTML=`<div class="empty-state"><span class="empty-icon">🔍</span><p>해당 카테고리의 정책이 없어요.</p></div>`;
+    return;
+  }
+  grid.innerHTML=filtered.map(p=>`
+    <div class="policy-card">
+      <div class="policy-card-top">
+        <div class="policy-icon-wrap ${p.cat}">${p.icon}</div>
+        <div class="policy-info">
+          <div class="policy-name">${p.name}</div>
+          <div class="policy-org">${p.org}</div>
+        </div>
+        <div class="policy-cat-tag ${p.cat}">${catLabel(p.cat)}</div>
+      </div>
+      <div class="policy-desc">${p.desc}</div>
+      <div class="policy-highlights">
+        ${p.highlights.map(h=>`<span class="policy-highlight-tag">${h}</span>`).join('')}
+      </div>
+      <div class="policy-actions">
+        <a href="${p.link}" target="_blank" rel="noopener" class="policy-link">🔗 ${p.linkLabel||'바로가기'}</a>
+        ${p.linkSub?`<a href="${p.linkSub}" target="_blank" rel="noopener" class="policy-link secondary">더보기</a>`:''}
+        <span class="policy-age-badge">청년 대상</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function catLabel(cat){
+  const m={savings:'저축·적금',loan:'대출·금리',housing:'주거',job:'취업·창업',education:'교육·장학'};
+  return m[cat]||cat;
+}
+
+function filterPolicy(cat, el){
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderPolicy(cat);
+}
+
+// ═══════════════════════════════════════════════
+//  모달 / 폼
+// ═══════════════════════════════════════════════
+function openModal(id){
+  document.getElementById(id).classList.add('active');
+}
+
+function closeModals(){
+  document.querySelectorAll('.modal').forEach(m=>m.classList.remove('active'));
+}
+
+document.querySelectorAll('.modal').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) closeModals(); });
+});
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModals(); });
+
+let _expCatEmoji='📌';
+function selectCat(btn, cat, emoji){
+  btn.closest('.cat-grid').querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('expCat').value=cat;
+  _expCatEmoji=emoji;
+}
+
+let _incCatEmoji='💰';
+function selectCatInc(btn, cat, emoji){
+  btn.closest('.cat-grid').querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('incCat').value=cat;
+  _incCatEmoji=emoji;
+}
+
+function selectEmoji(btn, e){
+  btn.closest('.cat-grid').querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('goalEmoji').value=e;
+}
+
+let _essCatIcon='📌'; let _essCat='기타';
+function selectEssCat(btn, cat, icon){
+  btn.closest('.cat-grid').querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('essCat').value=cat;
+  _essCatIcon=icon; _essCat=cat;
+}
+
+function addExpense(){
+  const cat=document.getElementById('expCat').value;
+  const amt=parseInt(document.getElementById('expAmt').value)||0;
+  const memo=document.getElementById('expMemo').value.trim();
+  if(!cat){ showToast('카테고리를 선택해주세요!','error'); return; }
+  if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
+  appData.transactions.unshift({ id:nextTxId++, type:'expense', category:cat, emoji:_expCatEmoji, amount:amt, memo:memo||cat, date:new Date() });
+  closeModals(); updateUI();
+  showToast(`${memo||cat} — ${fmt(amt)} 지출 기록!`,'success');
+}
+
+function addIncome(){
+  const cat=document.getElementById('incCat').value;
+  const amt=parseInt(document.getElementById('incAmt').value)||0;
+  const memo=document.getElementById('incMemo').value.trim();
+  if(!cat){ showToast('수입 종류를 선택해주세요!','error'); return; }
+  if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
+  appData.transactions.unshift({ id:nextTxId++, type:'income', category:cat, emoji:_incCatEmoji, amount:amt, memo:memo||cat, date:new Date() });
+  closeModals(); updateUI();
+  showToast(`${memo||cat} — ${fmt(amt)} 수입 기록!`,'success');
+}
+
+function addGoal(){
+  const name=document.getElementById('goalName').value.trim();
+  const amt=parseInt(document.getElementById('goalAmt').value)||0;
+  const cur=parseInt(document.getElementById('goalCurrent').value)||0;
+  const months=parseInt(document.getElementById('goalMonths').value)||1;
+  const emoji=document.getElementById('goalEmoji').value;
+  if(!name){ showToast('목표 이름을 입력해주세요!','error'); return; }
+  if(amt<=0){ showToast('목표 금액을 입력해주세요!','error'); return; }
+  const newId=Date.now();
+  appData.goals.push({ id:newId, emoji, name, amount:amt, current:Math.min(cur,amt), months });
+  closeModals(); updateUI(); switchTab('goals', document.querySelector('.nav-item:nth-child(3)'));
+  showToast(`"${name}" 목표 생성!`,'success');
+}
+
+function addEssential(){
+  const name=document.getElementById('essName').value.trim();
+  const cat=document.getElementById('essCat').value;
+  const amt=parseInt(document.getElementById('essAmt').value)||0;
+  const memo=document.getElementById('essMemo').value.trim();
+  if(!name){ showToast('항목 이름을 입력해주세요!','error'); return; }
+  if(!cat){ showToast('카테고리를 선택해주세요!','error'); return; }
+  if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
+  appData.essentials.push({ id:Date.now(), icon:_essCatIcon, name, cat, amount:amt, memo, paid:false });
+  closeModals(); renderEssentials();
+  showToast(`"${name}" 필수지출 추가!`,'success');
+}
+
+// ═══════════════════════════════════════════════
+//  초기화
+// ═══════════════════════════════════════════════
+updateUI();
+renderPolicy('all');
+</script>
 </body>
 </html>
