@@ -1495,9 +1495,175 @@
   </div>
 </div>
 
+<!-- ── Supabase JS SDK (CDN) ── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
 <script>
 // ═══════════════════════════════════════════════
-//  데이터 초기화
+//  ▶ Supabase 설정 — 본인 프로젝트 값으로 교체하세요
+// ═══════════════════════════════════════════════
+const SUPABASE_URL      = 'https://smbjubisigerxdkbtgzb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_hTbXK3Vky1VdravVG-6gRw_e6uitZxV';
+const API_BASE          = '/api';                // netlify.toml 리다이렉트 경로
+
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ═══════════════════════════════════════════════
+//  ▶ 로그인 모달 HTML (기존 UI 위 오버레이)
+// ═══════════════════════════════════════════════
+document.body.insertAdjacentHTML('beforeend', `
+<div id="authOverlay" style="
+  display:none; position:fixed; inset:0; z-index:9999;
+  background:rgba(45,30,15,.7); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center;">
+  <div style="
+    background:#fff; border-radius:22px; padding:36px 32px;
+    max-width:400px; width:92%; box-shadow:0 20px 60px rgba(255,112,67,.25);
+    font-family:'Noto Sans KR',sans-serif;">
+    <div style="font-size:1.5rem;font-weight:900;margin-bottom:6px;color:#2d1e0f;">
+      🌱 용돈플래너
+    </div>
+    <div style="font-size:.88rem;color:#8a6a50;font-weight:600;margin-bottom:24px;">
+      데이터를 저장하려면 로그인이 필요해요
+    </div>
+    <div id="authMsg" style="
+      display:none; padding:10px 14px; border-radius:10px;
+      font-size:.84rem; font-weight:700; margin-bottom:14px;"></div>
+    <input id="authEmail" type="email" placeholder="이메일" style="
+      width:100%; padding:11px 14px; border:1.5px solid #ffe0cc;
+      border-radius:10px; font-size:.93rem; font-family:inherit;
+      margin-bottom:10px; box-sizing:border-box; outline:none;" />
+    <input id="authPw" type="password" placeholder="비밀번호 (6자 이상)" style="
+      width:100%; padding:11px 14px; border:1.5px solid #ffe0cc;
+      border-radius:10px; font-size:.93rem; font-family:inherit;
+      margin-bottom:18px; box-sizing:border-box; outline:none;" />
+    <div style="display:flex; gap:10px;">
+      <button onclick="authLogin()" style="
+        flex:1; padding:12px; background:linear-gradient(135deg,#ff7043,#ff9263);
+        color:#fff; border:none; border-radius:12px; font-weight:700;
+        font-size:.93rem; cursor:pointer; font-family:inherit;">
+        로그인
+      </button>
+      <button onclick="authSignup()" style="
+        flex:1; padding:12px; background:#fff8f0;
+        border:1.5px solid #ffe0cc; border-radius:12px; font-weight:700;
+        font-size:.93rem; cursor:pointer; font-family:inherit; color:#2d1e0f;">
+        회원가입
+      </button>
+    </div>
+    <div style="text-align:center; margin-top:14px;">
+      <button onclick="authSkip()" style="
+        background:none; border:none; color:#c4a882; font-size:.8rem;
+        cursor:pointer; font-family:inherit; font-weight:600;">
+        로그인 없이 둘러보기 (데이터 저장 안 됨)
+      </button>
+    </div>
+  </div>
+</div>
+`);
+
+// ═══════════════════════════════════════════════
+//  ▶ 인증 상태 & API 헬퍼
+// ═══════════════════════════════════════════════
+let _currentSession = null; // Supabase 세션 객체
+
+/** 현재 access token 반환 (없으면 null) */
+function getToken() {
+  return _currentSession?.access_token || null;
+}
+
+/** Netlify API 호출 헬퍼 */
+async function callAPI(resource, action, body = null) {
+  const token = getToken();
+  if (!token) return null; // 비로그인 → 로컬만 동작
+
+  const url    = `${API_BASE}?resource=${resource}&action=${action}`;
+  const method = action === 'list' ? 'GET' : 'POST';
+  const opts   = {
+    method,
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  };
+  if (body) opts.body = JSON.stringify(body);
+
+  const res = await fetch(url, opts);
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    console.error(`[API] ${resource}/${action} 실패:`, e.error || res.status);
+    return null;
+  }
+  return res.json();
+}
+
+/** DB에서 세 테이블을 모두 불러와 appData에 반영 */
+async function loadFromDB() {
+  const [txs, goals, ess] = await Promise.all([
+    callAPI('transactions', 'list'),
+    callAPI('goals',        'list'),
+    callAPI('essentials',   'list'),
+  ]);
+
+  if (txs)   appData.transactions = txs.map(r => ({ ...r, date: new Date(r.date) }));
+  if (goals) appData.goals        = goals;
+  if (ess)   appData.essentials   = ess;
+
+  updateUI();
+}
+
+// ═══════════════════════════════════════════════
+//  ▶ 인증 UI 함수
+// ═══════════════════════════════════════════════
+function showAuthOverlay() {
+  document.getElementById('authOverlay').style.display = 'flex';
+}
+function hideAuthOverlay() {
+  document.getElementById('authOverlay').style.display = 'none';
+}
+function setAuthMsg(msg, isError = false) {
+  const el = document.getElementById('authMsg');
+  el.style.display      = 'block';
+  el.style.background   = isError ? 'rgba(229,57,53,.1)' : 'rgba(67,160,71,.1)';
+  el.style.color        = isError ? '#e53935' : '#43a047';
+  el.textContent        = msg;
+}
+
+async function authLogin() {
+  const email = document.getElementById('authEmail').value.trim();
+  const pw    = document.getElementById('authPw').value;
+  if (!email || !pw) return setAuthMsg('이메일과 비밀번호를 입력해주세요.', true);
+
+  setAuthMsg('로그인 중…');
+  const { data, error } = await _supabase.auth.signInWithPassword({ email, password: pw });
+  if (error) return setAuthMsg(error.message, true);
+
+  _currentSession = data.session;
+  hideAuthOverlay();
+  showToast('로그인 성공! 데이터를 불러오는 중…', 'success');
+  await loadFromDB();
+}
+
+async function authSignup() {
+  const email = document.getElementById('authEmail').value.trim();
+  const pw    = document.getElementById('authPw').value;
+  if (!email || !pw) return setAuthMsg('이메일과 비밀번호를 입력해주세요.', true);
+  if (pw.length < 6)  return setAuthMsg('비밀번호는 6자 이상이어야 합니다.', true);
+
+  setAuthMsg('회원가입 중…');
+  const { error } = await _supabase.auth.signUp({ email, password: pw });
+  if (error) return setAuthMsg(error.message, true);
+
+  setAuthMsg('가입 완료! 이메일을 확인하거나 바로 로그인하세요.', false);
+}
+
+function authSkip() {
+  hideAuthOverlay();
+  showToast('비로그인 모드: 데이터는 저장되지 않습니다.', 'warning');
+}
+
+// ═══════════════════════════════════════════════
+//  ▶ 데이터 초기화
 // ═══════════════════════════════════════════════
 let appData = {
   level: 5,
@@ -1522,36 +1688,7 @@ let appData = {
   ]
 };
 
-// 샘플 거래 데이터
-appData.transactions = [
-  { id:1, type:'income',  category:'용돈',  emoji:'💰', amount:200000, memo:'이번 달 용돈',      date: new Date(2026,10,1) },
-  { id:2, type:'income',  category:'알바',  emoji:'💼', amount:350000, memo:'편의점 알바',        date: new Date(2026,10,3) },
-  { id:3, type:'expense', category:'음식',  emoji:'🍔', amount:18500,  memo:'점심 — 김밥천국',   date: new Date(2026,10,3) },
-  { id:4, type:'expense', category:'교통',  emoji:'🚗', amount:12000,  memo:'버스 정기권',        date: new Date(2026,10,4) },
-  { id:5, type:'expense', category:'쇼핑',  emoji:'🛍️', amount:45000,  memo:'운동화',             date: new Date(2026,10,5) },
-  { id:6, type:'expense', category:'구독',  emoji:'📱', amount:14900,  memo:'넷플릭스',           date: new Date(2026,10,6) },
-  { id:7, type:'expense', category:'오락',  emoji:'🎮', amount:15000,  memo:'게임 아이템',        date: new Date(2026,10,7) },
-  { id:8, type:'income',  category:'선물',  emoji:'🎁', amount:50000,  memo:'생일 선물',          date: new Date(2026,10,8) },
-  { id:9, type:'expense', category:'음식',  emoji:'🍔', amount:22000,  memo:'저녁 — 치킨',       date: new Date(2026,10,9) },
-  { id:10, type:'expense',category:'미용',  emoji:'💄', amount:18000,  memo:'헤어컷',             date: new Date(2026,10,10) },
-];
-
-// 샘플 목표
-appData.goals = [
-  { id:1, emoji:'🎮', name:'게임기 구매', amount:500000, current:340000, months:3 },
-  { id:2, emoji:'✈️', name:'방학 여행',   amount:1500000, current:780000, months:5 },
-  { id:3, emoji:'📱', name:'새 핸드폰',   amount:1000000, current:650000, months:4 },
-];
-
-// 샘플 필수지출
-appData.essentials = [
-  { id:1, icon:'🏠', name:'월세',          cat:'주거', amount:350000, memo:'원룸 월세',        paid:true  },
-  { id:2, icon:'📱', name:'휴대폰 요금',   cat:'통신', amount:49000,  memo:'LTE 요금제',       paid:true  },
-  { id:3, icon:'🚌', name:'교통 정기권',   cat:'교통', amount:55000,  memo:'지하철 정기권',    paid:false },
-  { id:4, icon:'🛡️', name:'실손 보험',     cat:'보험', amount:30000,  memo:'청년 실손보험',    paid:false },
-  { id:5, icon:'🍚', name:'식비 예산',     cat:'식비', amount:200000, memo:'한 달 식재료',     paid:false },
-  { id:6, icon:'💻', name:'OTT 구독',      cat:'구독', amount:14900,  memo:'넷플릭스',         paid:true  },
-];
+// 샘플 데이터 제거 — 로그인 후 DB에서 불러옴 (loadFromDB 참조)
 
 let nextTxId = 100;
 let depositTargetId = null;
@@ -1908,13 +2045,14 @@ function txHTML(tx){
         <div class="tx-meta">${tx.category} · ${fmtDate(tx.date)}</div>
       </div>
       <div class="tx-amount ${typeClass}">${sign}${fmt(tx.amount)}</div>
-      <button class="tx-delete" onclick="deleteTx(${tx.id})" title="삭제">✕</button>
+      <button class="tx-delete" onclick="deleteTx('${tx.id}')" title="삭제">✕</button>
     </div>
   `;
 }
 
-function deleteTx(id){
-  appData.transactions = appData.transactions.filter(t=>t.id!==id);
+async function deleteTx(id){
+  await callAPI('transactions','delete',{ id: String(id) });
+  appData.transactions = appData.transactions.filter(t=>t.id!==id && t.id!==String(id));
   updateUI();
   showToast('거래가 삭제되었어요.','warning');
 }
@@ -1972,33 +2110,36 @@ function renderGoals(){
           매달 ${fmt(monthly)} 씩 저축하면 달성!
         </div>
         <div class="goal-actions">
-          <button class="btn btn-accent btn-sm" style="flex:1;" onclick="openDeposit(${g.id})">💰 적립</button>
-          <button class="btn btn-secondary btn-sm" onclick="deleteGoal(${g.id})">삭제</button>
+          <button class="btn btn-accent btn-sm" style="flex:1;" onclick="openDeposit('${g.id}')">💰 적립</button>
+          <button class="btn btn-secondary btn-sm" onclick="deleteGoal('${g.id}')">삭제</button>
         </div>
       </div>
     `;
   }).join('');
 }
 
-function deleteGoal(id){
-  appData.goals=appData.goals.filter(g=>g.id!==id);
+async function deleteGoal(id){
+  await callAPI('goals','delete',{ id: String(id) });
+  appData.goals=appData.goals.filter(g=>g.id!==id && g.id!==String(id));
   updateUI(); showToast('목표가 삭제되었어요.','warning');
 }
 
 function openDeposit(id){
   depositTargetId=id;
-  const g=appData.goals.find(g=>g.id===id);
+  const g=appData.goals.find(g=>String(g.id)===String(id));
   document.getElementById('depositGoalName').textContent=`🎯 ${g.name} — 현재 ${fmt(g.current)}`;
   document.getElementById('depositAmt').value='';
   openModal('depositModal');
 }
 
-function doDeposit(){
+async function doDeposit(){
   const amt=parseInt(document.getElementById('depositAmt').value)||0;
   if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
-  const g=appData.goals.find(g=>g.id===depositTargetId);
+  const g=appData.goals.find(g=>String(g.id)===String(depositTargetId));
   if(!g) return;
-  g.current=Math.min(g.current+amt, g.amount);
+  const newCurrent=Math.min(g.current+amt, g.amount);
+  await callAPI('goals','update',{ id: String(g.id), current: newCurrent });
+  g.current=newCurrent;
   closeModals(); updateUI();
   if(g.current>=g.amount) showToast(`🎉 "${g.name}" 목표 달성!`,'success');
   else showToast(`${fmt(amt)} 적립! 앞으로 ${fmt(g.amount-g.current)} 남았어요.`,'success');
@@ -2026,15 +2167,17 @@ function renderEssentials(){
         <div class="ess-meta">${e.cat}${e.memo?' · '+e.memo:''}</div>
       </div>
       <div class="ess-amount">${fmt(e.amount)}</div>
-      <button class="ess-paid-btn" onclick="toggleEssential(${e.id})">${e.paid?'✓ 납부완료':'납부하기'}</button>
+      <button class="ess-paid-btn" onclick="toggleEssential('${e.id}')">${e.paid?'✓ 납부완료':'납부하기'}</button>
     </div>
   `).join('');
 }
 
-function toggleEssential(id){
-  const e=appData.essentials.find(e=>e.id===id);
+async function toggleEssential(id){
+  const e=appData.essentials.find(e=>String(e.id)===String(id));
   if(!e) return;
-  e.paid=!e.paid;
+  const newPaid=!e.paid;
+  await callAPI('essentials','update',{ id: String(e.id), paid: newPaid });
+  e.paid=newPaid;
   renderEssentials();
   showToast(e.paid?`"${e.name}" 납부 완료!`:`"${e.name}" 납부 취소`,'success');
 }
@@ -2187,29 +2330,35 @@ function selectEssCat(btn, cat, icon){
   _essCatIcon=icon; _essCat=cat;
 }
 
-function addExpense(){
+async function addExpense(){
   const cat=document.getElementById('expCat').value;
   const amt=parseInt(document.getElementById('expAmt').value)||0;
   const memo=document.getElementById('expMemo').value.trim();
   if(!cat){ showToast('카테고리를 선택해주세요!','error'); return; }
   if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
-  appData.transactions.unshift({ id:nextTxId++, type:'expense', category:cat, emoji:_expCatEmoji, amount:amt, memo:memo||cat, date:new Date() });
+  const payload={ type:'expense', category:cat, emoji:_expCatEmoji, amount:amt, memo:memo||cat, date:new Date().toISOString() };
+  const saved = await callAPI('transactions','add', payload);
+  const newTx = saved || { id:nextTxId++, ...payload, date:new Date() };
+  appData.transactions.unshift({ ...newTx, date:new Date(newTx.date) });
   closeModals(); updateUI();
   showToast(`${memo||cat} — ${fmt(amt)} 지출 기록!`,'success');
 }
 
-function addIncome(){
+async function addIncome(){
   const cat=document.getElementById('incCat').value;
   const amt=parseInt(document.getElementById('incAmt').value)||0;
   const memo=document.getElementById('incMemo').value.trim();
   if(!cat){ showToast('수입 종류를 선택해주세요!','error'); return; }
   if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
-  appData.transactions.unshift({ id:nextTxId++, type:'income', category:cat, emoji:_incCatEmoji, amount:amt, memo:memo||cat, date:new Date() });
+  const payload={ type:'income', category:cat, emoji:_incCatEmoji, amount:amt, memo:memo||cat, date:new Date().toISOString() };
+  const saved = await callAPI('transactions','add', payload);
+  const newTx = saved || { id:nextTxId++, ...payload, date:new Date() };
+  appData.transactions.unshift({ ...newTx, date:new Date(newTx.date) });
   closeModals(); updateUI();
   showToast(`${memo||cat} — ${fmt(amt)} 수입 기록!`,'success');
 }
 
-function addGoal(){
+async function addGoal(){
   const name=document.getElementById('goalName').value.trim();
   const amt=parseInt(document.getElementById('goalAmt').value)||0;
   const cur=parseInt(document.getElementById('goalCurrent').value)||0;
@@ -2217,13 +2366,14 @@ function addGoal(){
   const emoji=document.getElementById('goalEmoji').value;
   if(!name){ showToast('목표 이름을 입력해주세요!','error'); return; }
   if(amt<=0){ showToast('목표 금액을 입력해주세요!','error'); return; }
-  const newId=Date.now();
-  appData.goals.push({ id:newId, emoji, name, amount:amt, current:Math.min(cur,amt), months });
+  const payload={ emoji, name, amount:amt, current:Math.min(cur,amt), months };
+  const saved = await callAPI('goals','add', payload);
+  appData.goals.push(saved || { id:Date.now(), ...payload });
   closeModals(); updateUI(); switchTab('goals', document.querySelector('.nav-item:nth-child(3)'));
   showToast(`"${name}" 목표 생성!`,'success');
 }
 
-function addEssential(){
+async function addEssential(){
   const name=document.getElementById('essName').value.trim();
   const cat=document.getElementById('essCat').value;
   const amt=parseInt(document.getElementById('essAmt').value)||0;
@@ -2231,16 +2381,46 @@ function addEssential(){
   if(!name){ showToast('항목 이름을 입력해주세요!','error'); return; }
   if(!cat){ showToast('카테고리를 선택해주세요!','error'); return; }
   if(amt<=0){ showToast('금액을 입력해주세요!','error'); return; }
-  appData.essentials.push({ id:Date.now(), icon:_essCatIcon, name, cat, amount:amt, memo, paid:false });
+  const payload={ icon:_essCatIcon, name, cat, amount:amt, memo, paid:false };
+  const saved = await callAPI('essentials','add', payload);
+  appData.essentials.push(saved || { id:Date.now(), ...payload });
   closeModals(); renderEssentials();
   showToast(`"${name}" 필수지출 추가!`,'success');
 }
 
 // ═══════════════════════════════════════════════
-//  초기화
+//  초기화 — Supabase 세션 확인 후 시작
 // ═══════════════════════════════════════════════
-updateUI();
-renderPolicy('all');
+(async () => {
+  // 기존 세션 복원 시도
+  const { data: { session } } = await _supabase.auth.getSession();
+
+  if (session) {
+    _currentSession = session;
+    await loadFromDB();
+  } else {
+    // 비로그인 상태: 빈 앱 화면 먼저 표시 후 로그인 유도
+    updateUI();
+    renderPolicy('all');
+    showAuthOverlay();
+  }
+
+  // 세션 변경(로그인/로그아웃) 감지
+  _supabase.auth.onAuthStateChange(async (event, session) => {
+    _currentSession = session;
+    if (event === 'SIGNED_IN' && session) {
+      hideAuthOverlay();
+      await loadFromDB();
+    }
+    if (event === 'SIGNED_OUT') {
+      appData.transactions = [];
+      appData.goals        = [];
+      appData.essentials   = [];
+      updateUI();
+      showAuthOverlay();
+    }
+  });
+})();
 </script>
 </body>
 </html>
