@@ -1,0 +1,9 @@
+{
+  "name": "pocket-money-tracker",
+  "version": "1.0.0",
+  "description": "용돈 관리 앱",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "2.45.4"
+  }
+}
