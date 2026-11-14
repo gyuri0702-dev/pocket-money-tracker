@@ -61,21 +61,22 @@
     .section h4{margin:0 0 12px;font-size:.95rem;font-weight:900}
     .section-note{color:var(--muted);font-size:.78rem;margin-top:4px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-    .grid-2:last-child{margin-bottom:0}
     .panel{border:1px solid #edf1eb;background:#fbfdf9;border-radius:16px;padding:18px;min-width:0}
     .panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
     .panel-head h4{margin:0}
     .link-more{font-size:.76rem;font-weight:800;color:var(--green-dark);text-decoration:none}
     .link-more:hover{text-decoration:underline}
 
-    .donut-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-    .donut{width:150px;height:150px;flex:none}
+    /* 지난달 vs 이번 달 비교 (글씨·그래프 크게) */
+    .compare-panel .panel-head h4{font-size:1.1rem}
+    .donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+    .donut{width:190px;height:190px;flex:none}
     .donut text{font-family:inherit;fill:var(--text)}
-    .legend{display:grid;gap:10px;flex:1;min-width:150px}
-    .legend-row{display:flex;align-items:center;gap:9px;font-size:.82rem}
-    .legend-dot{width:11px;height:11px;border-radius:4px;flex:none}
-    .legend-row strong{margin-left:auto;font-variant-numeric:tabular-nums}
-    .diff-pill{display:inline-block;margin-top:2px;padding:6px 11px;border-radius:99px;font-size:.78rem;font-weight:800}
+    .legend{display:grid;gap:14px;flex:1;min-width:180px}
+    .legend-row{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700}
+    .legend-dot{width:14px;height:14px;border-radius:5px;flex:none}
+    .legend-row strong{margin-left:auto;font-variant-numeric:tabular-nums;font-size:1.15rem;font-weight:900}
+    .diff-pill{display:inline-block;margin-top:2px;padding:9px 15px;border-radius:99px;font-size:.95rem;font-weight:800;line-height:1.4}
     .diff-pill.down{background:var(--green-soft);color:var(--green-dark)}
     .diff-pill.up{background:var(--peach-soft);color:#b66a5f}
     .diff-pill.flat{background:#f1f5f0;color:#6a776d}
@@ -276,7 +277,7 @@
 
       <section class="section" aria-label="대시보드 요약">
         <div class="grid-2">
-          <div class="panel">
+          <div class="panel compare-panel">
             <div class="panel-head"><h4>🍩 지난달 vs 이번 달 지출</h4></div>
             <div id="compareBox"><div class="loading">불러오는 중…</div></div>
           </div>
@@ -285,25 +286,9 @@
             <div class="insights" id="insightBox"><div class="loading">불러오는 중…</div></div>
           </div>
         </div>
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-head"><h4>🧾 최근 거래내역</h4><a class="link-more" href="#transactions">전체보기 →</a></div>
-            <div class="tx-list" id="recentList"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><h4>🎯 저축 목표 달성률</h4><a class="link-more" href="#goals">전체보기 →</a></div>
-            <div class="goal-list" id="goalMini"></div>
-          </div>
-        </div>
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-head"><h4>📋 이번 달 필수지출</h4><a class="link-more" href="#essential">전체보기 →</a></div>
-            <div id="essMini"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><h4>🍰 이번 달 카테고리별 지출</h4><a class="link-more" href="#budget">예산 보기 →</a></div>
-            <div class="cat-list" id="catMini"></div>
-          </div>
+        <div class="panel">
+          <div class="panel-head"><h4>🍰 이번 달 카테고리별 지출</h4><a class="link-more" href="#budget">예산 보기 →</a></div>
+          <div class="cat-list" id="catMini"></div>
         </div>
       </section>
 
@@ -543,7 +528,7 @@
         if(prev>0)segs+=`<circle cx="70" cy="70" r="${r}" fill="none" stroke="#a8cfe0" stroke-width="18" stroke-dasharray="${pl} ${C-pl}" stroke-dashoffset="0" transform="rotate(-90 70 70)"/>`;
         if(cur>0)segs+=`<circle cx="70" cy="70" r="${r}" fill="none" stroke="#f2b8a2" stroke-width="18" stroke-dasharray="${cl} ${C-cl}" stroke-dashoffset="${-pl}" transform="rotate(-90 70 70)"/>`;
       }else segs=`<circle cx="70" cy="70" r="${r}" fill="none" stroke="#eaf0e8" stroke-width="18"/>`;
-      return `<svg class="donut" viewBox="0 0 140 140" role="img" aria-label="지난달 지출 ${money(prev)}, 이번 달 지출 ${money(cur)}">${segs}<text x="70" y="64" text-anchor="middle" font-size="9" font-weight="700" style="fill:#758278">이번 달 지출</text><text x="70" y="82" text-anchor="middle" font-size="15" font-weight="900">₩${short(cur)}</text></svg>`;
+      return `<svg class="donut" viewBox="0 0 140 140" role="img" aria-label="지난달 지출 ${money(prev)}, 이번 달 지출 ${money(cur)}">${segs}<text x="70" y="63" text-anchor="middle" font-size="10" font-weight="700" style="fill:#758278">이번 달 지출</text><text x="70" y="83" text-anchor="middle" font-size="18" font-weight="900">₩${short(cur)}</text></svg>`;
     }
     function renderCompare(cur,prev){
       const diff=cur.expense-prev.expense;
@@ -591,29 +576,11 @@
       $('insightBox').innerHTML=buildInsights(cur,prev).map(i=>`<div class="insight ${i.t}"><span class="ic">${i.ic}</span><span>${safe(i.m)}</span></div>`).join('');
     }
 
-    function txRow(t,editable){
+    function txRow(t){
       const sign=t.type==='income'?'+':'−';
-      return `<div class="tx-row ${t.type}"><div class="tx-dot">${catIcon(t.category)}</div><div class="tx-copy"><div class="tx-title">${safe(t.name)}</div><div class="tx-sub">${t.type==='income'?'수입':'지출'} · ${safe(t.category)} · ${fmtDate(t.date)}</div></div><div class="tx-amount ${t.type}">${sign}${money(t.amount)}</div>${editable?`<div class="row-actions"><button class="icon-btn" data-act="edit-tx" data-id="${safe(t.id)}" aria-label="${safe(t.name)} 수정">수정</button><button class="icon-btn del" data-act="del-tx" data-id="${safe(t.id)}" aria-label="${safe(t.name)} 삭제">삭제</button></div>`:''}</div>`;
+      return `<div class="tx-row ${t.type}"><div class="tx-dot">${catIcon(t.category)}</div><div class="tx-copy"><div class="tx-title">${safe(t.name)}</div><div class="tx-sub">${t.type==='income'?'수입':'지출'} · ${safe(t.category)} · ${fmtDate(t.date)}</div></div><div class="tx-amount ${t.type}">${sign}${money(t.amount)}</div><div class="row-actions"><button class="icon-btn" data-act="edit-tx" data-id="${safe(t.id)}" aria-label="${safe(t.name)} 수정">수정</button><button class="icon-btn del" data-act="del-tx" data-id="${safe(t.id)}" aria-label="${safe(t.name)} 삭제">삭제</button></div></div>`;
     }
-    function renderRecent(){
-      const list=[...data.transactions].sort((a,b)=>new Date(b.date)-new Date(a.date)||b.created-a.created).slice(0,5);
-      $('recentList').innerHTML=list.length?list.map(t=>txRow(t,false)).join(''):'<div class="empty">아직 거래내역이 없어요 🌱<br><button class="btn btn-green btn-sm" data-act="open-tx">첫 거래 기록하기</button></div>';
-    }
-    function goalMiniRow(g){
-      const p=Math.min(100,pct(g.current,g.target));
-      return `<div class="goal-card ${p>=100?'done':''}"><div class="goal-name"><span>🎯 ${safe(g.name)}</span><span class="badge">${p}%</span></div><div class="progress"><span style="width:${p}%"></span></div><div class="goal-meta"><span>${money(g.current)}</span><span>${money(g.target)}</span></div></div>`;
-    }
-    function renderGoalMini(){
-      $('goalMini').innerHTML=data.goals.length?data.goals.slice(0,4).map(goalMiniRow).join(''):'<div class="empty">저축 목표가 없어요 🌼<br><button class="btn btn-soft btn-sm" data-act="open-goal">목표 만들기</button></div>';
-    }
-    function renderEssMini(){
-      const n=data.essentials.length;
-      if(!n){$('essMini').innerHTML='<div class="empty">등록된 필수지출이 없어요 📋<br><button class="btn btn-soft btn-sm" data-act="open-ess">필수지출 추가</button></div>';return}
-      const total=data.essentials.reduce((s,e)=>s+e.amount,0),paidList=data.essentials.filter(isPaid),paidAmt=paidList.reduce((s,e)=>s+e.amount,0),p=pct(paidAmt,total);
-      $('essMini').innerHTML=`<div class="goal-meta"><span>총액</span><strong>${money(total)}</strong></div><div class="progress"><span style="width:${p}%"></span></div><div class="goal-meta"><span>결제 완료 ${paidList.length}건 · ${money(paidAmt)}</span><span>미결제 ${n-paidList.length}건 · ${money(total-paidAmt)}</span></div>`+
-        `<div class="essential-list" style="margin-top:12px">${data.essentials.slice(0,4).map(e=>`<div class="essential-row ${isPaid(e)?'paid':''}"><div class="ess-copy"><div class="ess-name"><span class="ess-title">${safe(e.name)}</span><span class="badge ${isPaid(e)?'paid':'unpaid'}">${isPaid(e)?'결제 완료':'미결제'}</span></div></div><div class="ess-amount">${money(e.amount)}</div></div>`).join('')}</div>`;
-    }
-    function catBars(cur,withBudget){
+    function catBars(cur){
       const entries=Object.entries(cur.byCat).sort((a,b)=>b[1]-a[1]);
       if(!entries.length)return '<div class="empty">이번 달 지출 기록이 없어요 🍰</div>';
       return entries.map(([c,v])=>`<div class="cat-row"><div class="cat-top"><span>${catIcon(c)} ${safe(c)}</span><span class="amt">${money(v)} · ${pct(v,cur.expense)}%</span></div><div class="progress"><span style="width:${pct(v,cur.expense)}%;background:${CAT_COLOR[c]||'#cfd8d0'}"></span></div></div>`).join('');
@@ -632,7 +599,7 @@
       const q=view.q.trim().toLowerCase();
       const list=monthList.filter(t=>(view.type==='all'||t.type===view.type)&&(view.cat==='all'||t.category===view.cat)&&(!q||t.name.toLowerCase().includes(q))).sort((a,b)=>new Date(b.date)-new Date(a.date)||b.created-a.created);
       let html;
-      if(list.length)html=list.map(t=>txRow(t,true)).join('');
+      if(list.length)html=list.map(txRow).join('');
       else if(!data.transactions.length)html='<div class="empty">아직 거래내역이 없어요. 첫 기록을 추가해 보세요 🌱<br><button class="btn btn-green btn-sm" data-act="open-tx">＋ 거래 기록</button></div>';
       else html='<div class="empty">조건에 맞는 거래가 없어요 🔍</div>';
       $('txList').innerHTML=html;
@@ -663,7 +630,7 @@
       const mb=data.settings.monthlyBudget,cb=data.settings.categoryBudgets;
       const hasCat=CATS_EXP.some(c=>cb[c]);
       if(!mb&&!hasCat){
-        $('budgetBox').innerHTML=`<div class="empty">아직 설정한 예산이 없어요 💰<br>월 예산이나 카테고리별 예산을 정하면 초과 여부를 바로 알려 드려요.<br><button class="btn btn-yellow btn-sm" data-act="open-budget">예산 설정하기</button></div><div class="cat-list" style="margin-top:14px">${catBars(cur)}</div>`;
+        $('budgetBox').innerHTML=`<div class="empty">아직 설정한 예산이 없어요 💰<br>월 예산이나 카테고리별 예산을 정하면 초과 여부를 바로 알려 드려요.<br><button class="btn btn-yellow btn-sm" data-act="open-budget">예산 설정하기</button></div>`;
         return;
       }
       let html='';
@@ -683,7 +650,7 @@
 
     function render(){
       const cur=sums(nowYm()),prev=sums(shiftYm(nowYm(),-1));
-      renderStats(cur,prev);renderCompare(cur,prev);renderInsights(cur,prev);renderRecent();renderGoalMini();renderEssMini();renderCatMini(cur);
+      renderStats(cur,prev);renderCompare(cur,prev);renderInsights(cur,prev);renderCatMini(cur);
       renderTransactions();renderGoals();renderEssentials();renderBudget(cur);
     }
 
