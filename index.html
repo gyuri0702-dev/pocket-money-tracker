@@ -8,10 +8,241 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#f7faf4;--surface:#fff;--text:#344238;--muted:#758278;--line:#e6eee5;--green:#8ebc91;--green-soft:#eaf4e7;--yellow:#f2d783;--yellow-soft:#fff7dc;--blue:#a8cfe0;--blue-soft:#edf7fb;--pink:#e8b9b1;--shadow:0 10px 30px rgba(67,94,69,.08);--radius:20px}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:linear-gradient(145deg,#f7faf4,#f2f8f6 60%,#fffaf0);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh}button,input,select{font:inherit}.layout{max-width:1180px;margin:0 auto;padding:24px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px}.sidebar{position:sticky;top:24px;align-self:start;background:#eef5e9;border:1px solid #e3eddf;border-radius:24px;padding:22px 16px;box-shadow:var(--shadow);height:calc(100vh - 48px);display:flex;flex-direction:column}.brand{padding:4px 8px 22px;border-bottom:1px solid #dce8d9}.brand-mark{font-size:1.55rem}.brand h1{font-size:1.15rem;margin:6px 0 2px;font-weight:900}.brand p{margin:0;color:var(--muted);font-size:.78rem}.nav{display:grid;gap:7px;margin-top:20px}.nav a{display:flex;align-items:center;gap:10px;padding:12px;border-radius:13px;text-decoration:none;color:#59685b;font-weight:700;font-size:.9rem;transition:.2s}.nav a:hover,.nav a.active{background:#fff;color:#557d59;box-shadow:0 4px 12px rgba(67,94,69,.08)}.tip{margin-top:auto;background:#fff8df;border-radius:15px;padding:14px;font-size:.8rem;line-height:1.6;color:#766a47}.tip strong{display:block;color:#71613a;margin-bottom:4px}.main{min-width:0}.hero{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 26px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px}.hero h2{margin:0;font-size:1.55rem;letter-spacing:-.04em}.hero p{margin:6px 0 0;color:var(--muted);font-size:.88rem}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:10px 15px;cursor:pointer;font-weight:800;transition:.2s}.btn:hover{transform:translateY(-1px);filter:saturate(1.05)}.btn-green{background:#8ebc91;color:#fff}.btn-yellow{background:#f2d783;color:#554b2d}.btn-soft{background:#f1f5f0;color:#526455}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px 18px;box-shadow:var(--shadow)}.stat:nth-child(1){background:var(--green-soft)}.stat:nth-child(2){background:#fff0ed}.stat:nth-child(3){background:var(--yellow-soft)}.stat:nth-child(4){background:var(--blue-soft)}.stat-label{font-size:.8rem;font-weight:700;color:#66746a}.stat-value{font-size:1.45rem;font-weight:900;margin-top:8px;letter-spacing:-.04em}.section{scroll-margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 20px;box-shadow:var(--shadow)}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.section h3{margin:0;font-size:1.05rem;font-weight:900}.section-note{color:var(--muted);font-size:.78rem;margin-top:4px}.tx-list,.goal-list,.essential-list{display:grid;gap:9px}.tx-row{display:flex;align-items:center;gap:12px;background:#fafcf9;border:1px solid #edf1eb;border-radius:14px;padding:11px 13px}.tx-dot{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;background:var(--blue-soft);font-size:1.1rem;flex:none}.tx-copy{min-width:0;flex:1}.tx-title{font-size:.9rem;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tx-sub{font-size:.74rem;color:var(--muted);margin-top:3px}.tx-amount{font-weight:900;white-space:nowrap;font-size:.91rem}.tx-amount.income{color:#5d9b66}.tx-amount.expense{color:#c77d72}.delete{border:0;background:transparent;color:#9aa59b;cursor:pointer;padding:7px;border-radius:8px}.delete:hover{background:#fff0ed;color:#c77d72}.goal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.goal-card{padding:16px;border:1px solid #eaf0e8;background:#fbfdf9;border-radius:16px}.goal-name{font-weight:900;margin-bottom:4px}.goal-meta{font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}.progress{height:8px;background:#eaf0e8;border-radius:99px;overflow:hidden;margin:12px 0 8px}.progress span{height:100%;display:block;background:linear-gradient(90deg,#a8d1a2,#d8e9a1);border-radius:99px}.goal-actions{display:flex;gap:6px;margin-top:12px}.essential-row{display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px solid #edf1eb;background:#fafcf9;border-radius:14px}.essential-row.paid{background:#f0f7ed}.check{width:22px;height:22px;border:1.5px solid #cbd9c9;border-radius:7px;background:white;color:#fff;cursor:pointer;flex:none}.paid .check{background:#8ebc91;border-color:#8ebc91}.ess-copy{flex:1;min-width:0}.ess-name{font-weight:800;font-size:.88rem}.paid .ess-name{text-decoration:line-through;color:var(--muted)}.ess-meta{font-size:.74rem;color:var(--muted);margin-top:3px}.ess-amount{font-size:.88rem;font-weight:900;white-space:nowrap}.total{display:flex;justify-content:space-between;align-items:center;padding:14px 15px;margin-bottom:12px;border-radius:13px;background:var(--yellow-soft);font-size:.86rem;font-weight:800}.total strong{font-size:1.1rem}.empty{padding:28px 12px;text-align:center;color:var(--muted);font-size:.87rem;background:#fafcf9;border-radius:14px}.policy-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.filter-chip{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:#fafcf9;color:#657368;font-size:.82rem;font-weight:800;cursor:pointer}.filter-chip:hover,.filter-chip.active{background:#eaf4e7;border-color:#b9d5b5;color:#557d59}.policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}.policy-card{padding:17px;border:1px solid #e8eee6;border-radius:16px;background:#fcfdfb;display:flex;flex-direction:column;min-height:210px}.policy-top{display:flex;align-items:flex-start;gap:10px}.policy-icon{width:40px;height:40px;border-radius:13px;background:#edf7fb;display:grid;place-items:center;font-size:1.3rem;flex:none}.policy-card[data-category="savings"] .policy-icon{background:var(--green-soft)}.policy-card[data-category="housing"] .policy-icon{background:#f4eef9}.policy-card[data-category="job"] .policy-icon{background:var(--yellow-soft)}.policy-card[data-category="education"] .policy-icon{background:var(--blue-soft)}.policy-info{min-width:0;flex:1}.policy-name{font-weight:900;font-size:.9rem;line-height:1.45}.policy-org{font-size:.72rem;color:var(--muted);margin-top:3px}.policy-tag{font-size:.68rem;font-weight:800;color:#628c67;background:#eaf4e7;border-radius:99px;padding:4px 8px;white-space:nowrap}.policy-desc{font-size:.79rem;line-height:1.65;color:#68756b;margin:12px 0}.policy-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto}.policy-age{font-size:.7rem;color:var(--muted)}.policy-link{display:inline-flex;align-items:center;gap:5px;text-decoration:none;background:#8ebc91;color:#fff;padding:8px 11px;border-radius:10px;font-size:.76rem;font-weight:800}.policy-link:hover{background:#78a87c}.modal{position:fixed;inset:0;background:rgba(46,62,49,.35);display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.open{display:flex}.modal-box{width:min(440px,100%);background:#fff;border-radius:22px;padding:23px;box-shadow:0 20px 70px rgba(46,62,49,.2)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h3{margin:0;font-size:1.1rem}.close{border:0;background:#f1f5f0;border-radius:10px;padding:7px 10px;cursor:pointer}.field{margin-bottom:13px}.field label{display:block;font-size:.82rem;font-weight:800;margin-bottom:6px}.field input,.field select{width:100%;padding:11px 12px;border:1px solid #dfe9dc;border-radius:11px;background:#fbfdf9;color:var(--text);outline:none}.field input:focus,.field select:focus{border-color:#9fc89c;box-shadow:0 0 0 3px #eaf4e7}.modal-actions{display:flex;gap:8px;margin-top:18px}.modal-actions button{flex:1}.toast{position:fixed;bottom:20px;right:20px;background:#344238;color:#fff;padding:12px 16px;border-radius:12px;opacity:0;transform:translateY(8px);transition:.2s;z-index:20;font-size:.86rem}.toast.show{opacity:1;transform:translateY(0)}
-    @media(max-width:850px){.layout{grid-template-columns:1fr;padding:14px;gap:14px}.sidebar{position:static;height:auto;padding:14px}.brand{display:flex;align-items:center;gap:9px;padding:0 4px 12px}.brand h1{margin:0}.brand p,.tip{display:none}.brand-mark{font-size:1.3rem}.nav{display:flex;overflow-x:auto;margin-top:12px;padding-bottom:2px}.nav a{white-space:nowrap;padding:9px 11px;font-size:.82rem}.hero{padding:18px;align-items:flex-start;flex-direction:column}.stats{grid-template-columns:repeat(2,1fr)}.section{padding:17px}}
-    @media(max-width:480px){.layout{padding:10px}.hero h2{font-size:1.3rem}.actions{width:100%}.actions .btn{flex:1}.stat{padding:14px}.stat-value{font-size:1.2rem}.section-head{align-items:flex-start}.tx-row{gap:8px;padding:10px}.tx-amount{font-size:.82rem}.section{padding:14px}.policy-grid{grid-template-columns:1fr}}
+    :root{--bg:#f7faf4;--surface:#fff;--text:#344238;--muted:#758278;--line:#e6eee5;--green:#8ebc91;--green-dark:#557d59;--green-soft:#eaf4e7;--yellow:#f2d783;--yellow-soft:#fff7dc;--blue:#a8cfe0;--blue-soft:#edf7fb;--pink:#e8b9b1;--peach:#f2b8a2;--peach-soft:#fff0ed;--danger:#c77d72;--shadow:0 10px 30px rgba(67,94,69,.08);--radius:20px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:24px}
+    body{margin:0;background:linear-gradient(145deg,#f7faf4,#f2f8f6 60%,#fffaf0);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+    button,input,select{font:inherit}
+    button{color:inherit}
+    .layout{max-width:1200px;margin:0 auto;padding:24px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px}
+    .sidebar{position:sticky;top:24px;align-self:start;background:#eef5e9;border:1px solid #e3eddf;border-radius:24px;padding:22px 16px;box-shadow:var(--shadow);height:calc(100vh - 48px);display:flex;flex-direction:column}
+    .brand{padding:4px 8px 22px;border-bottom:1px solid #dce8d9}
+    .brand-mark{font-size:1.55rem}
+    .brand h1{font-size:1.15rem;margin:6px 0 2px;font-weight:900}
+    .brand p{margin:0;color:var(--muted);font-size:.78rem}
+    .nav{display:grid;gap:7px;margin-top:20px}
+    .nav a{display:flex;align-items:center;gap:10px;padding:12px;border-radius:13px;text-decoration:none;color:#59685b;font-weight:700;font-size:.9rem;transition:.2s}
+    .nav a:hover,.nav a.active{background:#fff;color:var(--green-dark);box-shadow:0 4px 12px rgba(67,94,69,.08)}
+    .tip{margin-top:auto;background:#fff8df;border-radius:15px;padding:14px;font-size:.8rem;line-height:1.6;color:#766a47}
+    .tip strong{display:block;color:#71613a;margin-bottom:4px}
+    .main{min-width:0}
+    .hero{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 26px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px}
+    .hero h2{margin:0;font-size:1.55rem;letter-spacing:-.04em}
+    .hero p{margin:6px 0 0;color:var(--muted);font-size:.88rem}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{border:0;border-radius:12px;padding:10px 15px;cursor:pointer;font-weight:800;transition:.2s;font-size:.88rem}
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.05)}
+    .btn:focus-visible,.chip:focus-visible,.icon-btn:focus-visible,.check:focus-visible{outline:3px solid #cfe5cc;outline-offset:2px}
+    .btn-green{background:var(--green);color:#fff}
+    .btn-yellow{background:var(--yellow);color:#554b2d}
+    .btn-soft{background:#f1f5f0;color:#526455}
+    .btn-danger{background:var(--danger);color:#fff}
+    .btn-sm{padding:7px 11px;font-size:.78rem;border-radius:10px}
+
+    .banner{display:none;margin-bottom:16px;padding:13px 16px;border-radius:14px;font-size:.84rem;font-weight:700;line-height:1.55}
+    .banner.show{display:block}
+    .banner.warn{background:var(--yellow-soft);color:#6f5f2c;border:1px solid #f0e0a6}
+    .banner.error{background:var(--peach-soft);color:#a65f55;border:1px solid #f1cbc3}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+    .stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px 18px;box-shadow:var(--shadow);min-width:0}
+    .stat:nth-child(1){background:var(--green-soft)}
+    .stat:nth-child(2){background:var(--peach-soft)}
+    .stat:nth-child(3){background:var(--yellow-soft)}
+    .stat:nth-child(4){background:var(--blue-soft)}
+    .stat-label{font-size:.8rem;font-weight:700;color:#66746a}
+    .stat-value{font-size:1.45rem;font-weight:900;margin-top:8px;letter-spacing:-.04em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    .stat-sub{font-size:.72rem;color:var(--muted);margin-top:4px}
+    .neg{color:var(--danger)}
+
+    .section{scroll-margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 20px;box-shadow:var(--shadow)}
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px;flex-wrap:wrap}
+    .section h3{margin:0;font-size:1.05rem;font-weight:900}
+    .section h4{margin:0 0 12px;font-size:.95rem;font-weight:900}
+    .section-note{color:var(--muted);font-size:.78rem;margin-top:4px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    .grid-2:last-child{margin-bottom:0}
+    .panel{border:1px solid #edf1eb;background:#fbfdf9;border-radius:16px;padding:18px;min-width:0}
+    .panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+    .panel-head h4{margin:0}
+    .link-more{font-size:.76rem;font-weight:800;color:var(--green-dark);text-decoration:none}
+    .link-more:hover{text-decoration:underline}
+
+    .donut-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+    .donut{width:150px;height:150px;flex:none}
+    .donut text{font-family:inherit;fill:var(--text)}
+    .legend{display:grid;gap:10px;flex:1;min-width:150px}
+    .legend-row{display:flex;align-items:center;gap:9px;font-size:.82rem}
+    .legend-dot{width:11px;height:11px;border-radius:4px;flex:none}
+    .legend-row strong{margin-left:auto;font-variant-numeric:tabular-nums}
+    .diff-pill{display:inline-block;margin-top:2px;padding:6px 11px;border-radius:99px;font-size:.78rem;font-weight:800}
+    .diff-pill.down{background:var(--green-soft);color:var(--green-dark)}
+    .diff-pill.up{background:var(--peach-soft);color:#b66a5f}
+    .diff-pill.flat{background:#f1f5f0;color:#6a776d}
+
+    .insights{display:grid;gap:9px}
+    .insight{display:flex;gap:10px;padding:11px 12px;border-radius:13px;background:#fff;border:1px solid #edf1eb;font-size:.83rem;line-height:1.55}
+    .insight .ic{font-size:1.1rem;flex:none}
+    .insight.good{background:#f0f7ed;border-color:#dcebd8}
+    .insight.warn{background:var(--yellow-soft);border-color:#f0e5b9}
+    .insight.bad{background:var(--peach-soft);border-color:#f3d4cc}
+
+    .tx-list,.goal-list,.essential-list,.cat-list{display:grid;gap:9px}
+    .tx-row{display:flex;align-items:center;gap:12px;background:#fafcf9;border:1px solid #edf1eb;border-radius:14px;padding:11px 13px}
+    .tx-dot{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;background:var(--blue-soft);font-size:1.1rem;flex:none}
+    .tx-row.income .tx-dot{background:var(--green-soft)}
+    .tx-row.expense .tx-dot{background:var(--peach-soft)}
+    .tx-copy{min-width:0;flex:1}
+    .tx-title{font-size:.9rem;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .tx-sub{font-size:.74rem;color:var(--muted);margin-top:3px}
+    .tx-amount{font-weight:900;white-space:nowrap;font-size:.92rem;font-variant-numeric:tabular-nums}
+    .tx-amount.income{color:#5d9b66}
+    .tx-amount.expense{color:var(--danger)}
+    .row-actions{display:flex;gap:2px;flex:none}
+    .icon-btn{border:0;background:transparent;color:#9aa59b;cursor:pointer;padding:7px 8px;border-radius:8px;font-size:.8rem;font-weight:700}
+    .icon-btn:hover{background:#eef3ec;color:var(--green-dark)}
+    .icon-btn.del:hover{background:var(--peach-soft);color:var(--danger)}
+
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+    .month-nav{display:flex;align-items:center;gap:6px;background:#f1f5f0;border-radius:12px;padding:4px}
+    .month-nav button{border:0;background:#fff;border-radius:9px;width:30px;height:30px;cursor:pointer;font-weight:900;color:var(--green-dark)}
+    .month-nav span{min-width:96px;text-align:center;font-weight:800;font-size:.85rem}
+    .chip{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:#fafcf9;color:#657368;font-size:.82rem;font-weight:800;cursor:pointer}
+    .chip:hover,.chip.active{background:var(--green-soft);border-color:#b9d5b5;color:var(--green-dark)}
+    .toolbar select,.toolbar input{padding:8px 11px;border:1px solid #dfe9dc;border-radius:11px;background:#fbfdf9;color:var(--text);font-size:.84rem;outline:none}
+    .toolbar input{flex:1;min-width:130px}
+    .toolbar select:focus,.toolbar input:focus{border-color:#9fc89c;box-shadow:0 0 0 3px var(--green-soft)}
+    .month-summary{display:flex;gap:16px;flex-wrap:wrap;font-size:.82rem;font-weight:800;margin-bottom:12px;color:#66746a}
+    .month-summary b{font-variant-numeric:tabular-nums}
+
+    .goal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+    .goal-card{padding:16px;border:1px solid #eaf0e8;background:#fbfdf9;border-radius:16px}
+    .goal-card.done{background:#f0f7ed;border-color:#cfe4cb}
+    .goal-name{font-weight:900;margin-bottom:6px;display:flex;justify-content:space-between;gap:6px;align-items:center}
+    .badge{font-size:.68rem;font-weight:800;border-radius:99px;padding:3px 8px;background:var(--green-soft);color:var(--green-dark);white-space:nowrap}
+    .badge.over{background:var(--peach-soft);color:#b66a5f}
+    .badge.warn{background:var(--yellow-soft);color:#7a6a2d}
+    .badge.paid{background:var(--green-soft);color:var(--green-dark)}
+    .badge.unpaid{background:var(--yellow-soft);color:#7a6a2d}
+    .badge.rec{background:var(--blue-soft);color:#4d7d90}
+    .goal-meta{font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+    .goal-meta strong{color:var(--text);font-variant-numeric:tabular-nums}
+    .progress{height:9px;background:#eaf0e8;border-radius:99px;overflow:hidden;margin:11px 0 8px}
+    .progress span{height:100%;display:block;background:linear-gradient(90deg,#a8d1a2,#d8e9a1);border-radius:99px;transition:width .4s}
+    .progress.warn span{background:linear-gradient(90deg,#f2d783,#f5e3a4)}
+    .progress.over span{background:linear-gradient(90deg,#e8b9b1,#f0cdc6)}
+    .goal-actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+
+    .essential-row{display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px solid #edf1eb;background:#fafcf9;border-radius:14px}
+    .essential-row.paid{background:#f0f7ed}
+    .check{width:24px;height:24px;border:1.5px solid #cbd9c9;border-radius:7px;background:#fff;color:#fff;cursor:pointer;flex:none;font-weight:900;line-height:1;padding:0}
+    .paid .check{background:var(--green);border-color:var(--green)}
+    .ess-copy{flex:1;min-width:0}
+    .ess-name{font-weight:800;font-size:.88rem;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+    .paid .ess-title{text-decoration:line-through;color:var(--muted)}
+    .ess-meta{font-size:.74rem;color:var(--muted);margin-top:3px}
+    .ess-amount{font-size:.88rem;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .total{display:flex;justify-content:space-between;align-items:center;padding:14px 15px;margin-bottom:12px;border-radius:13px;background:var(--yellow-soft);font-size:.86rem;font-weight:800;gap:10px;flex-wrap:wrap}
+    .total strong{font-size:1.1rem;font-variant-numeric:tabular-nums}
+    .total small{font-weight:700;color:#7a6a2d;display:block;margin-top:2px}
+
+    .budget-total{padding:16px;border-radius:16px;background:var(--blue-soft);margin-bottom:14px}
+    .budget-total .goal-meta{font-size:.82rem}
+    .cat-row{padding:12px 14px;border:1px solid #edf1eb;background:#fafcf9;border-radius:14px}
+    .cat-top{display:flex;align-items:center;gap:8px;font-size:.86rem;font-weight:800}
+    .cat-top .amt{margin-left:auto;font-variant-numeric:tabular-nums;font-size:.82rem}
+    .cat-row .progress{margin:9px 0 4px;height:8px}
+    .cat-note{font-size:.74rem;color:var(--muted)}
+    .cat-note.over{color:var(--danger);font-weight:800}
+
+    .empty{padding:28px 12px;text-align:center;color:var(--muted);font-size:.87rem;background:#fafcf9;border-radius:14px;line-height:1.7}
+    .empty .btn{margin-top:10px}
+    .loading{padding:26px 12px;text-align:center;color:var(--muted);font-size:.85rem;border-radius:14px;background:linear-gradient(90deg,#f6faf4,#eef5ea,#f6faf4);background-size:200% 100%;animation:shimmer 1.4s infinite}
+    @keyframes shimmer{to{background-position:-200% 0}}
+
+    .policy-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+    .policy-card{padding:17px;border:1px solid #e8eee6;border-radius:16px;background:#fcfdfb;display:flex;flex-direction:column;min-height:210px}
+    .policy-top{display:flex;align-items:flex-start;gap:10px}
+    .policy-icon{width:40px;height:40px;border-radius:13px;background:var(--blue-soft);display:grid;place-items:center;font-size:1.3rem;flex:none}
+    .policy-card[data-category="savings"] .policy-icon{background:var(--green-soft)}
+    .policy-card[data-category="housing"] .policy-icon{background:#f4eef9}
+    .policy-card[data-category="job"] .policy-icon{background:var(--yellow-soft)}
+    .policy-card[data-category="education"] .policy-icon{background:var(--blue-soft)}
+    .policy-info{min-width:0;flex:1}
+    .policy-name{font-weight:900;font-size:.9rem;line-height:1.45}
+    .policy-org{font-size:.72rem;color:var(--muted);margin-top:3px}
+    .policy-tag{font-size:.68rem;font-weight:800;color:#628c67;background:var(--green-soft);border-radius:99px;padding:4px 8px;white-space:nowrap}
+    .policy-desc{font-size:.79rem;line-height:1.65;color:#68756b;margin:12px 0}
+    .policy-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto}
+    .policy-age{font-size:.7rem;color:var(--muted)}
+    .policy-link{display:inline-flex;align-items:center;gap:5px;text-decoration:none;background:var(--green);color:#fff;padding:8px 11px;border-radius:10px;font-size:.76rem;font-weight:800}
+    .policy-link:hover{background:#78a87c}
+
+    .modal{position:fixed;inset:0;background:rgba(46,62,49,.35);display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+    .modal.open{display:flex}
+    .modal-box{width:min(460px,100%);max-height:calc(100vh - 36px);overflow:auto;background:#fff;border-radius:22px;padding:23px;box-shadow:0 20px 70px rgba(46,62,49,.2)}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .modal-head h3{margin:0;font-size:1.1rem}
+    .close{border:0;background:#f1f5f0;border-radius:10px;padding:7px 10px;cursor:pointer}
+    .field{margin-bottom:13px}
+    .field label{display:block;font-size:.82rem;font-weight:800;margin-bottom:6px}
+    .field label small{font-weight:600;color:var(--muted)}
+    .field input[type=text],.field input[type=number],.field input[type=date],.field select{width:100%;padding:11px 12px;border:1px solid #dfe9dc;border-radius:11px;background:#fbfdf9;color:var(--text);outline:none}
+    .field input:focus,.field select:focus{border-color:#9fc89c;box-shadow:0 0 0 3px var(--green-soft)}
+    .field .err{display:none;color:var(--danger);font-size:.76rem;font-weight:700;margin-top:5px}
+    .field.invalid input,.field.invalid select{border-color:#e0a49b;background:#fff9f8}
+    .field.invalid .err{display:block}
+    .field-check{display:flex;align-items:center;gap:8px;font-size:.84rem;font-weight:700;margin-bottom:13px}
+    .field-check input{width:18px;height:18px;accent-color:var(--green)}
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .modal-actions{display:flex;gap:8px;margin-top:18px}
+    .modal-actions button{flex:1}
+    .modal-actions button:disabled{opacity:.6;cursor:default;transform:none}
+    .confirm-text{font-size:.9rem;line-height:1.65;color:#4c5b4f}
+    .budget-grid{display:grid;gap:9px}
+    .budget-grid .brow{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:10px;font-size:.84rem;font-weight:800}
+    .budget-grid input{width:100%;padding:9px 11px;border:1px solid #dfe9dc;border-radius:10px;background:#fbfdf9;outline:none}
+    .budget-grid input:focus{border-color:#9fc89c;box-shadow:0 0 0 3px var(--green-soft)}
+
+    .toast{position:fixed;bottom:20px;right:20px;background:#344238;color:#fff;padding:12px 16px;border-radius:12px;opacity:0;transform:translateY(8px);transition:.2s;z-index:20;font-size:.86rem;max-width:calc(100vw - 40px);pointer-events:none}
+    .toast.show{opacity:1;transform:translateY(0)}
+    .toast.error{background:#a65f55}
+    .toast.success{background:#4f7a54}
+
+    @media(max-width:1000px){.grid-2{grid-template-columns:1fr}}
+    @media(max-width:850px){
+      .layout{grid-template-columns:1fr;padding:14px;gap:14px}
+      .sidebar{position:sticky;top:8px;z-index:5;height:auto;padding:12px 14px}
+      .brand{display:flex;align-items:center;gap:9px;padding:0 4px 10px}
+      .brand h1{margin:0}
+      .brand p,.tip{display:none}
+      .brand-mark{font-size:1.3rem}
+      .nav{display:flex;overflow-x:auto;margin-top:10px;padding-bottom:2px}
+      .nav a{white-space:nowrap;padding:9px 11px;font-size:.82rem}
+      .hero{padding:18px;align-items:flex-start;flex-direction:column}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .section{padding:17px}
+      html{scroll-padding-top:120px}
+      .section{scroll-margin-top:120px}
+    }
+    @media(max-width:480px){
+      .layout{padding:10px}
+      .hero h2{font-size:1.3rem}
+      .actions{width:100%}
+      .actions .btn{flex:1;padding:10px 8px}
+      .stat{padding:14px}
+      .stat-value{font-size:1.15rem}
+      .tx-row{gap:8px;padding:10px}
+      .tx-amount{font-size:.82rem}
+      .section{padding:14px}
+      .policy-grid{grid-template-columns:1fr}
+      .field-row{grid-template-columns:1fr}
+      .donut{margin:0 auto}
+      .budget-grid .brow{grid-template-columns:90px 1fr}
+      .row-actions .icon-btn{padding:7px 6px}
+    }
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
@@ -19,50 +250,189 @@
     <aside class="sidebar">
       <div class="brand"><span class="brand-mark">🌱</span><div><h1>용돈플래너</h1><p>가볍게 기록하고, 차근차근 모아요</p></div></div>
       <nav class="nav" aria-label="페이지 메뉴">
-        <a class="active" href="#dashboard">📊 대시보드</a><a href="#transactions">💳 거래내역</a><a href="#goals">🎯 목표</a><a href="#essential">📋 필수지출</a><a href="#policy">🏛️ 지원금 정책</a>
+        <a class="active" href="#dashboard">📊 대시보드</a><a href="#transactions">💳 거래내역</a><a href="#goals">🎯 목표</a><a href="#essential">📋 필수지출</a><a href="#budget">💰 예산</a><a href="#policy">🏛️ 지원금 정책</a>
       </nav>
       <div class="tip"><strong>💡 오늘의 작은 습관</strong>작은 기록이 모이면 나만의 소비 흐름이 보여요.</div>
     </aside>
+
     <main class="main">
       <header class="hero" id="dashboard">
         <div><h2>나의 용돈 한눈에 보기 ☁️</h2><p id="today"></p></div>
-        <div class="actions"><button class="btn btn-soft" onclick="openModal('goalModal')">＋ 목표 추가</button><button class="btn btn-yellow" onclick="openModal('essentialModal')">＋ 필수지출 추가</button><button class="btn btn-green" onclick="openModal('txModal')">＋ 거래 기록</button></div>
+        <div class="actions">
+          <button class="btn btn-soft" data-act="open-goal">＋ 목표 추가</button>
+          <button class="btn btn-yellow" data-act="open-ess">＋ 필수지출 추가</button>
+          <button class="btn btn-green" data-act="open-tx">＋ 거래 기록</button>
+        </div>
       </header>
-      <div class="stats">
+
+      <div class="banner" id="banner" role="alert"></div>
+
+      <div class="stats" id="stats">
         <article class="stat"><div class="stat-label">🌿 이번 달 수입</div><div class="stat-value" id="incomeStat">₩0</div></article>
         <article class="stat"><div class="stat-label">🍑 이번 달 지출</div><div class="stat-value" id="expenseStat">₩0</div></article>
-        <article class="stat"><div class="stat-label">🌼 남은 용돈</div><div class="stat-value" id="balanceStat">₩0</div></article>
-        <article class="stat"><div class="stat-label">🫧 목표 달성률</div><div class="stat-value" id="goalStat">0%</div></article>
+        <article class="stat"><div class="stat-label">🌼 남은 용돈</div><div class="stat-value" id="balanceStat">₩0</div><div class="stat-sub" id="balanceSub"></div></article>
+        <article class="stat"><div class="stat-label">🫧 목표 달성률</div><div class="stat-value" id="goalStat">0%</div><div class="stat-sub" id="goalSub"></div></article>
       </div>
+
+      <section class="section" aria-label="대시보드 요약">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head"><h4>🍩 지난달 vs 이번 달 지출</h4></div>
+            <div id="compareBox"><div class="loading">불러오는 중…</div></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h4>✨ 이번 달 소비 인사이트</h4></div>
+            <div class="insights" id="insightBox"><div class="loading">불러오는 중…</div></div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head"><h4>🧾 최근 거래내역</h4><a class="link-more" href="#transactions">전체보기 →</a></div>
+            <div class="tx-list" id="recentList"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h4>🎯 저축 목표 달성률</h4><a class="link-more" href="#goals">전체보기 →</a></div>
+            <div class="goal-list" id="goalMini"></div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head"><h4>📋 이번 달 필수지출</h4><a class="link-more" href="#essential">전체보기 →</a></div>
+            <div id="essMini"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h4>🍰 이번 달 카테고리별 지출</h4><a class="link-more" href="#budget">예산 보기 →</a></div>
+            <div class="cat-list" id="catMini"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="transactions">
-        <div class="section-head"><div><h3>💳 거래내역</h3><div class="section-note">최근 기록을 간단하게 확인해요.</div></div><button class="btn btn-soft" onclick="openModal('txModal')">＋ 거래 기록</button></div>
-        <div class="tx-list" id="txList"></div>
+        <div class="section-head">
+          <div><h3>💳 거래내역</h3><div class="section-note">월별로 확인하고, 항목을 눌러 수정하거나 삭제할 수 있어요.</div></div>
+          <button class="btn btn-green" data-act="open-tx">＋ 거래 기록</button>
+        </div>
+        <div class="toolbar">
+          <div class="month-nav"><button data-act="month-prev" aria-label="이전 달">‹</button><span id="txMonthLabel"></span><button data-act="month-next" aria-label="다음 달">›</button></div>
+          <button class="chip active" data-act="tx-type" data-type="all">전체</button>
+          <button class="chip" data-act="tx-type" data-type="income">수입</button>
+          <button class="chip" data-act="tx-type" data-type="expense">지출</button>
+        </div>
+        <div class="toolbar">
+          <select id="txCatFilter" aria-label="카테고리 필터"></select>
+          <input id="txSearch" type="text" placeholder="항목 검색" maxlength="40" aria-label="항목 검색">
+        </div>
+        <div class="month-summary" id="txSummary"></div>
+        <div class="tx-list" id="txList"><div class="loading">불러오는 중…</div></div>
       </section>
+
       <section class="section" id="goals">
-        <div class="section-head"><div><h3>🎯 저축 목표</h3><div class="section-note">원하는 목표와 현재 모은 금액을 관리해요.</div></div><button class="btn btn-soft" onclick="openModal('goalModal')">＋ 목표 추가</button></div>
-        <div class="goal-list goal-grid" id="goalList"></div>
+        <div class="section-head">
+          <div><h3>🎯 저축 목표</h3><div class="section-note">목표별로 모은 금액을 기록하고 수정해요.</div></div>
+          <button class="btn btn-soft" data-act="open-goal">＋ 목표 추가</button>
+        </div>
+        <div class="goal-list goal-grid" id="goalList"><div class="loading">불러오는 중…</div></div>
       </section>
+
       <section class="section" id="essential">
-        <div class="section-head"><div><h3>📋 필수지출</h3><div class="section-note">이번 달 꼭 필요한 지출을 체크해요.</div></div><button class="btn btn-soft" onclick="openModal('essentialModal')">＋ 지출 추가</button></div>
-        <div class="total"><span>필수지출 합계</span><strong id="essentialTotal">₩0</strong></div>
-        <div class="essential-list" id="essentialList"></div>
+        <div class="section-head">
+          <div><h3>📋 필수지출</h3><div class="section-note">체크하면 결제 완료로 표시되고 거래내역(지출)에도 기록돼요. 매월 반복 항목은 달이 바뀌면 자동으로 미결제로 돌아와요.</div></div>
+          <button class="btn btn-soft" data-act="open-ess">＋ 지출 추가</button>
+        </div>
+        <div class="total"><div><span>필수지출 합계</span><small id="essentialSub"></small></div><strong id="essentialTotal">₩0</strong></div>
+        <div class="essential-list" id="essentialList"><div class="loading">불러오는 중…</div></div>
       </section>
+
+      <section class="section" id="budget">
+        <div class="section-head">
+          <div><h3>💰 예산 관리</h3><div class="section-note">이번 달 지출 기준으로 월 예산과 카테고리별 예산을 비교해요.</div></div>
+          <button class="btn btn-yellow" data-act="open-budget">예산 설정</button>
+        </div>
+        <div id="budgetBox"><div class="loading">불러오는 중…</div></div>
+      </section>
+
       <section class="section" id="policy">
         <div class="section-head"><div><h3>🏛️ 청년 지원금 정책</h3><div class="section-note">저축·주거·취업·교육 관련 지원 제도를 살펴보세요. 신청 전 공식 사이트에서 자격과 기간을 확인해 주세요.</div></div></div>
         <div class="policy-filters" role="group" aria-label="정책 분류">
-          <button class="filter-chip active" data-filter="all" onclick="filterPolicies('all',this)">전체</button><button class="filter-chip" data-filter="savings" onclick="filterPolicies('savings',this)">저축·금융</button><button class="filter-chip" data-filter="housing" onclick="filterPolicies('housing',this)">주거</button><button class="filter-chip" data-filter="job" onclick="filterPolicies('job',this)">취업·일자리</button><button class="filter-chip" data-filter="education" onclick="filterPolicies('education',this)">교육</button>
+          <button class="chip active" data-filter="all" onclick="filterPolicies('all',this)">전체</button><button class="chip" data-filter="savings" onclick="filterPolicies('savings',this)">저축·금융</button><button class="chip" data-filter="housing" onclick="filterPolicies('housing',this)">주거</button><button class="chip" data-filter="job" onclick="filterPolicies('job',this)">취업·일자리</button><button class="chip" data-filter="education" onclick="filterPolicies('education',this)">교육</button>
         </div>
         <div class="policy-grid" id="policyGrid"></div>
       </section>
     </main>
   </div>
-  <div class="modal" id="txModal" role="dialog" aria-modal="true" aria-labelledby="txModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="txModalTitle">거래 기록 추가</h3><button class="close" onclick="closeModal('txModal')" aria-label="닫기">✕</button></div><form id="txForm"><div class="field"><label for="txType">구분</label><select id="txType"><option value="expense">지출</option><option value="income">수입</option></select></div><div class="field"><label for="txName">항목</label><input id="txName" maxlength="40" placeholder="예: 간식, 용돈" required></div><div class="field"><label for="txAmount">금액</label><input id="txAmount" type="number" min="1" placeholder="금액 입력" required></div><div class="modal-actions"><button type="button" class="btn btn-soft" onclick="closeModal('txModal')">취소</button><button class="btn btn-green">저장</button></div></form></div></div>
-  <div class="modal" id="goalModal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="goalModalTitle">저축 목표 추가</h3><button class="close" onclick="closeModal('goalModal')" aria-label="닫기">✕</button></div><form id="goalForm"><div class="field"><label for="goalName">목표 이름</label><input id="goalName" maxlength="40" placeholder="예: 새 자전거" required></div><div class="field"><label for="goalTarget">목표 금액</label><input id="goalTarget" type="number" min="1" placeholder="금액 입력" required></div><div class="field"><label for="goalCurrent">현재 모은 금액</label><input id="goalCurrent" type="number" min="0" value="0"></div><div class="modal-actions"><button type="button" class="btn btn-soft" onclick="closeModal('goalModal')">취소</button><button class="btn btn-green">저장</button></div></form></div></div>
-  <div class="modal" id="essentialModal" role="dialog" aria-modal="true" aria-labelledby="essentialModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="essentialModalTitle">필수지출 추가</h3><button class="close" onclick="closeModal('essentialModal')" aria-label="닫기">✕</button></div><form id="essentialForm"><div class="field"><label for="essentialName">항목</label><input id="essentialName" maxlength="40" placeholder="예: 교통비, 통신비" required></div><div class="field"><label for="essentialAmount">예상 금액</label><input id="essentialAmount" type="number" min="1" placeholder="금액 입력" required></div><div class="modal-actions"><button type="button" class="btn btn-soft" onclick="closeModal('essentialModal')">취소</button><button class="btn btn-green">저장</button></div></form></div></div>
+
+  <!-- 거래 모달 -->
+  <div class="modal" id="txModal" role="dialog" aria-modal="true" aria-labelledby="txModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="txModalTitle">거래 기록 추가</h3><button class="close" type="button" data-act="close-modal" aria-label="닫기">✕</button></div>
+    <form id="txForm" novalidate><input type="hidden" id="txId">
+      <div class="field-row">
+        <div class="field"><label for="txType">구분</label><select id="txType"><option value="expense">지출</option><option value="income">수입</option></select></div>
+        <div class="field"><label for="txCategory">카테고리</label><select id="txCategory"></select></div>
+      </div>
+      <div class="field" id="fTxName"><label for="txName">항목</label><input id="txName" type="text" maxlength="40" placeholder="예: 간식, 용돈" autocomplete="off"><div class="err"></div></div>
+      <div class="field" id="fTxAmount"><label for="txAmount">금액 (원)</label><input id="txAmount" type="number" inputmode="numeric" min="1" step="1" placeholder="금액 입력"><div class="err"></div></div>
+      <div class="field" id="fTxDate"><label for="txDate">날짜</label><input id="txDate" type="date"><div class="err"></div></div>
+      <div class="modal-actions"><button type="button" class="btn btn-soft" data-act="close-modal">취소</button><button class="btn btn-green" type="submit">저장</button></div>
+    </form></div></div>
+
+  <!-- 목표 모달 -->
+  <div class="modal" id="goalModal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="goalModalTitle">저축 목표 추가</h3><button class="close" type="button" data-act="close-modal" aria-label="닫기">✕</button></div>
+    <form id="goalForm" novalidate><input type="hidden" id="goalId">
+      <div class="field" id="fGoalName"><label for="goalName">목표 이름</label><input id="goalName" type="text" maxlength="40" placeholder="예: 새 자전거" autocomplete="off"><div class="err"></div></div>
+      <div class="field" id="fGoalTarget"><label for="goalTarget">목표 금액 (원)</label><input id="goalTarget" type="number" inputmode="numeric" min="1" step="1" placeholder="금액 입력"><div class="err"></div></div>
+      <div class="field" id="fGoalCurrent"><label for="goalCurrent">현재 모은 금액 (원)</label><input id="goalCurrent" type="number" inputmode="numeric" min="0" step="1" value="0"><div class="err"></div></div>
+      <div class="modal-actions"><button type="button" class="btn btn-soft" data-act="close-modal">취소</button><button class="btn btn-green" type="submit">저장</button></div>
+    </form></div></div>
+
+  <!-- 저축 기록 모달 -->
+  <div class="modal" id="savingModal" role="dialog" aria-modal="true" aria-labelledby="savingModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="savingModalTitle">저축 기록</h3><button class="close" type="button" data-act="close-modal" aria-label="닫기">✕</button></div>
+    <form id="savingForm" novalidate><input type="hidden" id="savingGoalId">
+      <p class="confirm-text" id="savingInfo" style="margin-top:0"></p>
+      <div class="field-row">
+        <div class="field"><label for="savingMode">구분</label><select id="savingMode"><option value="add">저축 추가</option><option value="sub">금액 차감</option></select></div>
+        <div class="field" id="fSavingAmount"><label for="savingAmount">금액 (원)</label><input id="savingAmount" type="number" inputmode="numeric" min="1" step="1" placeholder="금액 입력"><div class="err"></div></div>
+      </div>
+      <div class="modal-actions"><button type="button" class="btn btn-soft" data-act="close-modal">취소</button><button class="btn btn-green" type="submit">저장</button></div>
+    </form></div></div>
+
+  <!-- 필수지출 모달 -->
+  <div class="modal" id="essentialModal" role="dialog" aria-modal="true" aria-labelledby="essentialModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="essentialModalTitle">필수지출 추가</h3><button class="close" type="button" data-act="close-modal" aria-label="닫기">✕</button></div>
+    <form id="essentialForm" novalidate><input type="hidden" id="essentialId">
+      <div class="field" id="fEssName"><label for="essentialName">항목</label><input id="essentialName" type="text" maxlength="40" placeholder="예: 교통비, 통신비, 구독료" autocomplete="off"><div class="err"></div></div>
+      <div class="field" id="fEssAmount"><label for="essentialAmount">예상 금액 (원)</label><input id="essentialAmount" type="number" inputmode="numeric" min="1" step="1" placeholder="금액 입력"><div class="err"></div></div>
+      <div class="field-row">
+        <div class="field"><label for="essentialCategory">카테고리</label><select id="essentialCategory"></select></div>
+        <div class="field" id="fEssDay"><label for="essentialDay">결제일 <small>(선택)</small></label><input id="essentialDay" type="number" inputmode="numeric" min="1" max="31" step="1" placeholder="1~31"><div class="err"></div></div>
+      </div>
+      <label class="field-check"><input type="checkbox" id="essentialRecurring" checked> 매월 반복되는 지출이에요</label>
+      <div class="modal-actions"><button type="button" class="btn btn-soft" data-act="close-modal">취소</button><button class="btn btn-green" type="submit">저장</button></div>
+    </form></div></div>
+
+  <!-- 예산 모달 -->
+  <div class="modal" id="budgetModal" role="dialog" aria-modal="true" aria-labelledby="budgetModalTitle"><div class="modal-box"><div class="modal-head"><h3 id="budgetModalTitle">예산 설정</h3><button class="close" type="button" data-act="close-modal" aria-label="닫기">✕</button></div>
+    <form id="budgetForm" novalidate>
+      <div class="field" id="fBudgetTotal"><label for="budgetTotal">월 전체 예산 (원) <small>비우면 설정 안 함</small></label><input id="budgetTotal" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 300000"><div class="err"></div></div>
+      <label style="display:block;font-size:.82rem;font-weight:800;margin-bottom:8px">카테고리별 예산 <small style="font-weight:600;color:var(--muted)">(선택)</small></label>
+      <div class="budget-grid" id="budgetCats"></div>
+      <div class="err" id="budgetErr" style="display:none;color:var(--danger);font-size:.76rem;font-weight:700;margin-top:8px"></div>
+      <div class="modal-actions"><button type="button" class="btn btn-soft" data-act="close-modal">취소</button><button class="btn btn-green" type="submit">저장</button></div>
+    </form></div></div>
+
+  <!-- 확인 모달 -->
+  <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle"><div class="modal-box"><div class="modal-head"><h3 id="confirmTitle">정말 삭제할까요?</h3><button class="close" type="button" data-act="close-modal" aria-label="닫기">✕</button></div>
+    <p class="confirm-text" id="confirmText"></p>
+    <div class="modal-actions"><button type="button" class="btn btn-soft" data-act="close-modal">취소</button><button type="button" class="btn btn-danger" id="confirmOk">삭제</button></div></div></div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
+    /* ===== 저장소 (기존 키/데이터 구조 유지) ===== */
     const STORAGE_KEY='pocketMoneyTracker_pastel_v1';
-    const blankData={transactions:[],goals:[],essentials:[]};
+    const MAX_AMOUNT=9999999999;
+    const CATS_EXP=['식비','교통','통신','구독','쇼핑','여가','교육','기타'];
+    const CATS_INC=['용돈','아르바이트','기타수입'];
+    const CAT_ICON={식비:'🍙',교통:'🚌',통신:'📱',구독:'🎬',쇼핑:'🛍️',여가:'🎮',교육:'📚',기타:'🧺',용돈:'🌱',아르바이트:'💼',기타수입:'🌼'};
+    const CAT_COLOR={식비:'#f2b8a2',교통:'#a8cfe0',통신:'#b9d9a8',구독:'#d9c3ea',쇼핑:'#f2d783',여가:'#f0b6c8',교육:'#9fd3c7',기타:'#cfd8d0'};
+
     const policies=[
       {category:'savings',icon:'💰',name:'청년도약계좌',org:'서민금융진흥원',desc:'매월 납입하며 정부기여금과 이자 혜택을 통해 자산 형성을 돕는 청년 금융상품입니다.',age:'청년 대상',url:'https://ylaccount.kinfa.or.kr/'},
       {category:'savings',icon:'🌱',name:'청년내일저축계좌',org:'자산형성포털',desc:'근로·사업소득이 있는 청년의 저축에 정부지원금을 더해 자산 형성을 지원합니다.',age:'소득·가구 요건 확인',url:'https://hope.welfareinfo.or.kr/'},
@@ -77,34 +447,443 @@
       {category:'education',icon:'📚',name:'국가근로장학금',org:'한국장학재단',desc:'대학생이 교내·외 근로를 통해 학비와 생활비를 마련하도록 지원하는 장학 제도입니다.',age:'대학생 대상',url:'https://www.kosaf.go.kr/'},
       {category:'education',icon:'💻',name:'K-디지털 트레이닝',org:'고용24',desc:'디지털·신기술 분야의 실무 중심 훈련을 지원하는 직업훈련 과정입니다.',age:'훈련 희망자',url:'https://www.work24.go.kr/'}
     ];
-    let data=loadData();
-    function loadData(){try{return {...blankData,...JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}}catch{return {...blankData}}}
-    function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));render()}
-    function money(value){return '₩'+Number(value||0).toLocaleString('ko-KR')}
-    function safe(value){const el=document.createElement('span');el.textContent=String(value??'');return el.innerHTML}
-    function notify(message){const toast=document.getElementById('toast');toast.textContent=message;toast.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>toast.classList.remove('show'),2200)}
-    function openModal(id){document.getElementById(id).classList.add('open');const first=document.querySelector('#'+id+' input');if(first)setTimeout(()=>first.focus(),30)}
-    function closeModal(id){document.getElementById(id).classList.remove('open')}
-    function removeItem(group,id){data[group]=data[group].filter(item=>item.id!==id);save();notify('항목을 삭제했어요.')}
-    function monthTransactions(){const now=new Date();return data.transactions.filter(item=>{const d=new Date(item.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()})}
-    function renderPolicies(filter='all'){const grid=document.getElementById('policyGrid');const filtered=filter==='all'?policies:policies.filter(p=>p.category===filter);grid.innerHTML=filtered.map(p=>`<article class="policy-card" data-category="${p.category}"><div class="policy-top"><div class="policy-icon">${p.icon}</div><div class="policy-info"><div class="policy-name">${p.name}</div><div class="policy-org">${p.org}</div></div><span class="policy-tag">${({savings:'저축·금융',housing:'주거',job:'취업·일자리',education:'교육'})[p.category]}</span></div><p class="policy-desc">${p.desc}</p><div class="policy-bottom"><span class="policy-age">${p.age}</span><a class="policy-link" href="${p.url}" target="_blank" rel="noopener noreferrer">공식 안내 ↗</a></div></article>`).join('')}
-    function filterPolicies(filter,button){document.querySelectorAll('.filter-chip').forEach(item=>item.classList.remove('active'));button.classList.add('active');renderPolicies(filter)}
-    function render(){
-      const tx=monthTransactions(),income=tx.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0),expense=tx.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0),goalTarget=data.goals.reduce((s,g)=>s+g.target,0),goalCurrent=data.goals.reduce((s,g)=>s+Math.min(g.current,g.target),0);
-      document.getElementById('incomeStat').textContent=money(income);document.getElementById('expenseStat').textContent=money(expense);document.getElementById('balanceStat').textContent=money(income-expense);document.getElementById('goalStat').textContent=(goalTarget?Math.round(goalCurrent/goalTarget*100):0)+'%';
-      const date=new Date();document.getElementById('today').textContent=date.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
-      const txList=document.getElementById('txList');const sorted=[...data.transactions].sort((a,b)=>b.created-a.created);
-      txList.innerHTML=sorted.length?sorted.map(t=>`<div class="tx-row"><div class="tx-dot">${t.type==='income'?'🌱':'🧺'}</div><div class="tx-copy"><div class="tx-title">${safe(t.name)}</div><div class="tx-sub">${t.type==='income'?'수입':'지출'} · ${new Date(t.date).toLocaleDateString('ko-KR')}</div></div><div class="tx-amount ${t.type}">${t.type==='income'?'+':'−'}${money(t.amount)}</div><button class="delete" onclick="removeItem('transactions','${t.id}')" aria-label="${safe(t.name)} 거래 삭제">✕</button></div>`).join(''):'<div class="empty">아직 거래내역이 없어요. 첫 기록을 추가해 보세요 🌱</div>';
-      const goalList=document.getElementById('goalList');goalList.innerHTML=data.goals.length?data.goals.map(g=>{const pct=Math.min(100,Math.round(g.current/g.target*100));return `<article class="goal-card"><div class="goal-name">🎯 ${safe(g.name)}</div><div class="goal-meta"><span>${money(g.current)} 모았어요</span><span>${pct}%</span></div><div class="progress"><span style="width:${pct}%"></span></div><div class="goal-meta"><span>목표 금액</span><strong>${money(g.target)}</strong></div><div class="goal-actions"><button class="btn btn-soft" onclick="addToGoal('${g.id}')">＋ 저축 기록</button><button class="delete" onclick="removeItem('goals','${g.id}')" aria-label="${safe(g.name)} 목표 삭제">삭제</button></div></article>`}).join(''):'<div class="empty" style="grid-column:1/-1">아직 목표가 없어요. 작은 목표부터 만들어 보세요 🌼</div>';
-      const total=data.essentials.reduce((s,e)=>s+e.amount,0);document.getElementById('essentialTotal').textContent=money(total);const list=document.getElementById('essentialList');list.innerHTML=data.essentials.length?data.essentials.map(e=>`<div class="essential-row ${e.paid?'paid':''}"><button class="check" onclick="toggleEssential('${e.id}')" aria-label="${safe(e.name)} 납부 상태 변경">${e.paid?'✓':''}</button><div class="ess-copy"><div class="ess-name">${safe(e.name)}</div><div class="ess-meta">${e.paid?'납부 완료':'납부 전'}</div></div><div class="ess-amount">${money(e.amount)}</div><button class="delete" onclick="removeItem('essentials','${e.id}')" aria-label="${safe(e.name)} 지출 삭제">✕</button></div>`).join(''):'<div class="empty">등록된 필수지출이 없어요 📋</div>';
+
+    /* ===== 유틸 ===== */
+    const $=id=>document.getElementById(id);
+    const pad=n=>String(n).padStart(2,'0');
+    const uid=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'id-'+Date.now().toString(36)+Math.random().toString(36).slice(2,9);
+    function money(v){return '₩'+Number(v||0).toLocaleString('ko-KR')}
+    function short(n){n=Math.round(n);if(n>=100000000)return (n/100000000).toFixed(1).replace('.0','')+'억';if(n>=10000)return (n/10000).toFixed(n%10000?1:0).replace('.0','')+'만';return n.toLocaleString('ko-KR')}
+    function safe(v){const el=document.createElement('span');el.textContent=String(v??'');return el.innerHTML.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+    function ymOf(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)}
+    function shiftYm(s,n){const [y,m]=s.split('-').map(Number);return ymOf(new Date(y,m-1+n,1))}
+    function ymLabel(s){const [y,m]=s.split('-');return y+'년 '+Number(m)+'월'}
+    function dateInput(iso){const d=new Date(iso);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+    function fmtDate(iso){return new Date(iso).toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'short'})}
+    function pct(a,b){return b>0?Math.round(a/b*100):0}
+    function catIcon(c){return CAT_ICON[c]||'🧺'}
+    function notify(msg,type){const t=$('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(notify.timer);notify.timer=setTimeout(()=>t.classList.remove('show'),2400)}
+    function showBanner(msg,kind){const b=$('banner');b.textContent=msg;b.className='banner show '+(kind||'warn')}
+
+    /* ===== 데이터 로드/검증 ===== */
+    let storageOk=true;
+    function validAmount(v){return typeof v==='number'&&isFinite(v)&&v>0}
+    function normalize(raw){
+      const d={transactions:[],goals:[],essentials:[],settings:{monthlyBudget:0,categoryBudgets:{}}};
+      if(!raw||typeof raw!=='object')return d;
+      (Array.isArray(raw.transactions)?raw.transactions:[]).forEach(t=>{
+        if(!t||(t.type!=='income'&&t.type!=='expense')||!validAmount(Number(t.amount)))return;
+        const dt=new Date(t.date);const date=isNaN(dt)?new Date().toISOString():dt.toISOString();
+        const list=t.type==='income'?CATS_INC:CATS_EXP;
+        d.transactions.push({...t,id:String(t.id||uid()),name:String(t.name||'').slice(0,40),amount:Number(t.amount),date,created:Number(t.created)||dt.getTime()||Date.now(),category:list.includes(t.category)?t.category:(t.type==='income'?'기타수입':'기타')});
+      });
+      (Array.isArray(raw.goals)?raw.goals:[]).forEach(g=>{
+        if(!g||!validAmount(Number(g.target)))return;
+        d.goals.push({...g,id:String(g.id||uid()),name:String(g.name||'').slice(0,40),target:Number(g.target),current:Math.max(0,Number(g.current)||0)});
+      });
+      (Array.isArray(raw.essentials)?raw.essentials:[]).forEach(e=>{
+        if(!e||!validAmount(Number(e.amount)))return;
+        d.essentials.push({...e,id:String(e.id||uid()),name:String(e.name||'').slice(0,40),amount:Number(e.amount),paid:!!e.paid,recurring:!!e.recurring,category:CATS_EXP.includes(e.category)?e.category:'기타',dueDay:Number(e.dueDay)>=1&&Number(e.dueDay)<=31?Math.floor(Number(e.dueDay)):null,paidMonth:e.paidMonth||null});
+      });
+      const s=raw.settings||{};
+      d.settings.monthlyBudget=validAmount(Number(s.monthlyBudget))?Number(s.monthlyBudget):0;
+      if(s.categoryBudgets&&typeof s.categoryBudgets==='object')CATS_EXP.forEach(c=>{const v=Number(s.categoryBudgets[c]);if(validAmount(v))d.settings.categoryBudgets[c]=v});
+      return d;
     }
-    function toggleEssential(id){const item=data.essentials.find(e=>e.id===id);if(item){item.paid=!item.paid;save()}}
-    function addToGoal(id){const g=data.goals.find(item=>item.id===id);if(!g)return;const value=Number(prompt('얼마를 저축했나요?'));if(!Number.isFinite(value)||value<=0)return;g.current=Math.min(g.target,g.current+value);save();notify('목표 저축을 기록했어요!')}
-    document.getElementById('txForm').addEventListener('submit',event=>{event.preventDefault();data.transactions.unshift({id:crypto.randomUUID(),type:document.getElementById('txType').value,name:document.getElementById('txName').value.trim(),amount:Number(document.getElementById('txAmount').value),date:new Date().toISOString(),created:Date.now()});save();event.target.reset();closeModal('txModal');notify('거래내역을 저장했어요.')});
-    document.getElementById('goalForm').addEventListener('submit',event=>{event.preventDefault();data.goals.push({id:crypto.randomUUID(),name:document.getElementById('goalName').value.trim(),target:Number(document.getElementById('goalTarget').value),current:Number(document.getElementById('goalCurrent').value)||0});save();event.target.reset();closeModal('goalModal');notify('새 목표를 추가했어요.')});
-    document.getElementById('essentialForm').addEventListener('submit',event=>{event.preventDefault();data.essentials.push({id:crypto.randomUUID(),name:document.getElementById('essentialName').value.trim(),amount:Number(document.getElementById('essentialAmount').value),paid:false});save();event.target.reset();closeModal('essentialModal');notify('필수지출을 추가했어요.')});
-    document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',event=>{if(event.target===modal)closeModal(modal.id)}));document.addEventListener('keydown',event=>{if(event.key==='Escape')document.querySelectorAll('.modal.open').forEach(modal=>closeModal(modal.id))});
-    document.querySelectorAll('.nav a').forEach(link=>link.addEventListener('click',()=>{document.querySelectorAll('.nav a').forEach(item=>item.classList.remove('active'));link.classList.add('active')}));
+    function loadData(){
+      let text=null;
+      try{text=localStorage.getItem(STORAGE_KEY)}catch(e){storageOk=false;showBanner('이 브라우저에서는 저장 공간을 사용할 수 없어요. 지금 입력한 내용은 페이지를 닫으면 사라질 수 있어요.','warn');return normalize(null)}
+      if(!text)return normalize(null);
+      try{return normalize(JSON.parse(text))}
+      catch(e){
+        try{localStorage.setItem(STORAGE_KEY+'_backup_'+Date.now(),text)}catch(_){}
+        showBanner('저장된 데이터를 읽지 못해 빈 상태로 시작했어요. 이전 내용은 브라우저에 백업해 두었어요.','error');
+        return normalize(null);
+      }
+    }
+    let data=loadData();
+    function save(okMsg,type){
+      try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));storageOk=true}
+      catch(e){storageOk=false;showBanner('저장에 실패했어요. 브라우저 저장 공간이 가득 찼거나 사용할 수 없는 상태예요.','error');notify('저장하지 못했어요. 다시 시도해 주세요.','error');render();return false}
+      render();
+      if(okMsg)notify(okMsg,type||'success');
+      return true;
+    }
+
+    /* ===== 집계 ===== */
+    const nowYm=()=>ymOf(new Date());
+    const txIn=ym=>data.transactions.filter(t=>ymOf(new Date(t.date))===ym);
+    function sums(ym){
+      const list=txIn(ym);const byCat={};let income=0,expense=0;
+      list.forEach(t=>{if(t.type==='income')income+=t.amount;else{expense+=t.amount;byCat[t.category]=(byCat[t.category]||0)+t.amount}});
+      return {income,expense,byCat,count:list.length};
+    }
+    function isPaid(e){return e.recurring?e.paidMonth===nowYm():!!e.paid}
+
+    /* ===== 화면 상태 ===== */
+    const view={month:nowYm(),type:'all',cat:'all',q:''};
+
+    /* ===== 렌더 ===== */
+    function renderStats(cur,prev){
+      const bal=cur.income-cur.expense;
+      $('incomeStat').textContent=money(cur.income);
+      $('expenseStat').textContent=money(cur.expense);
+      const b=$('balanceStat');b.textContent=(bal<0?'−':'')+money(Math.abs(bal));b.classList.toggle('neg',bal<0);
+      $('balanceSub').textContent=bal<0?'수입보다 많이 썼어요':'수입 − 지출';
+      const gt=data.goals.reduce((s,g)=>s+g.target,0),gc=data.goals.reduce((s,g)=>s+Math.min(g.current,g.target),0);
+      $('goalStat').textContent=pct(gc,gt)+'%';
+      $('goalSub').textContent=data.goals.length?`${data.goals.length}개 목표 · ${money(gc)} / ${money(gt)}`:'목표를 추가해 보세요';
+      $('today').textContent=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+    }
+
+    function donutSvg(prev,cur){
+      const r=52,C=2*Math.PI*r,total=prev+cur;let segs='';
+      if(total>0){
+        const pl=C*prev/total,cl=C*cur/total;
+        if(prev>0)segs+=`<circle cx="70" cy="70" r="${r}" fill="none" stroke="#a8cfe0" stroke-width="18" stroke-dasharray="${pl} ${C-pl}" stroke-dashoffset="0" transform="rotate(-90 70 70)"/>`;
+        if(cur>0)segs+=`<circle cx="70" cy="70" r="${r}" fill="none" stroke="#f2b8a2" stroke-width="18" stroke-dasharray="${cl} ${C-cl}" stroke-dashoffset="${-pl}" transform="rotate(-90 70 70)"/>`;
+      }else segs=`<circle cx="70" cy="70" r="${r}" fill="none" stroke="#eaf0e8" stroke-width="18"/>`;
+      return `<svg class="donut" viewBox="0 0 140 140" role="img" aria-label="지난달 지출 ${money(prev)}, 이번 달 지출 ${money(cur)}">${segs}<text x="70" y="64" text-anchor="middle" font-size="9" font-weight="700" style="fill:#758278">이번 달 지출</text><text x="70" y="82" text-anchor="middle" font-size="15" font-weight="900">₩${short(cur)}</text></svg>`;
+    }
+    function renderCompare(cur,prev){
+      const diff=cur.expense-prev.expense;
+      let pill;
+      if(prev.expense===0&&cur.expense===0)pill='<span class="diff-pill flat">아직 지출 기록이 없어요</span>';
+      else if(prev.expense===0)pill='<span class="diff-pill up">지난달 지출 기록이 없어요</span>';
+      else if(diff===0)pill='<span class="diff-pill flat">지난달과 같아요</span>';
+      else{const p=Math.round(Math.abs(diff)/prev.expense*100);pill=diff<0?`<span class="diff-pill down">지난달보다 ${money(-diff)} (${p}%) 적어요 👏</span>`:`<span class="diff-pill up">지난달보다 ${money(diff)} (${p}%) 많아요</span>`}
+      $('compareBox').innerHTML=`<div class="donut-wrap">${donutSvg(prev.expense,cur.expense)}<div class="legend"><div class="legend-row"><span class="legend-dot" style="background:#a8cfe0"></span>지난달<strong>${money(prev.expense)}</strong></div><div class="legend-row"><span class="legend-dot" style="background:#f2b8a2"></span>이번 달<strong>${money(cur.expense)}</strong></div>${pill}</div></div>`;
+    }
+
+    function buildInsights(cur,prev){
+      const out=[];const now=new Date();
+      if(cur.count===0&&data.goals.length===0&&data.essentials.length===0){return [{t:'',ic:'🌱',m:'첫 거래를 기록하면 소비 패턴을 분석해 드려요.'}]}
+      if(cur.expense>0&&prev.expense>0){
+        const d=cur.expense-prev.expense,p=Math.round(Math.abs(d)/prev.expense*100);
+        if(d<0)out.push({t:'good',ic:'📉',m:`지난달보다 지출이 ${p}% 줄었어요. 잘하고 있어요!`});
+        else if(d>0)out.push({t:p>=20?'bad':'warn',ic:'📈',m:`지난달보다 지출이 ${p}% 늘었어요.`});
+        else out.push({t:'',ic:'⚖️',m:'지난달과 지출이 똑같아요.'});
+      }
+      const cats=Object.entries(cur.byCat).sort((a,b)=>b[1]-a[1]);
+      if(cats.length){out.push({t:'',ic:catIcon(cats[0][0]),m:`가장 많이 쓴 곳은 ${cats[0][0]}(${money(cats[0][1])}, 지출의 ${pct(cats[0][1],cur.expense)}%)이에요.`})}
+      if(cur.expense>0){
+        const day=now.getDate(),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+        const avg=Math.round(cur.expense/day),proj=Math.round(cur.expense/day*dim);
+        out.push({t:'',ic:'🗓️',m:`하루 평균 ${money(avg)}씩 썼어요. 이 속도라면 이번 달 지출은 약 ${money(proj)}이 돼요.`});
+      }
+      const mb=data.settings.monthlyBudget;
+      if(mb>0){
+        const used=pct(cur.expense,mb);
+        if(cur.expense>mb)out.push({t:'bad',ic:'🚨',m:`월 예산을 ${money(cur.expense-mb)} 초과했어요.`});
+        else if(used>=80)out.push({t:'warn',ic:'⚠️',m:`월 예산의 ${used}%를 사용했어요. 남은 예산은 ${money(mb-cur.expense)}이에요.`});
+        else out.push({t:'good',ic:'💚',m:`월 예산의 ${used}%를 사용했어요. 남은 예산은 ${money(mb-cur.expense)}이에요.`});
+      }
+      const overCats=CATS_EXP.filter(c=>data.settings.categoryBudgets[c]&&(cur.byCat[c]||0)>data.settings.categoryBudgets[c]);
+      if(overCats.length)out.push({t:'bad',ic:'🚨',m:`예산을 넘긴 카테고리: ${overCats.join(', ')}`});
+      const unpaid=data.essentials.filter(e=>!isPaid(e));
+      if(unpaid.length)out.push({t:'warn',ic:'📋',m:`아직 결제 전인 필수지출이 ${unpaid.length}건(${money(unpaid.reduce((s,e)=>s+e.amount,0))}) 있어요.`});
+      const open=data.goals.filter(g=>g.current<g.target).sort((a,b)=>b.current/b.target-a.current/a.target)[0];
+      if(open&&open.current>0)out.push({t:'good',ic:'🎯',m:`'${open.name}' 목표까지 ${money(open.target-open.current)} 남았어요 (${pct(open.current,open.target)}% 달성).`});
+      if(!out.length)out.push({t:'',ic:'🌱',m:'이번 달 거래를 더 기록하면 인사이트가 풍성해져요.'});
+      return out.slice(0,6);
+    }
+    function renderInsights(cur,prev){
+      $('insightBox').innerHTML=buildInsights(cur,prev).map(i=>`<div class="insight ${i.t}"><span class="ic">${i.ic}</span><span>${safe(i.m)}</span></div>`).join('');
+    }
+
+    function txRow(t,editable){
+      const sign=t.type==='income'?'+':'−';
+      return `<div class="tx-row ${t.type}"><div class="tx-dot">${catIcon(t.category)}</div><div class="tx-copy"><div class="tx-title">${safe(t.name)}</div><div class="tx-sub">${t.type==='income'?'수입':'지출'} · ${safe(t.category)} · ${fmtDate(t.date)}</div></div><div class="tx-amount ${t.type}">${sign}${money(t.amount)}</div>${editable?`<div class="row-actions"><button class="icon-btn" data-act="edit-tx" data-id="${safe(t.id)}" aria-label="${safe(t.name)} 수정">수정</button><button class="icon-btn del" data-act="del-tx" data-id="${safe(t.id)}" aria-label="${safe(t.name)} 삭제">삭제</button></div>`:''}</div>`;
+    }
+    function renderRecent(){
+      const list=[...data.transactions].sort((a,b)=>new Date(b.date)-new Date(a.date)||b.created-a.created).slice(0,5);
+      $('recentList').innerHTML=list.length?list.map(t=>txRow(t,false)).join(''):'<div class="empty">아직 거래내역이 없어요 🌱<br><button class="btn btn-green btn-sm" data-act="open-tx">첫 거래 기록하기</button></div>';
+    }
+    function goalMiniRow(g){
+      const p=Math.min(100,pct(g.current,g.target));
+      return `<div class="goal-card ${p>=100?'done':''}"><div class="goal-name"><span>🎯 ${safe(g.name)}</span><span class="badge">${p}%</span></div><div class="progress"><span style="width:${p}%"></span></div><div class="goal-meta"><span>${money(g.current)}</span><span>${money(g.target)}</span></div></div>`;
+    }
+    function renderGoalMini(){
+      $('goalMini').innerHTML=data.goals.length?data.goals.slice(0,4).map(goalMiniRow).join(''):'<div class="empty">저축 목표가 없어요 🌼<br><button class="btn btn-soft btn-sm" data-act="open-goal">목표 만들기</button></div>';
+    }
+    function renderEssMini(){
+      const n=data.essentials.length;
+      if(!n){$('essMini').innerHTML='<div class="empty">등록된 필수지출이 없어요 📋<br><button class="btn btn-soft btn-sm" data-act="open-ess">필수지출 추가</button></div>';return}
+      const total=data.essentials.reduce((s,e)=>s+e.amount,0),paidList=data.essentials.filter(isPaid),paidAmt=paidList.reduce((s,e)=>s+e.amount,0),p=pct(paidAmt,total);
+      $('essMini').innerHTML=`<div class="goal-meta"><span>총액</span><strong>${money(total)}</strong></div><div class="progress"><span style="width:${p}%"></span></div><div class="goal-meta"><span>결제 완료 ${paidList.length}건 · ${money(paidAmt)}</span><span>미결제 ${n-paidList.length}건 · ${money(total-paidAmt)}</span></div>`+
+        `<div class="essential-list" style="margin-top:12px">${data.essentials.slice(0,4).map(e=>`<div class="essential-row ${isPaid(e)?'paid':''}"><div class="ess-copy"><div class="ess-name"><span class="ess-title">${safe(e.name)}</span><span class="badge ${isPaid(e)?'paid':'unpaid'}">${isPaid(e)?'결제 완료':'미결제'}</span></div></div><div class="ess-amount">${money(e.amount)}</div></div>`).join('')}</div>`;
+    }
+    function catBars(cur,withBudget){
+      const entries=Object.entries(cur.byCat).sort((a,b)=>b[1]-a[1]);
+      if(!entries.length)return '<div class="empty">이번 달 지출 기록이 없어요 🍰</div>';
+      return entries.map(([c,v])=>`<div class="cat-row"><div class="cat-top"><span>${catIcon(c)} ${safe(c)}</span><span class="amt">${money(v)} · ${pct(v,cur.expense)}%</span></div><div class="progress"><span style="width:${pct(v,cur.expense)}%;background:${CAT_COLOR[c]||'#cfd8d0'}"></span></div></div>`).join('');
+    }
+    function renderCatMini(cur){$('catMini').innerHTML=catBars(cur)}
+
+    function renderTransactions(){
+      $('txMonthLabel').textContent=ymLabel(view.month);
+      document.querySelectorAll('[data-act="tx-type"]').forEach(b=>b.classList.toggle('active',b.dataset.type===view.type));
+      const sel=$('txCatFilter');const cats=view.type==='income'?CATS_INC:view.type==='expense'?CATS_EXP:[...CATS_EXP,...CATS_INC];
+      if(view.cat!=='all'&&!cats.includes(view.cat))view.cat='all';
+      sel.innerHTML='<option value="all">모든 카테고리</option>'+cats.map(c=>`<option value="${c}">${catIcon(c)} ${c}</option>`).join('');sel.value=view.cat;
+      const monthList=txIn(view.month);
+      const inc=monthList.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0),exp=monthList.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+      $('txSummary').innerHTML=`<span>수입 <b style="color:#5d9b66">+${money(inc)}</b></span><span>지출 <b style="color:var(--danger)">−${money(exp)}</b></span><span>합계 <b class="${inc-exp<0?'neg':''}">${inc-exp<0?'−':''}${money(Math.abs(inc-exp))}</b></span>`;
+      const q=view.q.trim().toLowerCase();
+      const list=monthList.filter(t=>(view.type==='all'||t.type===view.type)&&(view.cat==='all'||t.category===view.cat)&&(!q||t.name.toLowerCase().includes(q))).sort((a,b)=>new Date(b.date)-new Date(a.date)||b.created-a.created);
+      let html;
+      if(list.length)html=list.map(t=>txRow(t,true)).join('');
+      else if(!data.transactions.length)html='<div class="empty">아직 거래내역이 없어요. 첫 기록을 추가해 보세요 🌱<br><button class="btn btn-green btn-sm" data-act="open-tx">＋ 거래 기록</button></div>';
+      else html='<div class="empty">조건에 맞는 거래가 없어요 🔍</div>';
+      $('txList').innerHTML=html;
+    }
+
+    function renderGoals(){
+      $('goalList').innerHTML=data.goals.length?data.goals.map(g=>{
+        const p=Math.min(100,pct(g.current,g.target)),done=g.current>=g.target;
+        return `<article class="goal-card ${done?'done':''}"><div class="goal-name"><span>🎯 ${safe(g.name)}</span><span class="badge">${done?'달성 🎉':p+'%'}</span></div><div class="goal-meta"><span>${money(g.current)} 모았어요</span><span>${p}%</span></div><div class="progress"><span style="width:${p}%"></span></div><div class="goal-meta"><span>목표 금액</span><strong>${money(g.target)}</strong></div><div class="goal-meta" style="margin-top:4px"><span>남은 금액</span><strong>${money(Math.max(0,g.target-g.current))}</strong></div><div class="goal-actions"><button class="btn btn-green btn-sm" data-act="save-goal" data-id="${safe(g.id)}">＋ 저축 기록</button><button class="btn btn-soft btn-sm" data-act="edit-goal" data-id="${safe(g.id)}">수정</button><button class="icon-btn del" data-act="del-goal" data-id="${safe(g.id)}" aria-label="${safe(g.name)} 목표 삭제">삭제</button></div></article>`}).join('')
+        :'<div class="empty" style="grid-column:1/-1">아직 목표가 없어요. 작은 목표부터 만들어 보세요 🌼<br><button class="btn btn-soft btn-sm" data-act="open-goal">＋ 목표 추가</button></div>';
+    }
+
+    function renderEssentials(){
+      const total=data.essentials.reduce((s,e)=>s+e.amount,0),paid=data.essentials.filter(isPaid),paidAmt=paid.reduce((s,e)=>s+e.amount,0);
+      $('essentialTotal').textContent=money(total);
+      $('essentialSub').textContent=data.essentials.length?`결제 완료 ${paid.length}건(${money(paidAmt)}) · 미결제 ${data.essentials.length-paid.length}건(${money(total-paidAmt)})`:'';
+      $('essentialList').innerHTML=data.essentials.length?data.essentials.map(e=>{
+        const p=isPaid(e);
+        return `<div class="essential-row ${p?'paid':''}"><button class="check" data-act="toggle-ess" data-id="${safe(e.id)}" aria-pressed="${p}" aria-label="${safe(e.name)} 결제 상태 변경">${p?'✓':''}</button><div class="ess-copy"><div class="ess-name"><span class="ess-title">${catIcon(e.category)} ${safe(e.name)}</span><span class="badge ${p?'paid':'unpaid'}">${p?'결제 완료':'미결제'}</span>${e.recurring?'<span class="badge rec">매월 반복</span>':''}</div><div class="ess-meta">${safe(e.category)}${e.dueDay?' · 매월 '+e.dueDay+'일':''}</div></div><div class="ess-amount">${money(e.amount)}</div><div class="row-actions"><button class="icon-btn" data-act="edit-ess" data-id="${safe(e.id)}" aria-label="${safe(e.name)} 수정">수정</button><button class="icon-btn del" data-act="del-ess" data-id="${safe(e.id)}" aria-label="${safe(e.name)} 삭제">삭제</button></div></div>`}).join('')
+        :'<div class="empty">등록된 필수지출이 없어요 📋<br><button class="btn btn-soft btn-sm" data-act="open-ess">＋ 지출 추가</button></div>';
+    }
+
+    function budgetBar(spent,budget){
+      const p=pct(spent,budget),cls=spent>budget?'over':p>=80?'warn':'';
+      return `<div class="progress ${cls}"><span style="width:${Math.min(100,p)}%"></span></div>`;
+    }
+    function renderBudget(cur){
+      const mb=data.settings.monthlyBudget,cb=data.settings.categoryBudgets;
+      const hasCat=CATS_EXP.some(c=>cb[c]);
+      if(!mb&&!hasCat){
+        $('budgetBox').innerHTML=`<div class="empty">아직 설정한 예산이 없어요 💰<br>월 예산이나 카테고리별 예산을 정하면 초과 여부를 바로 알려 드려요.<br><button class="btn btn-yellow btn-sm" data-act="open-budget">예산 설정하기</button></div><div class="cat-list" style="margin-top:14px">${catBars(cur)}</div>`;
+        return;
+      }
+      let html='';
+      if(mb){
+        const over=cur.expense>mb,p=pct(cur.expense,mb);
+        html+=`<div class="budget-total"><div class="goal-meta"><span><b>${ymLabel(nowYm())} 월 예산</b></span><span class="badge ${over?'over':p>=80?'warn':''}">${over?'초과':p+'% 사용'}</span></div>${budgetBar(cur.expense,mb)}<div class="goal-meta"><span>지출 <strong>${money(cur.expense)}</strong> / ${money(mb)}</span><span class="${over?'neg':''}">${over?money(cur.expense-mb)+' 초과':money(mb-cur.expense)+' 남음'}</span></div></div>`;
+      }
+      const rows=CATS_EXP.filter(c=>cb[c]||cur.byCat[c]).map(c=>{
+        const spent=cur.byCat[c]||0,b=cb[c];
+        if(!b)return `<div class="cat-row"><div class="cat-top"><span>${catIcon(c)} ${c}</span><span class="amt">${money(spent)}</span></div><div class="cat-note">예산 미설정</div></div>`;
+        const over=spent>b,p=pct(spent,b);
+        return `<div class="cat-row"><div class="cat-top"><span>${catIcon(c)} ${c}</span><span class="badge ${over?'over':p>=80?'warn':''}">${over?'초과':p+'%'}</span><span class="amt">${money(spent)} / ${money(b)}</span></div>${budgetBar(spent,b)}<div class="cat-note ${over?'over':''}">${over?money(spent-b)+' 초과했어요':money(b-spent)+' 남았어요'}</div></div>`;
+      });
+      html+=`<div class="cat-list">${rows.join('')||'<div class="empty">이번 달 지출 기록이 없어요 🍰</div>'}</div>`;
+      $('budgetBox').innerHTML=html;
+    }
+
+    function render(){
+      const cur=sums(nowYm()),prev=sums(shiftYm(nowYm(),-1));
+      renderStats(cur,prev);renderCompare(cur,prev);renderInsights(cur,prev);renderRecent();renderGoalMini();renderEssMini();renderCatMini(cur);
+      renderTransactions();renderGoals();renderEssentials();renderBudget(cur);
+    }
+
+    /* ===== 정책 ===== */
+    function renderPolicies(filter='all'){const grid=$('policyGrid');const f=filter==='all'?policies:policies.filter(p=>p.category===filter);grid.innerHTML=f.map(p=>`<article class="policy-card" data-category="${p.category}"><div class="policy-top"><div class="policy-icon">${p.icon}</div><div class="policy-info"><div class="policy-name">${p.name}</div><div class="policy-org">${p.org}</div></div><span class="policy-tag">${({savings:'저축·금융',housing:'주거',job:'취업·일자리',education:'교육'})[p.category]}</span></div><p class="policy-desc">${p.desc}</p><div class="policy-bottom"><span class="policy-age">${p.age}</span><a class="policy-link" href="${p.url}" target="_blank" rel="noopener noreferrer">공식 안내 ↗</a></div></article>`).join('')}
+    function filterPolicies(filter,button){document.querySelectorAll('#policy .chip').forEach(i=>i.classList.remove('active'));button.classList.add('active');renderPolicies(filter)}
+
+    /* ===== 모달/폼 공통 ===== */
+    let lastFocus=null;
+    function openModal(id){lastFocus=document.activeElement;$(id).classList.add('open');const first=document.querySelector('#'+id+' input:not([type=hidden]),#'+id+' select');if(first)setTimeout(()=>first.focus(),30)}
+    function closeModal(id){$(id).classList.remove('open');if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch(e){}}
+    function closeAll(){document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))}
+    function clearErrors(form){form.querySelectorAll('.field').forEach(f=>{f.classList.remove('invalid');const e=f.querySelector('.err');if(e)e.textContent=''})}
+    function setErr(fieldId,msg){const f=$(fieldId);f.classList.add('invalid');f.querySelector('.err').textContent=msg}
+    function readName(inputId,fieldId,label){const v=$(inputId).value.trim();if(!v){setErr(fieldId,label+'을(를) 입력해 주세요.');return null}if(v.length>40){setErr(fieldId,'40자 이내로 입력해 주세요.');return null}return v}
+    function readAmount(inputId,fieldId,{min=1,allowEmpty=false}={}){
+      const raw=$(inputId).value.trim();
+      if(raw===''){if(allowEmpty)return 0;setErr(fieldId,'금액을 입력해 주세요.');return null}
+      const n=Number(raw);
+      if(!isFinite(n)){setErr(fieldId,'숫자만 입력해 주세요.');return null}
+      if(!Number.isInteger(n)){setErr(fieldId,'원 단위 정수로 입력해 주세요.');return null}
+      if(n<min){setErr(fieldId,min>=1?'1원 이상 입력해 주세요.':'0원 이상 입력해 주세요.');return null}
+      if(n>MAX_AMOUNT){setErr(fieldId,'금액이 너무 커요. 99억 원 이하로 입력해 주세요.');return null}
+      return n;
+    }
+    let confirmAction=null;
+    function askConfirm(title,text,okLabel,fn){$('confirmTitle').textContent=title;$('confirmText').textContent=text;$('confirmOk').textContent=okLabel||'삭제';confirmAction=fn;openModal('confirmModal')}
+    $('confirmOk').addEventListener('click',()=>{const fn=confirmAction;confirmAction=null;closeAll();if(fn)fn()});
+
+    /* ===== 거래 ===== */
+    function fillTxCats(type,sel){const list=type==='income'?CATS_INC:CATS_EXP;$('txCategory').innerHTML=list.map(c=>`<option value="${c}">${catIcon(c)} ${c}</option>`).join('');if(sel&&list.includes(sel))$('txCategory').value=sel}
+    function openTx(id){
+      const f=$('txForm');f.reset();clearErrors(f);
+      const t=id&&data.transactions.find(x=>x.id===id);
+      $('txId').value=t?t.id:'';$('txModalTitle').textContent=t?'거래 수정':'거래 기록 추가';
+      $('txType').value=t?t.type:'expense';fillTxCats($('txType').value,t&&t.category);
+      $('txName').value=t?t.name:'';$('txAmount').value=t?t.amount:'';$('txDate').value=t?dateInput(t.date):dateInput(new Date().toISOString());
+      openModal('txModal');
+    }
+    $('txType').addEventListener('change',()=>fillTxCats($('txType').value));
+    $('txForm').addEventListener('submit',e=>{
+      e.preventDefault();clearErrors(e.target);
+      const name=readName('txName','fTxName','항목'),amount=readAmount('txAmount','fTxAmount');
+      const ds=$('txDate').value;let date=null;
+      if(!ds)setErr('fTxDate','날짜를 선택해 주세요.');else{const d=new Date(ds+'T12:00:00');if(isNaN(d))setErr('fTxDate','올바른 날짜가 아니에요.');else date=d.toISOString()}
+      if(name===null||amount===null||date===null)return;
+      const id=$('txId').value,type=$('txType').value,category=$('txCategory').value;
+      if(id){const t=data.transactions.find(x=>x.id===id);if(!t){closeAll();return}Object.assign(t,{type,name,amount,category,date})}
+      else data.transactions.unshift({id:uid(),type,name,amount,category,date,created:Date.now()});
+      if(save(id?'거래를 수정했어요.':'거래내역을 저장했어요.'))closeAll();
+    });
+    function delTx(id){
+      const t=data.transactions.find(x=>x.id===id);if(!t)return;
+      askConfirm('거래를 삭제할까요?',`'${t.name}' (${t.type==='income'?'+':'−'}${money(t.amount)}) 기록이 삭제돼요.`,'삭제',()=>{
+        data.transactions=data.transactions.filter(x=>x.id!==id);
+        // 필수지출 결제로 자동 기록된 거래라면 결제 상태도 되돌림
+        if(t.essentialId){const e=data.essentials.find(x=>x.id===t.essentialId);if(e&&(e.paidMonth===t.essentialMonth)&&isPaid(e)){e.paid=false;e.paidMonth=null}}
+        save('거래를 삭제했어요.');
+      });
+    }
+
+    /* ===== 목표 ===== */
+    function openGoal(id){
+      const f=$('goalForm');f.reset();clearErrors(f);
+      const g=id&&data.goals.find(x=>x.id===id);
+      $('goalId').value=g?g.id:'';$('goalModalTitle').textContent=g?'저축 목표 수정':'저축 목표 추가';
+      $('goalName').value=g?g.name:'';$('goalTarget').value=g?g.target:'';$('goalCurrent').value=g?g.current:0;
+      openModal('goalModal');
+    }
+    $('goalForm').addEventListener('submit',e=>{
+      e.preventDefault();clearErrors(e.target);
+      const name=readName('goalName','fGoalName','목표 이름'),target=readAmount('goalTarget','fGoalTarget');
+      const current=readAmount('goalCurrent','fGoalCurrent',{min:0,allowEmpty:true});
+      if(name===null||target===null||current===null)return;
+      if(current>target){setErr('fGoalCurrent','현재 금액이 목표 금액보다 클 수 없어요.');return}
+      const id=$('goalId').value;
+      if(id){const g=data.goals.find(x=>x.id===id);if(!g){closeAll();return}Object.assign(g,{name,target,current})}
+      else data.goals.push({id:uid(),name,target,current});
+      if(save(id?'목표를 수정했어요.':'새 목표를 추가했어요.'))closeAll();
+    });
+    function openSaving(id){
+      const g=data.goals.find(x=>x.id===id);if(!g)return;
+      const f=$('savingForm');f.reset();clearErrors(f);
+      $('savingGoalId').value=g.id;$('savingInfo').textContent=`'${g.name}' · 현재 ${money(g.current)} / ${money(g.target)}`;
+      openModal('savingModal');
+    }
+    $('savingForm').addEventListener('submit',e=>{
+      e.preventDefault();clearErrors(e.target);
+      const g=data.goals.find(x=>x.id===$('savingGoalId').value);if(!g){closeAll();return}
+      const amount=readAmount('savingAmount','fSavingAmount');if(amount===null)return;
+      const sub=$('savingMode').value==='sub';
+      if(sub&&amount>g.current){setErr('fSavingAmount','현재 모은 금액보다 많이 차감할 수 없어요.');return}
+      const before=g.current;
+      g.current=sub?g.current-amount:Math.min(g.target,g.current+amount);
+      const clipped=!sub&&before+amount>g.target;
+      const done=before<g.target&&g.current>=g.target;
+      if(save(done?'🎉 목표를 달성했어요!':clipped?'목표 금액까지만 반영했어요.':sub?'저축 금액을 차감했어요.':'저축을 기록했어요!'))closeAll();
+    });
+    function delGoal(id){
+      const g=data.goals.find(x=>x.id===id);if(!g)return;
+      askConfirm('목표를 삭제할까요?',`'${g.name}' 목표와 모은 금액 기록이 삭제돼요.`,'삭제',()=>{data.goals=data.goals.filter(x=>x.id!==id);save('목표를 삭제했어요.')});
+    }
+
+    /* ===== 필수지출 ===== */
+    function openEss(id){
+      const f=$('essentialForm');f.reset();clearErrors(f);
+      $('essentialCategory').innerHTML=CATS_EXP.map(c=>`<option value="${c}">${catIcon(c)} ${c}</option>`).join('');
+      const e=id&&data.essentials.find(x=>x.id===id);
+      $('essentialId').value=e?e.id:'';$('essentialModalTitle').textContent=e?'필수지출 수정':'필수지출 추가';
+      $('essentialName').value=e?e.name:'';$('essentialAmount').value=e?e.amount:'';$('essentialCategory').value=e?e.category:'교통';
+      $('essentialDay').value=e&&e.dueDay?e.dueDay:'';$('essentialRecurring').checked=e?e.recurring:true;
+      openModal('essentialModal');
+    }
+    $('essentialForm').addEventListener('submit',ev=>{
+      ev.preventDefault();clearErrors(ev.target);
+      const name=readName('essentialName','fEssName','항목'),amount=readAmount('essentialAmount','fEssAmount');
+      let dueDay=null;const dr=$('essentialDay').value.trim();
+      if(dr!==''){const n=Number(dr);if(!Number.isInteger(n)||n<1||n>31)setErr('fEssDay','1~31 사이로 입력해 주세요.');else dueDay=n}
+      if(name===null||amount===null||(dr!==''&&dueDay===null))return;
+      const id=$('essentialId').value,category=$('essentialCategory').value,recurring=$('essentialRecurring').checked;
+      if(id){const e=data.essentials.find(x=>x.id===id);if(!e){closeAll();return}Object.assign(e,{name,amount,category,dueDay,recurring})}
+      else data.essentials.push({id:uid(),name,amount,category,dueDay,recurring,paid:false,paidMonth:null});
+      if(save(id?'필수지출을 수정했어요.':'필수지출을 추가했어요.'))closeAll();
+    });
+    function toggleEss(id){
+      const e=data.essentials.find(x=>x.id===id);if(!e)return;
+      const ym=nowYm();
+      if(!isPaid(e)){
+        e.paid=true;e.paidMonth=ym;
+        data.transactions.unshift({id:uid(),type:'expense',name:e.name,amount:e.amount,category:e.category,date:new Date().toISOString(),created:Date.now(),essentialId:e.id,essentialMonth:ym});
+        save('결제 완료로 표시하고 지출 내역에 기록했어요.');
+      }else{
+        e.paid=false;e.paidMonth=null;
+        const before=data.transactions.length;
+        data.transactions=data.transactions.filter(t=>!(t.essentialId===e.id&&t.essentialMonth===ym));
+        save(before!==data.transactions.length?'미결제로 되돌리고 자동 기록된 지출을 삭제했어요.':'미결제로 되돌렸어요.','');
+      }
+    }
+    function delEss(id){
+      const e=data.essentials.find(x=>x.id===id);if(!e)return;
+      askConfirm('필수지출을 삭제할까요?',`'${e.name}' 항목이 삭제돼요. 이미 기록된 거래내역은 그대로 남아요.`,'삭제',()=>{data.essentials=data.essentials.filter(x=>x.id!==id);save('필수지출을 삭제했어요.')});
+    }
+
+    /* ===== 예산 ===== */
+    function openBudget(){
+      clearErrors($('budgetForm'));$('budgetErr').style.display='none';
+      $('budgetTotal').value=data.settings.monthlyBudget||'';
+      $('budgetCats').innerHTML=CATS_EXP.map(c=>`<div class="brow"><label for="bc-${c}">${catIcon(c)} ${c}</label><input id="bc-${c}" data-cat="${c}" type="number" inputmode="numeric" min="0" step="1" placeholder="미설정" value="${data.settings.categoryBudgets[c]||''}"></div>`).join('');
+      openModal('budgetModal');
+    }
+    $('budgetForm').addEventListener('submit',e=>{
+      e.preventDefault();clearErrors(e.target);const be=$('budgetErr');be.style.display='none';
+      const total=readAmount('budgetTotal','fBudgetTotal',{min:0,allowEmpty:true});if(total===null)return;
+      const cats={};let bad=null;
+      document.querySelectorAll('#budgetCats input').forEach(inp=>{
+        const raw=inp.value.trim();if(raw==='')return;const n=Number(raw);
+        if(!Number.isInteger(n)||n<0||n>MAX_AMOUNT){bad=inp.dataset.cat;return}
+        if(n>0)cats[inp.dataset.cat]=n;
+      });
+      if(bad){be.textContent=`'${bad}' 예산은 0 이상의 원 단위 정수로 입력해 주세요.`;be.style.display='block';return}
+      data.settings.monthlyBudget=total;data.settings.categoryBudgets=cats;
+      if(save('예산을 저장했어요.'))closeAll();
+    });
+
+    /* ===== 이벤트 ===== */
+    document.addEventListener('click',ev=>{
+      const el=ev.target.closest('[data-act]');if(!el)return;
+      const id=el.dataset.id;
+      switch(el.dataset.act){
+        case 'open-tx':openTx();break;
+        case 'edit-tx':openTx(id);break;
+        case 'del-tx':delTx(id);break;
+        case 'open-goal':openGoal();break;
+        case 'edit-goal':openGoal(id);break;
+        case 'del-goal':delGoal(id);break;
+        case 'save-goal':openSaving(id);break;
+        case 'open-ess':openEss();break;
+        case 'edit-ess':openEss(id);break;
+        case 'del-ess':delEss(id);break;
+        case 'toggle-ess':toggleEss(id);break;
+        case 'open-budget':openBudget();break;
+        case 'close-modal':closeAll();break;
+        case 'month-prev':view.month=shiftYm(view.month,-1);renderTransactions();break;
+        case 'month-next':view.month=shiftYm(view.month,1);renderTransactions();break;
+        case 'tx-type':view.type=el.dataset.type;renderTransactions();break;
+      }
+    });
+    $('txCatFilter').addEventListener('change',e=>{view.cat=e.target.value;renderTransactions()});
+    $('txSearch').addEventListener('input',e=>{view.q=e.target.value;renderTransactions()});
+    document.querySelectorAll('.modal').forEach(m=>m.addEventListener('mousedown',e=>{if(e.target===m)closeAll()}));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+
+    /* 스크롤 위치에 따라 메뉴 강조 */
+    const navLinks=[...document.querySelectorAll('.nav a')];
+    navLinks.forEach(l=>l.addEventListener('click',()=>{navLinks.forEach(i=>i.classList.remove('active'));l.classList.add('active')}));
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>{entries.forEach(en=>{if(en.isIntersecting){navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+en.target.id))}})},{rootMargin:'-25% 0px -65% 0px'});
+      ['dashboard','transactions','goals','essential','budget','policy'].forEach(id=>{const s=$(id);if(s)io.observe(s)});
+    }
+
     render();renderPolicies();
   </script>
 </body>
